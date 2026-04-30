@@ -1,15 +1,65 @@
-# Aura Gym Tracker
+# Aura Gym Tracker (React)
 
-Aura is an elite fitness tracking application built by [Teda.dev](https://teda.dev), the AI app builder for everyday problems. 
+Aura is now converted to a modern React app using functional components and
+hooks while preserving the original behavior, data model, and LocalStorage
+logic.
 
-Designed with strict constraints and a commitment to modern SaaS aesthetics, Aura offers deep analytics, offline capabilities via LocalStorage, and a zero-friction logging interface. Built completely client-side utilizing HTML5, Tailwind CSS via CDN, and jQuery.
+## Tech Stack
+
+- React + Vite
+- Functional components + hooks
+- Chart.js (analytics)
+- Tailwind utility classes via CDN + existing custom CSS tokens
 
 ## Features
-- **Instant Session Logging**: Dynamically add exercises and sets with an intuitive modal.
-- **Progress Analytics**: Track your Estimated 1RM and Volume Load over time via integrated Chart.js.
-- **Offline Persistence**: All data is securely stored on the user's device.
-- **Dark/Light Mode**: First-class support for theming with custom HSL variables.
-- **High-Performance Architecture**: Modular JS, strict global namespaces, zero-build.
 
-## Usage
-Just open `index.html` in your web browser. Everything is loaded dynamically via CDNs.
+- **React-only Pages**: Landing page and dashboard are both rendered via React
+  Router.
+- **Workout Logging Modal** with dynamic exercises and sets
+- **Dashboard Summary** with total workouts, volume load, and set count
+- **History View** with full workout details and delete actions
+- **Analytics View** with exercise progression chart
+- **Theme Toggle** persisted in LocalStorage
+- **Offline Persistence** using `aura_workouts_data`
+
+## Scripts
+
+- `npm install`
+- `npm run dev`
+- `npm start`
+- `npm run build`
+- `npm run preview`
+
+## Routes
+
+- `/` → Landing page
+- `/dashboard` → Tracker dashboard app
+
+## Suggested Folder Structure
+
+```txt
+src/
+	components/
+		AnalyticsPanel.jsx
+		ExerciseItem.jsx
+		ProgressChart.jsx
+		ToastContainer.jsx
+		TrackerDashboard.jsx
+		WorkoutList.jsx
+		WorkoutModal.jsx
+	data/
+		mockData.js
+	services/
+		workoutStorage.js
+	utils/
+		workoutUtils.js
+	App.jsx
+	main.jsx
+styles/
+	main.css
+```
+
+## Notes
+
+- The original workout schema is preserved for compatibility.
+- Existing LocalStorage data continues to work in the React app.
