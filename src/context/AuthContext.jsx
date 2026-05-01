@@ -1,7 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import {
 	createUserWithEmailAndPassword,
+	GoogleAuthProvider,
 	onAuthStateChanged,
+	signInWithPopup,
 	signInWithEmailAndPassword,
 	signOut,
 } from "firebase/auth"
@@ -51,6 +53,21 @@ export function AuthProvider({ children }) {
 		return userCredential.user
 	}
 
+	const signInWithGoogle = async () => {
+		try {
+			setIsGuest(false)
+			localStorage.removeItem(GUEST_STORAGE_KEY)
+
+			const provider = new GoogleAuthProvider()
+			const userCredential = await signInWithPopup(auth, provider)
+
+			return userCredential.user
+		} catch (error) {
+			console.error("Google sign-in failed", error)
+			throw error
+		}
+	}
+
 	const continueAsGuest = () => {
 		setCurrentUser(null)
 		setIsGuest(true)
@@ -85,6 +102,7 @@ export function AuthProvider({ children }) {
 			currentUser,
 			isGuest,
 			login,
+			signInWithGoogle,
 			signup,
 			continueAsGuest,
 			logout,
