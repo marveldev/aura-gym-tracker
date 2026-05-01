@@ -36,9 +36,14 @@ function LandingPage() {
 							<span className="ml-2">Theme</span>
 						</button>
 						<Link
-							to="/dashboard"
+							to="/auth"
+							className="btn-secondary py-2.5 px-6 text-sm rounded font-bold">
+							Sign In
+						</Link>
+						<Link
+							to="/auth"
 							className="btn-primary py-2.5 px-6 text-sm rounded font-bold">
-							Launch App <i className="ph ph-arrow-right ml-2"></i>
+							Get Started <i className="ph ph-arrow-right ml-2"></i>
 						</Link>
 					</div>
 				</div>
@@ -61,7 +66,7 @@ function LandingPage() {
 						</p>
 						<div className="mt-12 flex flex-col sm:flex-row gap-4">
 							<Link
-								to="/dashboard"
+								to="/auth"
 								className="btn-primary text-lg rounded px-8 py-4 font-bold">
 								Start Tracking Now
 							</Link>
@@ -222,7 +227,7 @@ function LandingPage() {
 						spreadsheets for Aura.
 					</p>
 					<Link
-						to="/dashboard"
+						to="/auth"
 						className="btn-primary text-xl px-12 py-6 rounded font-bold">
 						Enter Dashboard
 					</Link>
