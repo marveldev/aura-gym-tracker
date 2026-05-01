@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext.jsx"
 
 function LandingPage() {
 	const [isDarkTheme, setIsDarkTheme] = useState(true)
+	const { currentUser, logout } = useAuth()
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const savedTheme = localStorage.getItem("aura_theme") || "dark"
@@ -16,6 +19,16 @@ function LandingPage() {
 		setIsDarkTheme(nextDark)
 		document.documentElement.classList.toggle("dark", nextDark)
 		localStorage.setItem("aura_theme", nextDark ? "dark" : "light")
+	}
+
+	const handleAuthButtonClick = async () => {
+		if (!currentUser) {
+			navigate("/auth")
+			return
+		}
+
+		await logout()
+		navigate("/", { replace: true })
 	}
 
 	return (
@@ -35,13 +48,13 @@ function LandingPage() {
 							<i className={`ph ${isDarkTheme ? "ph-sun" : "ph-moon"}`}></i>
 							<span className="ml-2">Theme</span>
 						</button>
+						<button
+							className="btn-secondary py-2.5 px-6 text-sm rounded font-bold"
+							onClick={handleAuthButtonClick}>
+							{currentUser ? "Sign Out" : "Sign In"}
+						</button>
 						<Link
-							to="/auth"
-							className="btn-secondary py-2.5 px-6 text-sm rounded font-bold">
-							Sign In
-						</Link>
-						<Link
-							to="/auth"
+							to={currentUser ? "/dashboard" : "/auth"}
 							className="btn-primary py-2.5 px-6 text-sm rounded font-bold">
 							Get Started <i className="ph ph-arrow-right ml-2"></i>
 						</Link>
@@ -66,7 +79,7 @@ function LandingPage() {
 						</p>
 						<div className="mt-12 flex flex-col sm:flex-row gap-4">
 							<Link
-								to="/auth"
+								to={currentUser ? "/dashboard" : "/auth"}
 								className="btn-primary text-lg rounded px-8 py-4 font-bold">
 								Start Tracking Now
 							</Link>
@@ -227,7 +240,7 @@ function LandingPage() {
 						spreadsheets for Aura.
 					</p>
 					<Link
-						to="/auth"
+						to={currentUser ? "/dashboard" : "/auth"}
 						className="btn-primary text-xl px-12 py-6 rounded font-bold">
 						Enter Dashboard
 					</Link>

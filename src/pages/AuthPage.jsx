@@ -1,5 +1,26 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../context/AuthContext.jsx"
+
+const getAuthErrorMessage = (errorCode) => {
+	switch (errorCode) {
+		case "auth/invalid-email":
+			return "Please enter a valid email address."
+		case "auth/user-not-found":
+		case "auth/invalid-credential":
+			return "Invalid email or password."
+		case "auth/wrong-password":
+			return "Invalid email or password."
+		case "auth/email-already-in-use":
+			return "An account with this email already exists."
+		case "auth/weak-password":
+			return "Password should be at least 6 characters long."
+		case "auth/too-many-requests":
+			return "Too many attempts. Please try again later."
+		default:
+			return "Something went wrong. Please try again."
+	}
+}
 
 function AuthPage() {
 	const [mode, setMode] = useState("signin") // "signin" | "signup"
@@ -19,6 +40,7 @@ function AuthPage() {
 	const [signUpConfirm, setSignUpConfirm] = useState("")
 	const [showSignUpPassword, setShowSignUpPassword] = useState(false)
 
+	const { currentUser, login, signup } = useAuth()
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -27,6 +49,12 @@ function AuthPage() {
 		setIsDarkTheme(dark)
 		document.documentElement.classList.toggle("dark", dark)
 	}, [])
+
+	useEffect(() => {
+		if (currentUser) {
+			navigate("/dashboard", { replace: true })
+		}
+	}, [currentUser, navigate])
 
 	const toggleTheme = () => {
 		const nextDark = !isDarkTheme
@@ -40,22 +68,26 @@ function AuthPage() {
 		setError("")
 	}
 
-	const handleSignIn = (e) => {
+	const handleSignIn = async (e) => {
 		e.preventDefault()
 		setError("")
 		if (!signInEmail || !signInPassword) {
 			setError("Please fill in all fields.")
 			return
 		}
-		setIsLoading(true)
-		// Simulate async auth — replace with your real auth logic
-		setTimeout(() => {
+
+		try {
+			setIsLoading(true)
+			await login(signInEmail, signInPassword)
+			navigate("/dashboard", { replace: true })
+		} catch (authError) {
+			setError(getAuthErrorMessage(authError.code))
+		} finally {
 			setIsLoading(false)
-			navigate("/dashboard")
-		}, 1200)
+		}
 	}
 
-	const handleSignUp = (e) => {
+	const handleSignUp = async (e) => {
 		e.preventDefault()
 		setError("")
 		if (!signUpName || !signUpEmail || !signUpPassword || !signUpConfirm) {
@@ -70,12 +102,16 @@ function AuthPage() {
 			setError("Password must be at least 8 characters.")
 			return
 		}
-		setIsLoading(true)
-		// Simulate async auth — replace with your real auth logic
-		setTimeout(() => {
+
+		try {
+			setIsLoading(true)
+			await signup(signUpEmail, signUpPassword)
+			navigate("/dashboard", { replace: true })
+		} catch (authError) {
+			setError(getAuthErrorMessage(authError.code))
+		} finally {
 			setIsLoading(false)
-			navigate("/dashboard")
-		}, 1200)
+		}
 	}
 
 	return (
