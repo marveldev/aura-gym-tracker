@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext.jsx"
 
+const AUTH_TAB_STORAGE_KEY = "aura_auth_tab"
+
 const getAuthErrorMessage = (errorCode) => {
 	switch (errorCode) {
 		case "auth/invalid-email":
@@ -27,7 +29,10 @@ const getAuthErrorMessage = (errorCode) => {
 }
 
 function AuthPage() {
-	const [mode, setMode] = useState("signin") // "signin" | "signup"
+	const [mode, setMode] = useState(() => {
+		const savedMode = localStorage.getItem(AUTH_TAB_STORAGE_KEY)
+		return savedMode === "signup" ? "signup" : "signin"
+	}) // "signin" | "signup"
 	const [isDarkTheme, setIsDarkTheme] = useState(true)
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState("")
@@ -95,6 +100,7 @@ function AuthPage() {
 
 	const switchMode = (next) => {
 		setMode(next)
+		localStorage.setItem(AUTH_TAB_STORAGE_KEY, next)
 		setError("")
 	}
 

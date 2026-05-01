@@ -91,9 +91,7 @@ function LandingPage() {
 						</div>
 					</div>
 
-					<div
-						className="flex-1 w-full animate-slide-up"
-						style={{ animationDelay: "0.2s" }}>
+					<div className="flex-1 w-full animate-slide-up">
 						<div className="grid grid-cols-2 gap-6">
 							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
 								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
