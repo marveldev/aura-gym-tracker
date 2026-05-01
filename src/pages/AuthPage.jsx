@@ -34,13 +34,12 @@ function AuthPage() {
 	const [showSignInPassword, setShowSignInPassword] = useState(false)
 
 	// Sign-up fields
-	const [signUpName, setSignUpName] = useState("")
 	const [signUpEmail, setSignUpEmail] = useState("")
 	const [signUpPassword, setSignUpPassword] = useState("")
 	const [signUpConfirm, setSignUpConfirm] = useState("")
 	const [showSignUpPassword, setShowSignUpPassword] = useState(false)
 
-	const { currentUser, login, signup } = useAuth()
+	const { currentUser, isGuest, login, signup, continueAsGuest } = useAuth()
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -51,10 +50,16 @@ function AuthPage() {
 	}, [])
 
 	useEffect(() => {
-		if (currentUser) {
+		if (currentUser || isGuest) {
 			navigate("/dashboard", { replace: true })
 		}
-	}, [currentUser, navigate])
+	}, [currentUser, isGuest, navigate])
+
+	const handleContinueAsGuest = () => {
+		setError("")
+		continueAsGuest()
+		navigate("/dashboard", { replace: true })
+	}
 
 	const toggleTheme = () => {
 		const nextDark = !isDarkTheme
@@ -90,7 +95,7 @@ function AuthPage() {
 	const handleSignUp = async (e) => {
 		e.preventDefault()
 		setError("")
-		if (!signUpName || !signUpEmail || !signUpPassword || !signUpConfirm) {
+		if (!signUpEmail || !signUpPassword || !signUpConfirm) {
 			setError("Please fill in all fields.")
 			return
 		}
@@ -256,23 +261,6 @@ function AuthPage() {
 						{mode === "signup" && (
 							<form onSubmit={handleSignUp} className="space-y-5">
 								<div>
-									<label className="label">Full name</label>
-									<div className="relative">
-										<span className="absolute left-3 top-1/2 -translate-y-1/2 text-[hsl(var(--muted))]">
-											<i className="ph ph-user text-base"></i>
-										</span>
-										<input
-											type="text"
-											placeholder="John Smith"
-											className="input-field pl-9"
-											required
-											value={signUpName}
-											onChange={(e) => setSignUpName(e.target.value)}
-										/>
-									</div>
-								</div>
-
-								<div>
 									<label className="label">Email address</label>
 									<div className="relative">
 										<span className="absolute left-3 top-1/2 -translate-y-1/2 text-[hsl(var(--muted))]">
@@ -392,9 +380,12 @@ function AuthPage() {
 								</svg>
 								Google
 							</button>
-							<button className="btn btn-secondary py-2.5 rounded-lg text-sm">
-								<i className="ph ph-phone text-base"></i>
-								Phone
+							<button
+								type="button"
+								onClick={handleContinueAsGuest}
+								className="btn btn-secondary py-2.5 rounded-lg text-sm">
+								<i className="ph ph-user-circle text-base"></i>
+								Anonymous
 							</button>
 						</div>
 					</div>

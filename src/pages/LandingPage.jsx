@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext.jsx"
 
 function LandingPage() {
 	const [isDarkTheme, setIsDarkTheme] = useState(true)
-	const { currentUser, logout } = useAuth()
+	const { currentUser, isGuest, logout } = useAuth()
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -22,7 +22,7 @@ function LandingPage() {
 	}
 
 	const handleAuthButtonClick = async () => {
-		if (!currentUser) {
+		if (!currentUser && !isGuest) {
 			navigate("/auth")
 			return
 		}
@@ -51,10 +51,10 @@ function LandingPage() {
 						<button
 							className="btn-secondary py-2.5 px-6 text-sm rounded font-bold"
 							onClick={handleAuthButtonClick}>
-							{currentUser ? "Sign Out" : "Sign In"}
+							{currentUser || isGuest ? "Sign Out" : "Sign In"}
 						</button>
 						<Link
-							to={currentUser ? "/dashboard" : "/auth"}
+							to={currentUser || isGuest ? "/dashboard" : "/auth"}
 							className="btn-primary py-2.5 px-6 text-sm rounded font-bold">
 							Get Started <i className="ph ph-arrow-right ml-2"></i>
 						</Link>
@@ -79,7 +79,7 @@ function LandingPage() {
 						</p>
 						<div className="mt-12 flex flex-col sm:flex-row gap-4">
 							<Link
-								to={currentUser ? "/dashboard" : "/auth"}
+								to={currentUser || isGuest ? "/dashboard" : "/auth"}
 								className="btn-primary text-lg rounded px-8 py-4 font-bold">
 								Start Tracking Now
 							</Link>
@@ -240,7 +240,7 @@ function LandingPage() {
 						spreadsheets for Aura.
 					</p>
 					<Link
-						to={currentUser ? "/dashboard" : "/auth"}
+						to={currentUser || isGuest ? "/dashboard" : "/auth"}
 						className="btn-primary text-xl px-12 py-6 rounded font-bold">
 						Enter Dashboard
 					</Link>
