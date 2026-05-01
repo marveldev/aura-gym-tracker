@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
 function LandingPage() {
+	const [isDarkTheme, setIsDarkTheme] = useState(true)
+
+	useEffect(() => {
+		const savedTheme = localStorage.getItem("aura_theme") || "dark"
+		const dark = savedTheme === "dark"
+		setIsDarkTheme(dark)
+		document.documentElement.classList.toggle("dark", dark)
+	}, [])
+
+	const toggleTheme = () => {
+		const nextDark = !isDarkTheme
+		setIsDarkTheme(nextDark)
+		document.documentElement.classList.toggle("dark", nextDark)
+		localStorage.setItem("aura_theme", nextDark ? "dark" : "light")
+	}
+
 	return (
 		<div className="overflow-x-hidden selection:bg-[hsl(var(--primary))] selection:text-white">
 			<nav className="fixed w-full top-0 z-50 transition-all duration-300 backdrop-blur-md bg-[hsl(var(--bg))]/80 border-b border-[hsl(var(--border))]/50">
@@ -12,7 +29,15 @@ function LandingPage() {
 						</span>
 					</div>
 					<div className="flex items-center gap-6">
-						<Link to="/dashboard" className="btn-primary py-2.5 px-6 text-sm">
+						<button
+							className="btn-secondary py-2.5 px-4 text-sm rounded font-bold"
+							onClick={toggleTheme}>
+							<i className={`ph ${isDarkTheme ? "ph-sun" : "ph-moon"}`}></i>
+							<span className="ml-2">Theme</span>
+						</button>
+						<Link
+							to="/dashboard"
+							className="btn-primary py-2.5 px-6 text-sm rounded font-bold">
 							Launch App <i className="ph ph-arrow-right ml-2"></i>
 						</Link>
 					</div>
@@ -23,8 +48,8 @@ function LandingPage() {
 				<div className="absolute top-1/4 right-0 w-[800px] h-[800px] bg-[hsl(var(--primary))]/10 rounded-full blur-[120px] -z-10 translate-x-1/3"></div>
 				<div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[100px] -z-10 -translate-x-1/2"></div>
 
-				<div className="max-w-7xl mx-auto px-6 w-full flex flex-col relative z-10">
-					<div className="max-w-4xl animate-slide-up">
+				<div className="max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row relative z-10 gap-12 lg:gap-16 items-center">
+					<div className="flex-1 max-w-4xl animate-slide-up">
 						<h1 className="text-7xl md:text-9xl font-extrabold tracking-tighter leading-[0.9] text-[hsl(var(--fg))]">
 							STRENGTH <br />
 							IS A <span className="text-gradient italic">SCIENCE.</span>
@@ -35,27 +60,72 @@ function LandingPage() {
 							progression.
 						</p>
 						<div className="mt-12 flex flex-col sm:flex-row gap-4">
-							<Link to="/dashboard" className="btn-primary text-lg">
+							<Link
+								to="/dashboard"
+								className="btn-primary text-lg rounded px-8 py-4 font-bold">
 								Start Tracking Now
 							</Link>
-							<a href="#features" className="btn-outline text-lg">
+							<a
+								href="#features"
+								className="btn-outline text-lg rounded px-8 py-4 font-bold">
 								Explore Features
 							</a>
 						</div>
 					</div>
+
+					<div
+						className="flex-1 w-full animate-slide-up"
+						style={{ animationDelay: "0.2s" }}>
+						<div className="grid grid-cols-2 gap-6">
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
+								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
+									<i className="ph ph-arrow-up text-2xl"></i>
+								</div>
+								<p className="text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+									+12%
+								</p>
+								<p className="text-sm text-[hsl(var(--muted))]">
+									Monthly Progress
+								</p>
+							</div>
+
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
+								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
+									<i className="ph ph-lightning text-2xl"></i>
+								</div>
+								<p className="text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+									156
+								</p>
+								<p className="text-sm text-[hsl(var(--muted))]">
+									Total Workouts
+								</p>
+							</div>
+
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
+								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
+									<i className="ph ph-target text-2xl"></i>
+								</div>
+								<p className="text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+									+45lbs
+								</p>
+								<p className="text-sm text-[hsl(var(--muted))]">Max Increase</p>
+							</div>
+
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
+								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
+									<i className="ph ph-chart-line-up text-2xl"></i>
+								</div>
+								<p className="text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+									89%
+								</p>
+								<p className="text-sm text-[hsl(var(--muted))]">
+									Consistency Rate
+								</p>
+							</div>
+						</div>
+					</div>
 				</div>
 			</section>
-
-			<div className="w-full border-y border-[hsl(var(--border))] bg-[hsl(var(--surface))] py-6 overflow-hidden flex whitespace-nowrap">
-				<div className="animate-[marquee_20s_linear_infinite] inline-flex items-center gap-12 text-[hsl(var(--muted))] font-mono text-sm uppercase tracking-widest">
-					<span>Volume Load: +12.4%</span> •{" "}
-					<span>Bench Press 1RM: 315lbs</span> •<span>Weekly Sets: 112</span> •{" "}
-					<span>Recovery Status: Optimal</span> •
-					<span>Volume Load: +12.4%</span> •{" "}
-					<span>Bench Press 1RM: 315lbs</span> •<span>Weekly Sets: 112</span> •{" "}
-					<span>Recovery Status: Optimal</span>
-				</div>
-			</div>
 
 			<section id="features" className="py-32 relative max-w-5xl mx-auto px-6">
 				<div
@@ -139,26 +209,6 @@ function LandingPage() {
 							</div>
 						</div>
 					</div>
-
-					<div
-						className="stack-card w-full rounded-3xl bg-[hsl(var(--surface))] border border-[hsl(var(--border))] p-10 md:p-16 shadow-2xl shadow-black/5 flex flex-col md:flex-row gap-12 items-center z-30 mt-12"
-						style={{ top: "160px" }}>
-						<div className="flex-1">
-							<div className="w-16 h-16 rounded-2xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mb-8">
-								<i className="ph ph-lock-key text-3xl"></i>
-							</div>
-							<h3 className="text-3xl font-bold text-[hsl(var(--fg))] mb-4">
-								Your Data. Local.
-							</h3>
-							<p className="text-[hsl(var(--muted))] text-lg leading-relaxed">
-								Aura works entirely in your browser using local storage. Zero
-								latency. Instant loads. Full privacy. Your metrics stay yours.
-							</p>
-						</div>
-						<div className="flex-1 w-full flex justify-center">
-							<div className="w-32 h-32 rounded-full border-4 border-[hsl(var(--border))] border-t-[hsl(var(--primary))] animate-spin"></div>
-						</div>
-					</div>
 				</div>
 			</section>
 
@@ -171,7 +221,9 @@ function LandingPage() {
 						Join thousands of serious lifters who have ditched their
 						spreadsheets for Aura.
 					</p>
-					<Link to="/dashboard" className="btn-primary text-xl px-12 py-6">
+					<Link
+						to="/dashboard"
+						className="btn-primary text-xl px-12 py-6 rounded font-bold">
 						Enter Dashboard
 					</Link>
 				</div>
@@ -189,15 +241,6 @@ function LandingPage() {
 							Aura Tracker
 						</span>
 					</div>
-					<p className="text-[hsl(var(--muted))] text-sm">
-						Built with precision by{" "}
-						<a
-							href="https://teda.dev"
-							className="text-[hsl(var(--primary))] hover:underline">
-							Teda.dev
-						</a>
-						.
-					</p>
 				</div>
 			</footer>
 		</div>
