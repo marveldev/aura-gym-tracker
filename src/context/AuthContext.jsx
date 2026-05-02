@@ -3,6 +3,7 @@ import {
 	createUserWithEmailAndPassword,
 	GoogleAuthProvider,
 	onAuthStateChanged,
+	sendPasswordResetEmail,
 	signInWithPopup,
 	signInWithEmailAndPassword,
 	signOut,
@@ -74,6 +75,16 @@ export function AuthProvider({ children }) {
 		localStorage.setItem(GUEST_STORAGE_KEY, "true")
 	}
 
+	const resetPassword = async (email) => {
+		try {
+			await sendPasswordResetEmail(auth, email)
+			return { success: true, error: null }
+		} catch (error) {
+			console.error("Password reset failed", error)
+			return { success: false, error }
+		}
+	}
+
 	const logout = async () => {
 		if (auth.currentUser) {
 			await signOut(auth)
@@ -102,6 +113,7 @@ export function AuthProvider({ children }) {
 			currentUser,
 			isGuest,
 			login,
+			resetPassword,
 			signInWithGoogle,
 			signup,
 			continueAsGuest,

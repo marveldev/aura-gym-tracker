@@ -36,6 +36,7 @@ function AuthPage() {
 	const [isDarkTheme, setIsDarkTheme] = useState(true)
 	const [isLoading, setIsLoading] = useState(false)
 	const [error, setError] = useState("")
+	const [successMessage, setSuccessMessage] = useState("")
 
 	// Sign-in fields
 	const [signInEmail, setSignInEmail] = useState("")
@@ -52,6 +53,7 @@ function AuthPage() {
 		currentUser,
 		isGuest,
 		login,
+		resetPassword,
 		signup,
 		signInWithGoogle,
 		continueAsGuest,
@@ -73,12 +75,14 @@ function AuthPage() {
 
 	const handleContinueAsGuest = () => {
 		setError("")
+		setSuccessMessage("")
 		continueAsGuest()
 		navigate("/dashboard", { replace: true })
 	}
 
 	const handleGoogleSignIn = async () => {
 		setError("")
+		setSuccessMessage("")
 
 		try {
 			setIsLoading(true)
@@ -102,11 +106,32 @@ function AuthPage() {
 		setMode(next)
 		localStorage.setItem(AUTH_TAB_STORAGE_KEY, next)
 		setError("")
+		setSuccessMessage("")
+	}
+
+	const handleForgotPassword = async () => {
+		setError("")
+		setSuccessMessage("")
+
+		if (!signInEmail) {
+			setError("Please enter your email address first.")
+			return
+		}
+
+		const result = await resetPassword(signInEmail)
+
+		if (result.success) {
+			setSuccessMessage("Password reset email sent. Please check your inbox.")
+			return
+		}
+
+		setError(getAuthErrorMessage(result.error?.code))
 	}
 
 	const handleSignIn = async (e) => {
 		e.preventDefault()
 		setError("")
+		setSuccessMessage("")
 		if (!signInEmail || !signInPassword) {
 			setError("Please fill in all fields.")
 			return
@@ -126,6 +151,7 @@ function AuthPage() {
 	const handleSignUp = async (e) => {
 		e.preventDefault()
 		setError("")
+		setSuccessMessage("")
 		if (!signUpEmail || !signUpPassword || !signUpConfirm) {
 			setError("Please fill in all fields.")
 			return
@@ -218,6 +244,13 @@ function AuthPage() {
 							</div>
 						)}
 
+						{successMessage && (
+							<div className="flex items-center gap-3 bg-[hsl(var(--success))]/10 border border-[hsl(var(--success))]/30 text-[hsl(var(--success))] text-sm rounded-lg px-4 py-3 mb-6">
+								<i className="ph ph-check-circle text-lg shrink-0"></i>
+								{successMessage}
+							</div>
+						)}
+
 						{/* ── Sign In Form ── */}
 						{mode === "signin" && (
 							<form onSubmit={handleSignIn} className="space-y-5">
@@ -243,6 +276,7 @@ function AuthPage() {
 										<label className="label mb-0">Password</label>
 										<button
 											type="button"
+											onClick={handleForgotPassword}
 											className="text-xs text-[hsl(var(--primary))] hover:underline">
 											Forgot password?
 										</button>
