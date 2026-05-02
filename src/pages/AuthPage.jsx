@@ -54,9 +54,9 @@ function AuthPage() {
 		isGuest,
 		login,
 		resetPassword,
+		signInAsGuest,
 		signup,
 		signInWithGoogle,
-		continueAsGuest,
 	} = useAuth()
 	const navigate = useNavigate()
 
@@ -73,11 +73,19 @@ function AuthPage() {
 		}
 	}, [currentUser, isGuest, navigate])
 
-	const handleContinueAsGuest = () => {
+	const handleContinueAsGuest = async () => {
 		setError("")
 		setSuccessMessage("")
-		continueAsGuest()
-		navigate("/dashboard", { replace: true })
+
+		try {
+			setIsLoading(true)
+			await signInAsGuest()
+			navigate("/dashboard", { replace: true })
+		} catch (authError) {
+			setError(getAuthErrorMessage(authError.code))
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	const handleGoogleSignIn = async () => {

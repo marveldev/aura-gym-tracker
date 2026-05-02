@@ -4,6 +4,7 @@ import {
 	GoogleAuthProvider,
 	onAuthStateChanged,
 	sendPasswordResetEmail,
+	signInAnonymously as firebaseSignInAnonymously,
 	signInWithPopup,
 	signInWithEmailAndPassword,
 	signOut,
@@ -69,6 +70,29 @@ export function AuthProvider({ children }) {
 		}
 	}
 
+	const signInAnonymously = async () => {
+		try {
+			setIsGuest(false)
+			localStorage.removeItem(GUEST_STORAGE_KEY)
+
+			const userCredential = await firebaseSignInAnonymously(auth)
+			return userCredential.user
+		} catch (error) {
+			console.error("Anonymous sign-in failed", error)
+			throw error
+		}
+	}
+
+	const signInAsGuest = async () => {
+		try {
+			const user = await signInAnonymously()
+			return user
+		} catch (error) {
+			console.error("Guest sign-in failed", error)
+			throw error
+		}
+	}
+
 	const continueAsGuest = () => {
 		setCurrentUser(null)
 		setIsGuest(true)
@@ -114,6 +138,8 @@ export function AuthProvider({ children }) {
 			isGuest,
 			login,
 			resetPassword,
+			signInAsGuest,
+			signInAnonymously,
 			signInWithGoogle,
 			signup,
 			continueAsGuest,
