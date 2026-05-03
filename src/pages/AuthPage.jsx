@@ -57,6 +57,7 @@ function AuthPage() {
 		signInAsGuest,
 		signup,
 		signInWithGoogle,
+		checkProfileExists,
 	} = useAuth()
 	const navigate = useNavigate()
 
@@ -80,6 +81,7 @@ function AuthPage() {
 		try {
 			setIsLoading(true)
 			await signInAsGuest()
+			// Guests always go to dashboard directly
 			navigate("/dashboard", { replace: true })
 		} catch (authError) {
 			setError(getAuthErrorMessage(authError.code))
@@ -94,8 +96,13 @@ function AuthPage() {
 
 		try {
 			setIsLoading(true)
-			await signInWithGoogle()
-			navigate("/dashboard", { replace: true })
+			const user = await signInWithGoogle()
+			const profileExists = await checkProfileExists(user.uid)
+			if (profileExists) {
+				navigate("/dashboard", { replace: true })
+			} else {
+				navigate("/onboarding", { replace: true })
+			}
 		} catch (authError) {
 			setError(getAuthErrorMessage(authError.code))
 		} finally {
@@ -147,8 +154,13 @@ function AuthPage() {
 
 		try {
 			setIsLoading(true)
-			await login(signInEmail, signInPassword)
-			navigate("/dashboard", { replace: true })
+			const user = await login(signInEmail, signInPassword)
+			const profileExists = await checkProfileExists(user.uid)
+			if (profileExists) {
+				navigate("/dashboard", { replace: true })
+			} else {
+				navigate("/onboarding", { replace: true })
+			}
 		} catch (authError) {
 			setError(getAuthErrorMessage(authError.code))
 		} finally {
@@ -175,8 +187,9 @@ function AuthPage() {
 
 		try {
 			setIsLoading(true)
-			await signup(signUpEmail, signUpPassword)
-			navigate("/dashboard", { replace: true })
+			const user = await signup(signUpEmail, signUpPassword)
+			// New sign-ups always go to onboarding first
+			navigate("/onboarding", { replace: true })
 		} catch (authError) {
 			setError(getAuthErrorMessage(authError.code))
 		} finally {

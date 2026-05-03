@@ -9,7 +9,9 @@ import {
 	signInWithEmailAndPassword,
 	signOut,
 } from "firebase/auth"
+import { doc, getDoc } from "firebase/firestore"
 import { auth } from "../firebase.js"
+import { db } from "../firebase.js"
 
 const AuthContext = createContext(null)
 const GUEST_STORAGE_KEY = "aura_guest_session"
@@ -119,6 +121,18 @@ export function AuthProvider({ children }) {
 		localStorage.removeItem(GUEST_STORAGE_KEY)
 	}
 
+	const checkProfileExists = async (uid) => {
+		try {
+			if (!uid) return false
+			const userDocRef = doc(db, "users", uid)
+			const docSnapshot = await getDoc(userDocRef)
+			return docSnapshot.exists()
+		} catch (error) {
+			console.error("Error checking profile:", error)
+			return false
+		}
+	}
+
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setCurrentUser(user)
@@ -144,6 +158,7 @@ export function AuthProvider({ children }) {
 			signup,
 			continueAsGuest,
 			logout,
+			checkProfileExists,
 		}),
 		[currentUser, isGuest],
 	)
