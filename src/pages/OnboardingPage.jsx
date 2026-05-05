@@ -11,7 +11,7 @@ const SCROLL_PADDING = CONTAINER_HEIGHT / 2 - SCALE_ITEM_HEIGHT / 2
 
 function StepHeader({ title }) {
 	return (
-		<h1 className="text-[42px] sm:text-[56px] leading-[0.95] font-bold tracking-[-0.03em] text-[hsl(var(--fg))]">
+		<h1 className="text-[34px] sm:text-[48px] lg:text-[56px] leading-[0.95] font-bold tracking-[-0.03em] text-[hsl(var(--fg))]">
 			What&apos;s Your
 			<span className="block text-[hsl(var(--primary))]">{title}?</span>
 		</h1>
@@ -93,9 +93,9 @@ function ScrollWheelScale({
 				<div
 					className="relative w-full overflow-hidden"
 					style={{ height: CONTAINER_HEIGHT }}>
-					<div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[hsl(var(--bg))] via-[hsl(var(--bg))]/95 to-transparent z-30"></div>
-					<div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[hsl(var(--bg))] via-[hsl(var(--bg))]/95 to-transparent z-30"></div>
-					<div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-[56px] rounded-full bg-[hsl(var(--surface))] border border-[hsl(var(--border))] z-20"></div>
+					<div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-[hsl(var(--bg))] via-[hsl(var(--bg))]/95 to-transparent z-30 lg:hidden"></div>
+					<div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[hsl(var(--bg))] via-[hsl(var(--bg))]/95 to-transparent z-30 lg:hidden"></div>
+					<div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 h-[56px] rounded-full bg-[hsl(var(--surface))] border border-[hsl(var(--border))] lg:bg-[hsl(var(--bg))] lg:border-[hsl(var(--border))] z-20"></div>
 
 					<div
 						ref={containerRef}
@@ -239,7 +239,7 @@ export default function OnboardingPage() {
 				<>
 					<StepHeader title="Age" />
 					<div className="mt-16">
-						<div className="text-center text-[64px] sm:text-[76px] font-bold text-[hsl(var(--primary))] tabular-nums tracking-[-0.04em]">
+						<div className="text-center text-[52px] sm:text-[64px] lg:text-[72px] font-bold text-[hsl(var(--primary))] tabular-nums tracking-[-0.04em]">
 							{age}
 							<span className="text-2xl sm:text-3xl font-medium text-[hsl(var(--muted))] ml-2 tracking-normal">
 								yrs
@@ -289,7 +289,7 @@ export default function OnboardingPage() {
 						</div>
 					</div>
 
-					<div className="mt-8 text-center text-[64px] sm:text-[76px] font-bold text-[hsl(var(--primary))] tabular-nums tracking-[-0.04em]">
+					<div className="mt-8 text-center text-[52px] sm:text-[64px] lg:text-[72px] font-bold text-[hsl(var(--primary))] tabular-nums tracking-[-0.04em]">
 						{currentWeightDisplay}
 						<span className="text-2xl sm:text-3xl font-medium text-[hsl(var(--muted))] ml-2 uppercase tracking-normal">
 							{weightUnit}
@@ -349,7 +349,7 @@ export default function OnboardingPage() {
 						</div>
 					</div>
 
-					<div className="mt-8 text-center text-[64px] sm:text-[76px] font-bold text-[hsl(var(--primary))] tabular-nums tracking-[-0.04em]">
+					<div className="mt-8 text-center text-[52px] sm:text-[64px] lg:text-[72px] font-bold text-[hsl(var(--primary))] tabular-nums tracking-[-0.04em]">
 						{heightUnit === "cm" ? (
 							<>
 								{heightCm.toFixed(1)}
@@ -443,55 +443,59 @@ export default function OnboardingPage() {
 	}
 
 	return (
-		<div className="min-h-screen bg-[hsl(var(--bg))] px-5 sm:px-8 lg:px-12 py-8 sm:py-10 flex">
-			<div className="w-full max-w-5xl mx-auto flex flex-col">
-				<div className="absolute right-0 top-24 w-72 h-72 rounded-full bg-[hsl(var(--primary))]/8 blur-[120px] pointer-events-none"></div>
+		<div className="min-h-screen relative overflow-hidden bg-[hsl(var(--bg))] px-4 sm:px-6 lg:px-8 py-8 sm:py-10 flex">
+			<div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--surface))]/35 via-transparent to-[hsl(var(--bg))] pointer-events-none"></div>
+			<div className="absolute right-0 top-24 w-72 h-72 rounded-full bg-[hsl(var(--primary))]/8 blur-[120px] pointer-events-none"></div>
+			<div className="absolute left-0 bottom-20 w-72 h-72 rounded-full bg-[hsl(var(--primary))]/7 blur-[140px] pointer-events-none"></div>
 
-				<div className="flex items-center gap-4 mb-10">
-					<span className="text-[32px] font-semibold text-[hsl(var(--fg))] tabular-nums">
-						{String(step).padStart(2, "0")}
-					</span>
-					<div className="flex-1 h-2 rounded-full bg-[hsl(var(--border))] overflow-hidden">
-						<div
-							className="h-full bg-[hsl(var(--primary))] rounded-full transition-all duration-300"
-							style={{ width: `${progress}%` }}
-						/>
-					</div>
-					<span className="text-[32px] font-semibold text-[hsl(var(--muted))] tabular-nums">
-						{String(totalSteps).padStart(2, "0")}
-					</span>
-				</div>
-
-				<div className="flex-1 flex flex-col justify-between min-h-[640px]">
-					<div className="max-w-3xl">{renderStep()}</div>
-
-					{error && (
-						<div className="mt-6 flex items-center gap-2 text-sm text-[hsl(var(--danger))]">
-							<i className="ph ph-warning-circle text-base"></i>
-							<span>{error}</span>
+			<div className="w-full max-w-4xl mx-auto flex flex-col lg:justify-center lg:items-center relative z-10">
+				<div className="w-full lg:max-w-3xl lg:rounded-3xl lg:border lg:border-[hsl(var(--border))] lg:bg-[hsl(var(--surface))]/70 lg:backdrop-blur-sm lg:px-8 lg:py-8">
+					<div className="w-full max-w-2xl mx-auto flex items-center gap-4 mb-10">
+						<span className="text-[32px] font-semibold text-[hsl(var(--fg))] tabular-nums">
+							{String(step).padStart(2, "0")}
+						</span>
+						<div className="flex-1 h-2 rounded-full bg-[hsl(var(--border))] overflow-hidden">
+							<div
+								className="h-full bg-[hsl(var(--primary))] rounded-full transition-all duration-300"
+								style={{ width: `${progress}%` }}
+							/>
 						</div>
-					)}
-				</div>
+						<span className="text-[32px] font-semibold text-[hsl(var(--muted))] tabular-nums">
+							{String(totalSteps).padStart(2, "0")}
+						</span>
+					</div>
 
-				<div className="mt-8 flex items-center gap-3">
-					<button
-						type="button"
-						onClick={handleBack}
-						disabled={isLoading}
-						className="w-14 h-14 rounded-full border border-[hsl(var(--border))] text-[hsl(var(--fg))] grid place-items-center hover:bg-[hsl(var(--surface))] transition-colors disabled:opacity-60">
-						<i className="ph ph-caret-left text-xl"></i>
-					</button>
-					<button
-						type="button"
-						onClick={handleContinue}
-						disabled={isLoading}
-						className="flex-1 h-14 rounded-full inline-flex items-center justify-center gap-2 bg-[hsl(var(--primary))] text-[hsl(var(--primary-fg))] hover:bg-[hsl(var(--primary-hover))] shadow-md shadow-[hsl(var(--primary))]/20 transition-all focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]/50 text-base font-semibold disabled:opacity-60 disabled:cursor-not-allowed">
-						{isLoading
-							? "Saving..."
-							: step === totalSteps
-								? "Finish"
-								: "Continue"}
-					</button>
+					<div className="w-full max-w-2xl mx-auto flex-1 flex flex-col justify-between min-h-[600px] lg:min-h-[640px]">
+						<div className="w-full">{renderStep()}</div>
+
+						{error && (
+							<div className="mt-6 flex items-center gap-2 text-sm text-[hsl(var(--danger))] lg:justify-center">
+								<i className="ph ph-warning-circle text-base"></i>
+								<span>{error}</span>
+							</div>
+						)}
+					</div>
+
+					<div className="mt-8 w-full max-w-2xl mx-auto flex items-center gap-3">
+						<button
+							type="button"
+							onClick={handleBack}
+							disabled={isLoading}
+							className="w-14 h-14 rounded-full border border-[hsl(var(--border))] text-[hsl(var(--fg))] grid place-items-center hover:bg-[hsl(var(--surface))] transition-colors disabled:opacity-60">
+							<i className="ph ph-caret-left text-xl"></i>
+						</button>
+						<button
+							type="button"
+							onClick={handleContinue}
+							disabled={isLoading}
+							className="flex-1 h-14 rounded-full inline-flex items-center justify-center gap-2 bg-[hsl(var(--primary))] text-[hsl(var(--primary-fg))] hover:bg-[hsl(var(--primary-hover))] shadow-md shadow-[hsl(var(--primary))]/20 transition-all focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]/50 text-base font-semibold disabled:opacity-60 disabled:cursor-not-allowed">
+							{isLoading
+								? "Saving..."
+								: step === totalSteps
+									? "Finish"
+									: "Continue"}
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
