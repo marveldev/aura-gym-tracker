@@ -141,7 +141,7 @@ function HandbookExerciseDetailPage() {
 							type="button"
 							onClick={handleStartWorkout}
 							className="btn btn-primary rounded-lg px-5 py-2.5">
-							Start Workout
+							Log Workout
 						</button>
 					</div>
 				</div>

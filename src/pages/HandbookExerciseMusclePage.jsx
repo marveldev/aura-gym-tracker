@@ -37,21 +37,6 @@ function HandbookExerciseMusclePage() {
 		)
 	}
 
-	const handleStartWorkout = (exercise) => {
-		navigate("/workout", {
-			state: {
-				prefillWorkout: {
-					exercise: {
-						name: exercise.name,
-						description: exercise.description,
-						targetMuscles: exercise.muscles.join(", "),
-					},
-					focus: current.title,
-				},
-			},
-		})
-	}
-
 	const handleOpenExercise = (exerciseSlug) => {
 		navigate(`/handbook/exercises/${muscleKey}/${exerciseSlug}`)
 	}
@@ -95,17 +80,6 @@ function HandbookExerciseMusclePage() {
 								<p className="text-sm text-[hsl(var(--primary))] mt-2">
 									Target muscles: {exercise.muscles.join(", ")}
 								</p>
-								<div className="mt-4">
-									<button
-										type="button"
-										onClick={(event) => {
-											event.stopPropagation()
-											handleStartWorkout(exercise)
-										}}
-										className="btn btn-primary rounded-lg px-4 py-2">
-										Start Workout
-									</button>
-								</div>
 							</div>
 						))}
 					</div>
