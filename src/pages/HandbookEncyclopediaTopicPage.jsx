@@ -55,7 +55,9 @@ function HandbookEncyclopediaTopicPage() {
 
 						{selectedTopic.importantInfo?.length > 0 && (
 							<div>
-								<h2 className="text-xl font-semibold mb-3">Important Information</h2>
+								<h2 className="text-xl font-semibold mb-3">
+									Important Information
+								</h2>
 								<ul className="space-y-2 text-[hsl(var(--muted))]">
 									{selectedTopic.importantInfo.map((point) => (
 										<li key={point} className="flex items-start gap-2">

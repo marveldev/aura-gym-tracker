@@ -14,7 +14,9 @@ function HandbookFoodCategoryPage() {
 						<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 							Category not found
 						</h1>
-						<Link to="/handbook/food" className="btn btn-secondary rounded-lg px-4 py-2">
+						<Link
+							to="/handbook/food"
+							className="btn btn-secondary rounded-lg px-4 py-2">
 							Back
 						</Link>
 					</div>
@@ -23,7 +25,9 @@ function HandbookFoodCategoryPage() {
 						<p className="text-[hsl(var(--muted))] mb-6">
 							This food category does not exist.
 						</p>
-						<Link to="/handbook/food" className="btn btn-primary rounded-lg px-4 py-2">
+						<Link
+							to="/handbook/food"
+							className="btn btn-primary rounded-lg px-4 py-2">
 							Back to Food & Calories
 						</Link>
 					</div>
@@ -39,7 +43,9 @@ function HandbookFoodCategoryPage() {
 					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 						{categoryInfo.name}
 					</h1>
-					<Link to="/handbook/food" className="btn btn-secondary rounded-lg px-4 py-2">
+					<Link
+						to="/handbook/food"
+						className="btn btn-secondary rounded-lg px-4 py-2">
 						Back
 					</Link>
 				</div>

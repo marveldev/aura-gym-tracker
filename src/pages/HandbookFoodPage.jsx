@@ -10,7 +10,8 @@ const foodCategories = [
 	{
 		name: "Dairy & Eggs",
 		slug: "dairy-eggs",
-		description: "Milk, yogurt, cheese, and egg products for protein and calcium.",
+		description:
+			"Milk, yogurt, cheese, and egg products for protein and calcium.",
 		icon: "ph-egg",
 	},
 ]
@@ -23,7 +24,9 @@ function HandbookFoodPage() {
 					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 						Food & Calories
 					</h1>
-					<Link to="/handbook" className="btn btn-secondary rounded-lg px-4 py-2">
+					<Link
+						to="/handbook"
+						className="btn btn-secondary rounded-lg px-4 py-2">
 						Back
 					</Link>
 				</div>
@@ -31,7 +34,8 @@ function HandbookFoodPage() {
 				<div className="card p-6 sm:p-8">
 					<div className="space-y-6">
 						<p className="text-[hsl(var(--muted))] leading-relaxed">
-							Browse common foods with calorie and macronutrient information to support your nutrition planning.
+							Browse common foods with calorie and macronutrient information to
+							support your nutrition planning.
 						</p>
 
 						<div className="grid gap-3 sm:gap-4">
@@ -44,9 +48,7 @@ function HandbookFoodPage() {
 										<i
 											className={`ph ${category.icon} text-2xl text-[hsl(var(--primary))]`}></i>
 										<div>
-											<h2 className="font-semibold text-lg">
-												{category.name}
-											</h2>
+											<h2 className="font-semibold text-lg">{category.name}</h2>
 											<p className="text-[hsl(var(--muted))] text-sm mt-1">
 												{category.description}
 											</p>

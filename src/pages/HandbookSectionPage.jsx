@@ -180,9 +180,9 @@ function HandbookSectionPage() {
 								className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4 flex items-center justify-between transition-colors hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--primary))]">
 								<div>
 									<h2 className="font-semibold text-lg">{item.name}</h2>
-								<p className="text-[hsl(var(--muted))] mt-1">
-									{item.description}
-								</p>
+									<p className="text-[hsl(var(--muted))] mt-1">
+										{item.description}
+									</p>
 								</div>
 								<i className="ph ph-caret-right text-lg" aria-hidden="true"></i>
 							</Link>
