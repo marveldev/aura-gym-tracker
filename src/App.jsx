@@ -39,7 +39,7 @@ function App() {
 					path="/handbook"
 					element={
 						<ProtectedRoute>
-							<HandbookPage />
+							<Navigate to="/dashboard?view=handbook" replace />
 						</ProtectedRoute>
 					}
 				/>

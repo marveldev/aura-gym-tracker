@@ -9,6 +9,7 @@ import TrackerDashboard from "../components/TrackerDashboard.jsx"
 import WorkoutList from "../components/WorkoutList.jsx"
 import AnalyticsPanel from "../components/AnalyticsPanel.jsx"
 import WorkoutTab from "../components/WorkoutTab.jsx"
+import HandbookPage from "./HandbookPage.jsx"
 import WorkoutModal from "../components/WorkoutModal.jsx"
 import ToastContainer from "../components/ToastContainer.jsx"
 import { initMockDataIfEmpty } from "../data/mockData.js"
@@ -21,7 +22,7 @@ import {
 	getWorkouts,
 } from "../services/workoutStorage.js"
 
-const views = ["dashboard", "workout", "history", "analytics"]
+const views = ["dashboard", "workout", "handbook", "history", "analytics"]
 
 function DashboardPage() {
 	const location = useLocation()
@@ -181,18 +182,14 @@ function DashboardPage() {
 												? "ph-squares-four"
 												: view === "workout"
 													? "ph-barbell"
+													: view === "handbook"
+														? "ph-book-open"
 													: view === "history"
 														? "ph-clock-counter-clockwise"
 														: "ph-chart-line-up"
 										}`}></i>
 									{view.charAt(0).toUpperCase() + view.slice(1)}
 								</button>
-								{view === "dashboard" && (
-									<Link to="/handbook" className="nav-link">
-										<i className="ph ph-book-open text-xl"></i>
-										Handbook
-									</Link>
-								)}
 							</div>
 						))}
 					</nav>
@@ -223,18 +220,14 @@ function DashboardPage() {
 										? "ph-squares-four"
 										: view === "workout"
 											? "ph-barbell"
+											: view === "handbook"
+												? "ph-book-open"
 											: view === "history"
 												? "ph-clock-counter-clockwise"
 												: "ph-chart-line-up"
 								}`}></i>
 							<span>{view.charAt(0).toUpperCase() + view.slice(1)}</span>
 						</button>
-						{view === "dashboard" && (
-							<Link to="/handbook" className="mobile-link">
-								<i className="ph ph-book-open text-2xl"></i>
-								<span>Handbook</span>
-							</Link>
-						)}
 					</div>
 				))}
 				<button className="mobile-link" onClick={toggleTheme}>
@@ -257,6 +250,8 @@ function DashboardPage() {
 				{activeView === "workout" && (
 					<WorkoutTab onCompleteWorkout={handleSaveWorkout} />
 				)}
+
+				{activeView === "handbook" && <HandbookPage embedded />}
 
 				{activeView === "history" && (
 					<WorkoutList

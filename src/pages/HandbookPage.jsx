@@ -27,19 +27,24 @@ const handbookSections = [
 	},
 ]
 
-function HandbookPage() {
+function HandbookPage({ embedded = false }) {
 	return (
-		<div className="min-h-screen bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
+		<div
+			className={`${
+				embedded ? "" : "min-h-screen"
+			} bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8`}>
 			<div className="max-w-5xl mx-auto">
 				<div className="flex items-center justify-between mb-8">
 					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 						Handbook
 					</h1>
-					<Link
-						to="/dashboard"
-						className="btn btn-primary rounded-lg px-4 py-2">
-						Dashboard
-					</Link>
+					{!embedded && (
+						<Link
+							to="/dashboard"
+							className="btn btn-primary rounded-lg px-4 py-2">
+							Dashboard
+						</Link>
+					)}
 				</div>
 
 				<div className="grid gap-4 sm:gap-5 md:grid-cols-2">
