@@ -119,20 +119,27 @@ function DashboardPage() {
 
 					<nav className="flex flex-col gap-2">
 						{views.map((view) => (
-							<button
-								key={view}
-								className={`nav-link ${activeView === view ? "active" : ""}`}
-								onClick={() => setActiveView(view)}>
-								<i
-									className={`ph text-xl ${
-										view === "dashboard"
-											? "ph-squares-four"
-											: view === "history"
-												? "ph-clock-counter-clockwise"
-												: "ph-chart-line-up"
-									}`}></i>
-								{view.charAt(0).toUpperCase() + view.slice(1)}
-							</button>
+							<div key={view} className="flex flex-col gap-2">
+								<button
+									className={`nav-link ${activeView === view ? "active" : ""}`}
+									onClick={() => setActiveView(view)}>
+									<i
+										className={`ph text-xl ${
+											view === "dashboard"
+												? "ph-squares-four"
+												: view === "history"
+													? "ph-clock-counter-clockwise"
+													: "ph-chart-line-up"
+										}`}></i>
+									{view.charAt(0).toUpperCase() + view.slice(1)}
+								</button>
+								{view === "dashboard" && (
+									<Link to="/handbook" className="nav-link">
+										<i className="ph ph-book-open text-xl"></i>
+										Handbook
+									</Link>
+								)}
+							</div>
 						))}
 					</nav>
 				</div>
@@ -152,20 +159,27 @@ function DashboardPage() {
 
 			<nav className="mobile-nav">
 				{views.map((view) => (
-					<button
-						key={view}
-						className={`mobile-link ${activeView === view ? "active" : ""}`}
-						onClick={() => setActiveView(view)}>
-						<i
-							className={`ph text-2xl ${
-								view === "dashboard"
-									? "ph-squares-four"
-									: view === "history"
-										? "ph-clock-counter-clockwise"
-										: "ph-chart-line-up"
-							}`}></i>
-						<span>{view.charAt(0).toUpperCase() + view.slice(1)}</span>
-					</button>
+					<div key={view} className="contents">
+						<button
+							className={`mobile-link ${activeView === view ? "active" : ""}`}
+							onClick={() => setActiveView(view)}>
+							<i
+								className={`ph text-2xl ${
+									view === "dashboard"
+										? "ph-squares-four"
+										: view === "history"
+											? "ph-clock-counter-clockwise"
+											: "ph-chart-line-up"
+								}`}></i>
+							<span>{view.charAt(0).toUpperCase() + view.slice(1)}</span>
+						</button>
+						{view === "dashboard" && (
+							<Link to="/handbook" className="mobile-link">
+								<i className="ph ph-book-open text-2xl"></i>
+								<span>Handbook</span>
+							</Link>
+						)}
+					</div>
 				))}
 				<button className="mobile-link" onClick={toggleTheme}>
 					<i

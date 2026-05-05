@@ -3,6 +3,10 @@ import LandingPage from "./pages/LandingPage.jsx"
 import DashboardPage from "./pages/DashboardPage.jsx"
 import AuthPage from "./pages/AuthPage.jsx"
 import OnboardingPage from "./pages/OnboardingPage.jsx"
+import HandbookPage from "./pages/HandbookPage.jsx"
+import HandbookSectionPage from "./pages/HandbookSectionPage.jsx"
+import HandbookExerciseMusclePage from "./pages/HandbookExerciseMusclePage.jsx"
+import HandbookExerciseDetailPage from "./pages/HandbookExerciseDetailPage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 
 function App() {
@@ -24,6 +28,38 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<DashboardPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook"
+					element={
+						<ProtectedRoute>
+							<HandbookPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/:section"
+					element={
+						<ProtectedRoute>
+							<HandbookSectionPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/exercises/:muscle"
+					element={
+						<ProtectedRoute>
+							<HandbookExerciseMusclePage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/exercises/:muscle/:exercise"
+					element={
+						<ProtectedRoute>
+							<HandbookExerciseDetailPage />
 						</ProtectedRoute>
 					}
 				/>
