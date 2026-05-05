@@ -30,7 +30,11 @@ function useWorkoutSession({ onComplete } = {}) {
 
 	const currentExercise = workout.exercises[currentExerciseIndex]
 	const totalSets = useMemo(
-		() => workout.exercises.reduce((sum, exercise) => sum + exercise.sets.length, 0),
+		() =>
+			workout.exercises.reduce(
+				(sum, exercise) => sum + exercise.sets.length,
+				0,
+			),
 		[workout.exercises],
 	)
 	const totalVolume = useMemo(
@@ -76,7 +80,10 @@ function useWorkoutSession({ onComplete } = {}) {
 				index === currentExerciseIndex
 					? {
 							...exercise,
-							sets: [...exercise.sets, { reps: numericReps, weight: numericWeight }],
+							sets: [
+								...exercise.sets,
+								{ reps: numericReps, weight: numericWeight },
+							],
 						}
 					: exercise,
 			),

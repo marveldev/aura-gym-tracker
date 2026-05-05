@@ -16,7 +16,8 @@ function TodayWorkoutCard({ workout, onStart }) {
 			</div>
 
 			<p className="text-[hsl(var(--muted))]">
-				Your planned session is ready. Review the exercises below and start when you are ready.
+				Your planned session is ready. Review the exercises below and start when
+				you are ready.
 			</p>
 
 			<div className="space-y-2">

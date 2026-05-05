@@ -56,7 +56,9 @@ function WorkoutSession({ onCompleteWorkout }) {
 							<div
 								key={exercise.name}
 								className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 p-4">
-								<p className="font-semibold text-[hsl(var(--fg))]">{exercise.name}</p>
+								<p className="font-semibold text-[hsl(var(--fg))]">
+									{exercise.name}
+								</p>
 								<p className="text-sm text-[hsl(var(--muted))] mt-1">
 									{exercise.sets.length} sets logged
 								</p>
@@ -82,13 +84,16 @@ function WorkoutSession({ onCompleteWorkout }) {
 						{workout.name}
 					</h2>
 					<span className="text-sm text-[hsl(var(--muted))]">
-						Exercise {currentExerciseIndex + 1} of {workout.exercises.length} • Set{" "}
-						{currentSetIndex + 1} of {currentExercise?.targetSets ?? defaultSetTarget}
+						Exercise {currentExerciseIndex + 1} of {workout.exercises.length} •
+						Set {currentSetIndex + 1} of{" "}
+						{currentExercise?.targetSets ?? defaultSetTarget}
 					</span>
 				</div>
 
 				<div className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 p-4">
-					<p className="text-sm text-[hsl(var(--muted))] mb-1">Current Exercise</p>
+					<p className="text-sm text-[hsl(var(--muted))] mb-1">
+						Current Exercise
+					</p>
 					<h3 className="text-xl font-semibold text-[hsl(var(--fg))]">
 						{currentExercise.name}
 					</h3>
@@ -96,7 +101,9 @@ function WorkoutSession({ onCompleteWorkout }) {
 
 				<div className="grid sm:grid-cols-2 gap-3">
 					<label className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 p-3">
-						<span className="block text-sm text-[hsl(var(--muted))] mb-2">Reps</span>
+						<span className="block text-sm text-[hsl(var(--muted))] mb-2">
+							Reps
+						</span>
 						<input
 							type="number"
 							min="1"
@@ -130,7 +137,8 @@ function WorkoutSession({ onCompleteWorkout }) {
 						type="button"
 						onClick={nextSet}
 						disabled={
-							currentSetIndex >= (currentExercise?.targetSets ?? defaultSetTarget) - 1
+							currentSetIndex >=
+							(currentExercise?.targetSets ?? defaultSetTarget) - 1
 						}
 						className="btn btn-secondary rounded-lg px-5 py-3 disabled:opacity-60 disabled:cursor-not-allowed">
 						Next Set
@@ -154,7 +162,9 @@ function WorkoutSession({ onCompleteWorkout }) {
 				<div className="space-y-2">
 					<p className="text-sm text-[hsl(var(--muted))]">Logged Sets</p>
 					{currentExercise.sets.length === 0 ? (
-						<p className="text-sm text-[hsl(var(--muted))]">No sets logged yet.</p>
+						<p className="text-sm text-[hsl(var(--muted))]">
+							No sets logged yet.
+						</p>
 					) : (
 						<div className="space-y-2">
 							{currentExercise.sets.map((set, index) => (

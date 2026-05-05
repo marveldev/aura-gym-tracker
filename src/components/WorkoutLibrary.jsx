@@ -24,7 +24,9 @@ function WorkoutLibrary({ categories, onStartWorkout }) {
 											{workout.exercises.length} exercises
 										</p>
 									</div>
-									<i className="ph ph-caret-right text-lg text-[hsl(var(--muted))]" aria-hidden="true"></i>
+									<i
+										className="ph ph-caret-right text-lg text-[hsl(var(--muted))]"
+										aria-hidden="true"></i>
 								</div>
 								<div className="mt-4 flex flex-wrap gap-2 text-sm">
 									<span className="rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/70 px-3 py-1 text-[hsl(var(--muted))]">

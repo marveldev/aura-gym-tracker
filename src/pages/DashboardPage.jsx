@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react"
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom"
+import {
+	Link,
+	useLocation,
+	useNavigate,
+	useSearchParams,
+} from "react-router-dom"
 import TrackerDashboard from "../components/TrackerDashboard.jsx"
 import WorkoutList from "../components/WorkoutList.jsx"
 import AnalyticsPanel from "../components/AnalyticsPanel.jsx"
@@ -177,8 +182,8 @@ function DashboardPage() {
 												: view === "workout"
 													? "ph-barbell"
 													: view === "history"
-													? "ph-clock-counter-clockwise"
-													: "ph-chart-line-up"
+														? "ph-clock-counter-clockwise"
+														: "ph-chart-line-up"
 										}`}></i>
 									{view.charAt(0).toUpperCase() + view.slice(1)}
 								</button>
@@ -219,8 +224,8 @@ function DashboardPage() {
 										: view === "workout"
 											? "ph-barbell"
 											: view === "history"
-											? "ph-clock-counter-clockwise"
-											: "ph-chart-line-up"
+												? "ph-clock-counter-clockwise"
+												: "ph-chart-line-up"
 								}`}></i>
 							<span>{view.charAt(0).toUpperCase() + view.slice(1)}</span>
 						</button>
