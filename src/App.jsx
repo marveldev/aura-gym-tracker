@@ -5,7 +5,10 @@ import AuthPage from "./pages/AuthPage.jsx"
 import OnboardingPage from "./pages/OnboardingPage.jsx"
 import HandbookPage from "./pages/HandbookPage.jsx"
 import HandbookSectionPage from "./pages/HandbookSectionPage.jsx"
+import HandbookEncyclopediaTopicPage from "./pages/HandbookEncyclopediaTopicPage.jsx"
 import HandbookNutritionPage from "./pages/HandbookNutritionPage.jsx"
+import HandbookFoodPage from "./pages/HandbookFoodPage.jsx"
+import HandbookFoodCategoryPage from "./pages/HandbookFoodCategoryPage.jsx"
 import HandbookExerciseMusclePage from "./pages/HandbookExerciseMusclePage.jsx"
 import HandbookExerciseDetailPage from "./pages/HandbookExerciseDetailPage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
@@ -53,6 +56,30 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<HandbookNutritionPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/food"
+					element={
+						<ProtectedRoute>
+							<HandbookFoodPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/food/:category"
+					element={
+						<ProtectedRoute>
+							<HandbookFoodCategoryPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/encyclopedia/:topic"
+					element={
+						<ProtectedRoute>
+							<HandbookEncyclopediaTopicPage />
 						</ProtectedRoute>
 					}
 				/>

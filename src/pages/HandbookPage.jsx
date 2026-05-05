@@ -25,6 +25,12 @@ const handbookSections = [
 		description: "A-Z fitness and health glossary with concise definitions.",
 		icon: "ph-book-open-text",
 	},
+	{
+		title: "Food & Calories",
+		slug: "food",
+		description: "Common foods with calorie and macronutrient information.",
+		icon: "ph-bowl-food",
+	},
 ]
 
 function HandbookPage() {

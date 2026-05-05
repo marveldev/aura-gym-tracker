@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom"
+import { encyclopediaTopics } from "../data/encyclopediaTopics.js"
 
 const sectionMeta = {
 	exercises: {
@@ -55,23 +56,7 @@ const sectionMeta = {
 	encyclopedia: {
 		title: "Encyclopedia",
 		intro: "Quick-reference definitions for commonly used fitness concepts.",
-		terms: [
-			{
-				term: "Hypertrophy",
-				definition:
-					"An increase in muscle size over time, usually driven by resistance training and recovery.",
-			},
-			{
-				term: "Progressive Overload",
-				definition:
-					"Gradually increasing training demand (load, reps, volume, or difficulty) to continue adaptation.",
-			},
-			{
-				term: "1RM",
-				definition:
-					"One-repetition maximum: the heaviest load you can lift for a single technically sound rep.",
-			},
-		],
+		terms: encyclopediaTopics,
 	},
 }
 
@@ -189,14 +174,18 @@ function HandbookSectionPage() {
 				{current.terms && (
 					<div className="space-y-3">
 						{current.terms.map((item) => (
-							<div
-								key={item.term}
-								className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4">
-								<h2 className="font-semibold text-lg">{item.term}</h2>
+							<Link
+								key={item.slug}
+								to={`/handbook/encyclopedia/${item.slug}`}
+								className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4 flex items-center justify-between transition-colors hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--primary))]">
+								<div>
+									<h2 className="font-semibold text-lg">{item.name}</h2>
 								<p className="text-[hsl(var(--muted))] mt-1">
-									{item.definition}
+									{item.description}
 								</p>
-							</div>
+								</div>
+								<i className="ph ph-caret-right text-lg" aria-hidden="true"></i>
+							</Link>
 						))}
 					</div>
 				)}
