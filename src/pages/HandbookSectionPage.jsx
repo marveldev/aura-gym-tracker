@@ -3,8 +3,7 @@ import { Link, useParams } from "react-router-dom"
 const sectionMeta = {
 	exercises: {
 		title: "Exercises",
-		intro:
-			"Select a muscle group to explore focused exercise options.",
+		intro: "Select a muscle group to explore focused exercise options.",
 		muscleGroups: [
 			{ name: "Chest", slug: "chest" },
 			{ name: "Back", slug: "back" },
@@ -81,7 +80,9 @@ function SectionLayout({ title, children, backTo = "/handbook" }) {
 		<div className="min-h-screen bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
 			<div className="max-w-4xl mx-auto">
 				<div className="flex items-center justify-between mb-8">
-					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{title}</h1>
+					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+						{title}
+					</h1>
 					<Link to={backTo} className="btn btn-secondary rounded-lg px-4 py-2">
 						Back
 					</Link>
@@ -114,7 +115,9 @@ function HandbookSectionPage() {
 	return (
 		<SectionLayout title={current.title}>
 			<div className="space-y-6">
-				<p className="text-[hsl(var(--muted))] leading-relaxed">{current.intro}</p>
+				<p className="text-[hsl(var(--muted))] leading-relaxed">
+					{current.intro}
+				</p>
 
 				{current.muscleGroups && (
 					<div className="grid gap-3 sm:gap-4">
@@ -138,17 +141,23 @@ function HandbookSectionPage() {
 									key={macro.name}
 									className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4">
 									<h2 className="font-semibold text-lg">{macro.name}</h2>
-									<p className="text-[hsl(var(--muted))] mt-1">{macro.description}</p>
+									<p className="text-[hsl(var(--muted))] mt-1">
+										{macro.description}
+									</p>
 								</div>
 							))}
 						</div>
 						<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4 space-y-3">
 							<p className="text-[hsl(var(--muted))]">
-								<span className="font-semibold text-[hsl(var(--fg))]">Caloric surplus:</span>{" "}
+								<span className="font-semibold text-[hsl(var(--fg))]">
+									Caloric surplus:
+								</span>{" "}
 								{current.energyBalance.surplus}
 							</p>
 							<p className="text-[hsl(var(--muted))]">
-								<span className="font-semibold text-[hsl(var(--fg))]">Caloric deficit:</span>{" "}
+								<span className="font-semibold text-[hsl(var(--fg))]">
+									Caloric deficit:
+								</span>{" "}
 								{current.energyBalance.deficit}
 							</p>
 						</div>
@@ -178,7 +187,9 @@ function HandbookSectionPage() {
 								key={item.term}
 								className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4">
 								<h2 className="font-semibold text-lg">{item.term}</h2>
-								<p className="text-[hsl(var(--muted))] mt-1">{item.definition}</p>
+								<p className="text-[hsl(var(--muted))] mt-1">
+									{item.definition}
+								</p>
 							</div>
 						))}
 					</div>

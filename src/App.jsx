@@ -7,6 +7,7 @@ import HandbookPage from "./pages/HandbookPage.jsx"
 import HandbookSectionPage from "./pages/HandbookSectionPage.jsx"
 import HandbookExerciseMusclePage from "./pages/HandbookExerciseMusclePage.jsx"
 import HandbookExerciseDetailPage from "./pages/HandbookExerciseDetailPage.jsx"
+import WorkoutPage from "./pages/WorkoutPage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 
 function App() {
@@ -28,6 +29,14 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<DashboardPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/workout"
+					element={
+						<ProtectedRoute>
+							<WorkoutPage />
 						</ProtectedRoute>
 					}
 				/>

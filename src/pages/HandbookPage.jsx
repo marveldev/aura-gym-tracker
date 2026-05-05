@@ -35,7 +35,9 @@ function HandbookPage() {
 					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 						Handbook
 					</h1>
-					<Link to="/dashboard" className="btn btn-primary rounded-lg px-4 py-2">
+					<Link
+						to="/dashboard"
+						className="btn btn-primary rounded-lg px-4 py-2">
 						Dashboard
 					</Link>
 				</div>
@@ -47,7 +49,8 @@ function HandbookPage() {
 							to={`/handbook/${section.slug}`}
 							className="card group p-6 sm:p-7 transition-all hover:border-[hsl(var(--primary))]/45 hover:bg-[hsl(var(--surface))]/95">
 							<div className="flex items-center justify-between mb-4">
-								<i className={`ph ${section.icon} text-2xl text-[hsl(var(--primary))]`}></i>
+								<i
+									className={`ph ${section.icon} text-2xl text-[hsl(var(--primary))]`}></i>
 								<i className="ph ph-arrow-up-right text-lg text-[hsl(var(--muted))] group-hover:text-[hsl(var(--primary))] transition-colors"></i>
 							</div>
 							<h2 className="text-xl font-semibold tracking-tight mb-2">

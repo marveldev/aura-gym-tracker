@@ -19,22 +19,34 @@ const focusOptions = [
 	"Full Body",
 ]
 
-function WorkoutModal({ isOpen, onClose, onSave, onError }) {
+function WorkoutModal({
+	isOpen,
+	onClose,
+	onSave,
+	onError,
+	initialExerciseName = "",
+	initialFocus = "",
+}) {
 	const [date, setDate] = useState(getTodayDate())
 	const [focus, setFocus] = useState("Chest")
 	const [exercises, setExercises] = useState([createExercise()])
 
 	const resetForm = () => {
 		setDate(getTodayDate())
-		setFocus("Chest")
-		setExercises([createExercise()])
+		setFocus(focusOptions.includes(initialFocus) ? initialFocus : "Chest")
+		setExercises([
+			{
+				...createExercise(),
+				name: initialExerciseName,
+			},
+		])
 	}
 
 	useEffect(() => {
 		if (isOpen) {
 			resetForm()
 		}
-	}, [isOpen])
+	}, [isOpen, initialExerciseName, initialFocus])
 
 	const canRemoveExercise = useMemo(
 		() => exercises.length > 1,
