@@ -14,12 +14,6 @@ const handbookSections = [
 		icon: "ph-apple-logo",
 	},
 	{
-		title: "Pharmacology",
-		slug: "pharmacology",
-		description: "Educational references and safety-focused terminology.",
-		icon: "ph-pill",
-	},
-	{
 		title: "Encyclopedia",
 		slug: "encyclopedia",
 		description: "A-Z fitness and health glossary with concise definitions.",

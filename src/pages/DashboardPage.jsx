@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import TrackerDashboard from "../components/TrackerDashboard.jsx"
 import WorkoutList from "../components/WorkoutList.jsx"
 import AnalyticsPanel from "../components/AnalyticsPanel.jsx"
+import WorkoutTab from "../components/WorkoutTab.jsx"
 import WorkoutModal from "../components/WorkoutModal.jsx"
 import ToastContainer from "../components/ToastContainer.jsx"
 import { initMockDataIfEmpty } from "../data/mockData.js"
@@ -15,12 +16,16 @@ import {
 	getWorkouts,
 } from "../services/workoutStorage.js"
 
-const views = ["dashboard", "history", "analytics"]
+const views = ["dashboard", "workout", "history", "analytics"]
 
 function DashboardPage() {
 	const location = useLocation()
 	const navigate = useNavigate()
-	const [activeView, setActiveView] = useState("dashboard")
+	const [searchParams, setSearchParams] = useSearchParams()
+	const initialView = views.includes(searchParams.get("view"))
+		? searchParams.get("view")
+		: "dashboard"
+	const [activeView, setActiveView] = useState(initialView)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [prefillExerciseName, setPrefillExerciseName] = useState("")
 	const [prefillFocus, setPrefillFocus] = useState("")
@@ -63,6 +68,18 @@ function DashboardPage() {
 	}, [])
 
 	useEffect(() => {
+		const nextView = searchParams.get("view")
+		if (views.includes(nextView) && nextView !== activeView) {
+			setActiveView(nextView)
+			return
+		}
+
+		if (!nextView && activeView !== "dashboard") {
+			setSearchParams({ view: activeView }, { replace: true })
+		}
+	}, [activeView, searchParams, setSearchParams])
+
+	useEffect(() => {
 		if (!location.state?.openWorkoutModal) {
 			return
 		}
@@ -73,8 +90,18 @@ function DashboardPage() {
 		setPrefillFocus((prefillWorkout?.focus || "").trim())
 		setIsModalOpen(true)
 
-		navigate("/dashboard", { replace: true, state: null })
+		navigate(`/dashboard?view=${activeView}`, { replace: true, state: null })
 	}, [location.state, navigate])
+
+	const handleViewChange = (view) => {
+		setActiveView(view)
+		if (view === "dashboard") {
+			setSearchParams({}, { replace: true })
+			return
+		}
+
+		setSearchParams({ view }, { replace: true })
+	}
 
 	const stats = useMemo(() => calculateStats(workouts), [workouts])
 	const uniqueExercises = useMemo(
@@ -142,12 +169,14 @@ function DashboardPage() {
 							<div key={view} className="flex flex-col gap-2">
 								<button
 									className={`nav-link ${activeView === view ? "active" : ""}`}
-									onClick={() => setActiveView(view)}>
+									onClick={() => handleViewChange(view)}>
 									<i
 										className={`ph text-xl ${
 											view === "dashboard"
 												? "ph-squares-four"
-												: view === "history"
+												: view === "workout"
+													? "ph-barbell"
+													: view === "history"
 													? "ph-clock-counter-clockwise"
 													: "ph-chart-line-up"
 										}`}></i>
@@ -182,12 +211,14 @@ function DashboardPage() {
 					<div key={view} className="contents">
 						<button
 							className={`mobile-link ${activeView === view ? "active" : ""}`}
-							onClick={() => setActiveView(view)}>
+							onClick={() => handleViewChange(view)}>
 							<i
 								className={`ph text-2xl ${
 									view === "dashboard"
 										? "ph-squares-four"
-										: view === "history"
+										: view === "workout"
+											? "ph-barbell"
+											: view === "history"
 											? "ph-clock-counter-clockwise"
 											: "ph-chart-line-up"
 								}`}></i>
@@ -214,8 +245,12 @@ function DashboardPage() {
 						workouts={workouts}
 						stats={stats}
 						onOpenModal={() => setIsModalOpen(true)}
-						onViewHistory={() => setActiveView("history")}
+						onViewHistory={() => handleViewChange("history")}
 					/>
+				)}
+
+				{activeView === "workout" && (
+					<WorkoutTab onCompleteWorkout={handleSaveWorkout} />
 				)}
 
 				{activeView === "history" && (

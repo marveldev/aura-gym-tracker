@@ -41,18 +41,6 @@ const sectionMeta = {
 				"Caloric deficit means eating fewer calories than you burn, typically used to reduce body weight over time.",
 		},
 	},
-	pharmacology: {
-		title: "Pharmacology",
-		intro:
-			"This section is educational and non-prescriptive. It is not medical advice and does not provide usage instructions.",
-		highlights: [
-			"Pharmacology studies how compounds interact with the body.",
-			"Effects can vary based on dose, context, health status, and interactions.",
-			"Safety, legality, and ethical considerations should always be prioritized.",
-			"Clinical decisions should be made with qualified healthcare professionals.",
-		],
-		note: "High-level information only. No protocols, dosing, or unsafe guidance are provided.",
-	},
 	encyclopedia: {
 		title: "Encyclopedia",
 		intro: "Quick-reference definitions for commonly used fitness concepts.",
@@ -151,22 +139,6 @@ function HandbookSectionPage() {
 								</span>{" "}
 								{current.energyBalance.deficit}
 							</p>
-						</div>
-					</div>
-				)}
-
-				{current.highlights && (
-					<div className="space-y-4">
-						<ul className="space-y-2 text-[hsl(var(--muted))]">
-							{current.highlights.map((item) => (
-								<li key={item} className="flex items-start gap-2">
-									<span className="mt-2 h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]"></span>
-									<span>{item}</span>
-								</li>
-							))}
-						</ul>
-						<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4">
-							<p className="text-sm text-[hsl(var(--muted))]">{current.note}</p>
 						</div>
 					</div>
 				)}
