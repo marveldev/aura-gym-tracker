@@ -137,14 +137,20 @@ function HandbookSectionPage() {
 					<div className="space-y-4">
 						<div className="grid gap-3 sm:gap-4">
 							{current.macros.map((macro) => (
-								<div
+								<Link
 									key={macro.name}
-									className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4">
-									<h2 className="font-semibold text-lg">{macro.name}</h2>
-									<p className="text-[hsl(var(--muted))] mt-1">
-										{macro.description}
-									</p>
-								</div>
+									to={`/handbook/nutrition/${macro.name.toLowerCase()}`}
+									className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4 flex items-center justify-between transition-colors hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--primary))]">
+									<div>
+										<h2 className="font-semibold text-lg">{macro.name}</h2>
+										<p className="text-[hsl(var(--muted))] mt-1">
+											{macro.description}
+										</p>
+									</div>
+									<i
+										className="ph ph-caret-right text-lg flex-shrink-0"
+										aria-hidden="true"></i>
+								</Link>
 							))}
 						</div>
 						<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4 space-y-3">

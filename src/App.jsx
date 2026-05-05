@@ -5,9 +5,9 @@ import AuthPage from "./pages/AuthPage.jsx"
 import OnboardingPage from "./pages/OnboardingPage.jsx"
 import HandbookPage from "./pages/HandbookPage.jsx"
 import HandbookSectionPage from "./pages/HandbookSectionPage.jsx"
+import HandbookNutritionPage from "./pages/HandbookNutritionPage.jsx"
 import HandbookExerciseMusclePage from "./pages/HandbookExerciseMusclePage.jsx"
 import HandbookExerciseDetailPage from "./pages/HandbookExerciseDetailPage.jsx"
-import WorkoutPage from "./pages/WorkoutPage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 
 function App() {
@@ -33,14 +33,6 @@ function App() {
 					}
 				/>
 				<Route
-					path="/workout"
-					element={
-						<ProtectedRoute>
-							<WorkoutPage />
-						</ProtectedRoute>
-					}
-				/>
-				<Route
 					path="/handbook"
 					element={
 						<ProtectedRoute>
@@ -53,6 +45,14 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<HandbookSectionPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/nutrition/:macro"
+					element={
+						<ProtectedRoute>
+							<HandbookNutritionPage />
 						</ProtectedRoute>
 					}
 				/>

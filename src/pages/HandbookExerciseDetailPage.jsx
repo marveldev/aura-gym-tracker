@@ -44,8 +44,9 @@ function HandbookExerciseDetailPage() {
 	}
 
 	const handleStartWorkout = () => {
-		navigate("/workout", {
+		navigate("/dashboard", {
 			state: {
+				openWorkoutModal: true,
 				prefillWorkout: {
 					exercise: {
 						name: selectedExercise.name,

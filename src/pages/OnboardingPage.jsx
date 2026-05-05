@@ -279,7 +279,7 @@ export default function OnboardingPage() {
 							<button
 								type="button"
 								onClick={() => setWeightUnit("lb")}
-								className={`px-7 py-2.5 rounded-full font-medium transition-all ${
+								className={`px-7 py-2.5     vassdm,mbczzd,;;ieq oee\y4wqqfrounded-full font-medium transition-all ${
 									weightUnit === "lb"
 										? "bg-[hsl(var(--primary))] text-[hsl(var(--primary-fg))]"
 										: "text-[hsl(var(--fg))]"

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import TrackerDashboard from "../components/TrackerDashboard.jsx"
 import WorkoutList from "../components/WorkoutList.jsx"
 import AnalyticsPanel from "../components/AnalyticsPanel.jsx"
@@ -18,8 +18,12 @@ import {
 const views = ["dashboard", "history", "analytics"]
 
 function DashboardPage() {
+	const location = useLocation()
+	const navigate = useNavigate()
 	const [activeView, setActiveView] = useState("dashboard")
 	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [prefillExerciseName, setPrefillExerciseName] = useState("")
+	const [prefillFocus, setPrefillFocus] = useState("")
 	const [workouts, setWorkouts] = useState([])
 	const [selectedExercise, setSelectedExercise] = useState("")
 	const [isDarkTheme, setIsDarkTheme] = useState(true)
@@ -58,6 +62,20 @@ function DashboardPage() {
 		return () => document.removeEventListener("keydown", onEscape)
 	}, [])
 
+	useEffect(() => {
+		if (!location.state?.openWorkoutModal) {
+			return
+		}
+
+		const prefillWorkout = location.state?.prefillWorkout
+		setActiveView("dashboard")
+		setPrefillExerciseName((prefillWorkout?.exercise?.name || "").trim())
+		setPrefillFocus((prefillWorkout?.focus || "").trim())
+		setIsModalOpen(true)
+
+		navigate("/dashboard", { replace: true, state: null })
+	}, [location.state, navigate])
+
 	const stats = useMemo(() => calculateStats(workouts), [workouts])
 	const uniqueExercises = useMemo(
 		() => getUniqueExercises(workouts),
@@ -86,6 +104,8 @@ function DashboardPage() {
 		addWorkout(workout)
 		refreshWorkouts()
 		showToast("Session logged successfully!")
+		setPrefillExerciseName("")
+		setPrefillFocus("")
 		setIsModalOpen(false)
 	}
 
@@ -219,9 +239,15 @@ function DashboardPage() {
 
 			<WorkoutModal
 				isOpen={isModalOpen}
-				onClose={() => setIsModalOpen(false)}
+				onClose={() => {
+					setIsModalOpen(false)
+					setPrefillExerciseName("")
+					setPrefillFocus("")
+				}}
 				onSave={handleSaveWorkout}
 				onError={(message) => showToast(message, "error")}
+				initialExerciseName={prefillExerciseName}
+				initialFocus={prefillFocus}
 			/>
 
 			<ToastContainer toasts={toasts} />
