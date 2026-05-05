@@ -184,9 +184,9 @@ function DashboardPage() {
 													? "ph-barbell"
 													: view === "handbook"
 														? "ph-book-open"
-													: view === "history"
-														? "ph-clock-counter-clockwise"
-														: "ph-chart-line-up"
+														: view === "history"
+															? "ph-clock-counter-clockwise"
+															: "ph-chart-line-up"
 										}`}></i>
 									{view.charAt(0).toUpperCase() + view.slice(1)}
 								</button>
@@ -222,9 +222,9 @@ function DashboardPage() {
 											? "ph-barbell"
 											: view === "handbook"
 												? "ph-book-open"
-											: view === "history"
-												? "ph-clock-counter-clockwise"
-												: "ph-chart-line-up"
+												: view === "history"
+													? "ph-clock-counter-clockwise"
+													: "ph-chart-line-up"
 								}`}></i>
 							<span>{view.charAt(0).toUpperCase() + view.slice(1)}</span>
 						</button>
