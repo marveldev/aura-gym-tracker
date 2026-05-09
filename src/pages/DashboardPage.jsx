@@ -5,6 +5,7 @@ import {
 	useNavigate,
 	useSearchParams,
 } from "react-router-dom"
+import { useAuth } from "../context/AuthContext.jsx"
 import TrackerDashboard from "../components/TrackerDashboard.jsx"
 import WorkoutList from "../components/WorkoutList.jsx"
 import AnalyticsPanel from "../components/AnalyticsPanel.jsx"
@@ -27,6 +28,7 @@ const views = ["dashboard", "workout", "handbook", "history", "analytics"]
 function DashboardPage() {
 	const location = useLocation()
 	const navigate = useNavigate()
+	const { logout } = useAuth()
 	const [searchParams, setSearchParams] = useSearchParams()
 	const initialView = views.includes(searchParams.get("view"))
 		? searchParams.get("view")
@@ -159,17 +161,47 @@ function DashboardPage() {
 		localStorage.setItem("aura_theme", nextDark ? "dark" : "light")
 	}
 
+	const handleSignOut = async () => {
+		await logout()
+		navigate("/", { replace: true })
+	}
+
 	return (
 		<div className="app-container">
-			<aside className="sidebar">
-				<div className="p-6">
-					<Link to="/" className="flex items-center gap-3 mb-12">
-						<img src="/logo.svg" alt="Aura Logo" className="w-8 h-8" />
-						<span className="text-xl font-bold tracking-tight text-[hsl(var(--fg))]">
+			<nav className="fixed w-full top-0 z-50 transition-all duration-300 backdrop-blur-md bg-[hsl(var(--bg))]/80 border-b border-[hsl(var(--border))]/50">
+				<div className="px-4 md:px-6 h-16 flex items-center justify-between">
+					<Link to="/" className="flex items-center gap-3">
+						<img
+							src="/logo.svg"
+							alt="Aura Logo"
+							className="w-7 h-7 sm:w-8 sm:h-8"
+						/>
+						<span className="text-lg sm:text-xl font-bold tracking-tight text-[hsl(var(--fg))]">
 							Aura
 						</span>
 					</Link>
 
+					<div className="flex items-center gap-2 sm:gap-3">
+						<button
+							className="btn-secondary h-10 w-10 rounded flex items-center justify-center"
+							onClick={toggleTheme}
+							aria-label={
+								isDarkTheme ? "Switch to light theme" : "Switch to dark theme"
+							}>
+							<i
+								className={`ph text-lg ${isDarkTheme ? "ph-sun" : "ph-moon"}`}></i>
+						</button>
+						<button
+							className="btn-secondary py-2 px-3 sm:px-4 text-sm rounded font-bold whitespace-nowrap"
+							onClick={handleSignOut}>
+							Sign Out
+						</button>
+					</div>
+				</div>
+			</nav>
+
+			<aside className="sidebar pt-16">
+				<div className="p-6">
 					<nav className="flex flex-col gap-2">
 						{views.map((view) => (
 							<div key={view} className="flex flex-col gap-2">
@@ -193,18 +225,6 @@ function DashboardPage() {
 							</div>
 						))}
 					</nav>
-				</div>
-
-				<div className="p-6 border-t border-[hsl(var(--border))]">
-					<button
-						className="nav-link w-full justify-between"
-						onClick={toggleTheme}>
-						<span className="flex items-center gap-3">
-							<i
-								className={`ph text-xl ${isDarkTheme ? "ph-sun" : "ph-moon"}`}></i>
-							Theme
-						</span>
-					</button>
 				</div>
 			</aside>
 
@@ -230,14 +250,9 @@ function DashboardPage() {
 						</button>
 					</div>
 				))}
-				<button className="mobile-link" onClick={toggleTheme}>
-					<i
-						className={`ph text-2xl ${isDarkTheme ? "ph-sun" : "ph-moon"}`}></i>
-					<span>Theme</span>
-				</button>
 			</nav>
 
-			<main className="main-content">
+			<main className="main-content pt-20 md:pt-24">
 				{activeView === "dashboard" && (
 					<TrackerDashboard
 						workouts={workouts}

@@ -34,14 +34,34 @@ function LandingPage() {
 	return (
 		<div className="overflow-x-hidden selection:bg-[hsl(var(--primary))] selection:text-white">
 			<nav className="fixed w-full top-0 z-50 transition-all duration-300 backdrop-blur-md bg-[hsl(var(--bg))]/80 border-b border-[hsl(var(--border))]/50">
-				<div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
 					<div className="flex items-center gap-3">
-						<img src="/logo.svg" alt="Aura Logo" className="w-8 h-8" />
-						<span className="text-xl font-bold tracking-tight text-[hsl(var(--fg))]">
+						<img
+							src="/logo.svg"
+							alt="Aura Logo"
+							className="w-7 h-7 sm:w-8 sm:h-8"
+						/>
+						<span className="text-lg sm:text-xl font-bold tracking-tight text-[hsl(var(--fg))]">
 							Aura
 						</span>
 					</div>
-					<div className="flex items-center gap-6">
+					<div className="flex items-center gap-2 md:hidden">
+						<button
+							className="btn-secondary h-10 w-10 rounded flex items-center justify-center"
+							onClick={toggleTheme}
+							aria-label={
+								isDarkTheme ? "Switch to light theme" : "Switch to dark theme"
+							}>
+							<i
+								className={`ph text-lg ${isDarkTheme ? "ph-sun" : "ph-moon"}`}></i>
+						</button>
+						<button
+							className="btn-secondary py-2 px-3 text-sm rounded font-bold whitespace-nowrap"
+							onClick={handleAuthButtonClick}>
+							{currentUser || isGuest ? "Sign Out" : "Sign In"}
+						</button>
+					</div>
+					<div className="hidden md:flex items-center gap-4 lg:gap-6">
 						<button
 							className="btn-secondary py-2.5 px-4 text-sm rounded font-bold"
 							onClick={toggleTheme}>
@@ -62,7 +82,7 @@ function LandingPage() {
 				</div>
 			</nav>
 
-			<section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+			<section className="relative min-h-screen flex items-center pt-20 sm:pt-20 overflow-hidden">
 				<div className="absolute top-1/4 right-0 w-[800px] h-[800px] bg-[hsl(var(--primary))]/10 rounded-full blur-[120px] -z-10 translate-x-1/3"></div>
 				<div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[100px] -z-10 -translate-x-1/2"></div>
 
@@ -80,12 +100,12 @@ function LandingPage() {
 						<div className="mt-12 flex flex-col sm:flex-row gap-4">
 							<Link
 								to={currentUser || isGuest ? "/dashboard" : "/auth"}
-								className="btn-primary text-lg rounded px-8 py-4 font-bold">
+								className="btn-primary text-lg rounded px-8 py-4 font-bold w-full sm:w-auto text-center">
 								Start Tracking Now
 							</Link>
 							<a
 								href="#features"
-								className="btn-outline text-lg rounded px-8 py-4 font-bold">
+								className="btn-outline text-lg rounded px-8 py-4 font-bold w-full sm:w-auto text-center">
 								Explore Features
 							</a>
 						</div>
