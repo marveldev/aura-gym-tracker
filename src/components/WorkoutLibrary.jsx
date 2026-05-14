@@ -1,3 +1,5 @@
+import ExerciseApiImage from "./ExerciseApiImage.jsx"
+
 function WorkoutLibrary({ categories, onStartWorkout }) {
 	return (
 		<section className="space-y-6">
@@ -35,6 +37,28 @@ function WorkoutLibrary({ categories, onStartWorkout }) {
 									<span className="rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/70 px-3 py-1 text-[hsl(var(--muted))]">
 										{workout.difficulty}
 									</span>
+								</div>
+								<div className="mt-4 space-y-2">
+									{workout.exercises.map((exercise) => (
+										<div
+											key={`${workout.name}-${exercise.name}`}
+											className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 px-3 py-2">
+											<div className="flex items-center gap-3">
+												<ExerciseApiImage
+													exerciseName={exercise.name}
+													containerClassName="h-12 w-12"
+												/>
+												<div className="min-w-0 flex-1">
+													<p className="truncate text-sm font-medium text-[hsl(var(--fg))]">
+														{exercise.name}
+													</p>
+													<p className="text-xs text-[hsl(var(--muted))]">
+														{exercise.targetSets} target sets
+													</p>
+												</div>
+											</div>
+										</div>
+									))}
 								</div>
 								<p className="mt-4 text-sm font-medium text-[hsl(var(--primary))]">
 									Start workout

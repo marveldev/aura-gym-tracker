@@ -1,3 +1,5 @@
+import ExerciseApiImage from "./ExerciseApiImage.jsx"
+
 function TodayWorkoutCard({ workout, onStart }) {
 	return (
 		<div className="card p-6 sm:p-7 space-y-4">
@@ -21,11 +23,21 @@ function TodayWorkoutCard({ workout, onStart }) {
 			</p>
 
 			<div className="space-y-2">
-				{workout.exercises.map((exercise, index) => (
+				{workout.exercises.map((exercise) => (
 					<div
 						key={exercise.name}
-						className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 px-4 py-3 text-[hsl(var(--fg))]">
-						{index + 1}. {exercise.name}
+						className="rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 px-3 py-2.5">
+						<div className="flex items-center gap-3">
+							<ExerciseApiImage exerciseName={exercise.name} />
+							<div className="min-w-0 flex-1">
+								<p className="truncate text-sm sm:text-base font-medium text-[hsl(var(--fg))]">
+									{exercise.name}
+								</p>
+								<p className="text-xs text-[hsl(var(--muted))]">
+									{exercise.targetSets} target sets
+								</p>
+							</div>
+						</div>
 					</div>
 				))}
 			</div>

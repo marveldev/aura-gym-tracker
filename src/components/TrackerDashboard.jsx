@@ -9,14 +9,16 @@ function TrackerDashboard({ workouts, stats, onOpenModal, onViewHistory }) {
 
 	return (
 		<div className="animate-fade-in">
-			<header className="flex justify-between items-center mb-8">
-				<div>
+			<header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+				<div className="min-w-0">
 					<h1 className="text-3xl font-bold tracking-tight">Overview</h1>
 					<p className="text-[hsl(var(--muted))] mt-1">{getDateGreeting()}</p>
 				</div>
-				<button className="btn btn-primary" onClick={onOpenModal}>
+				<button
+					className="btn btn-primary w-full sm:w-auto shrink-0 justify-center px-5 py-3"
+					onClick={onOpenModal}>
 					<i className="ph ph-plus-bold"></i>
-					<span className="hidden sm:inline">Log Workout</span>
+					<span>Log Workout</span>
 				</button>
 			</header>
 

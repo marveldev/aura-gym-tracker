@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { handbookExerciseData } from "../data/handbookExercises.js"
+import { getExerciseByName, getExerciseImageUrl } from "../api/wger.ts"
 
 function HandbookExerciseDetailPage() {
 	const navigate = useNavigate()
@@ -10,6 +12,48 @@ function HandbookExerciseDetailPage() {
 	const selectedExercise = muscleGroup?.exercises.find(
 		(item) => item.slug === exerciseKey,
 	)
+	const [wgerData, setWgerData] = useState(null)
+	const [isExerciseLoading, setIsExerciseLoading] = useState(false)
+	const [exerciseError, setExerciseError] = useState("")
+	const [imageLoadError, setImageLoadError] = useState(false)
+
+	useEffect(() => {
+		let isMounted = true
+		setImageLoadError(false)
+
+		const loadExercise = async () => {
+			if (!selectedExercise?.name) return
+
+			setIsExerciseLoading(true)
+			setExerciseError("")
+
+			try {
+				const result = await getExerciseByName(selectedExercise.name)
+				if (!isMounted) return
+
+				setWgerData(result)
+				if (!result) setExerciseError("No WGER match found.")
+			} catch (error) {
+				if (!isMounted) return
+				console.error(
+					`[ExerciseDetail] API error for "${selectedExercise.name}":`,
+					error,
+				)
+				setWgerData(null)
+				setExerciseError(
+					error instanceof Error ? error.message : "Unable to load WGER data.",
+				)
+			}
+			setIsExerciseLoading(false)
+		}
+
+		loadExercise()
+
+		return () => {
+			isMounted = false
+		}
+	}, [selectedExercise?.name])
+
 	const instructionSteps = selectedExercise?.instructions || [
 		`Set up your ${selectedExercise?.name || "exercise"} with stable posture and controlled breathing.`,
 		"Perform each repetition with a full, pain-free range of motion.",
@@ -22,6 +66,7 @@ function HandbookExerciseDetailPage() {
 		"Pause and reassess if you feel sharp pain or joint discomfort.",
 	]
 	const howToTips = selectedExercise?.howToTips || []
+	const exerciseImageUrl = getExerciseImageUrl(wgerData)
 
 	if (!muscleGroup || !selectedExercise) {
 		return (
@@ -62,7 +107,7 @@ function HandbookExerciseDetailPage() {
 	return (
 		<div className="min-h-screen bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
 			<div className="max-w-4xl mx-auto">
-				<div className="flex items-center justify-between mb-8">
+				<div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
 					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 						{selectedExercise.name}
 					</h1>
@@ -74,14 +119,73 @@ function HandbookExerciseDetailPage() {
 				</div>
 
 				<div className="card p-6 sm:p-8 space-y-4">
-					<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/40 p-6">
-						<div className="aspect-video w-full rounded-lg border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--bg))] flex flex-col items-center justify-center text-center px-4">
-							<i className="ph ph-image-square text-3xl text-[hsl(var(--muted))] mb-2"></i>
-							<p className="text-sm font-medium text-[hsl(var(--fg))]">
-								Exercise illustration/video placeholder
+					<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/40 p-4 sm:p-6">
+						<div className="overflow-hidden rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--bg))]">
+							{exerciseImageUrl && !imageLoadError ? (
+								<img
+									src={exerciseImageUrl}
+									alt={selectedExercise.name}
+									className="h-auto w-full object-contain"
+									loading="lazy"
+									onError={(e) => {
+										console.error(
+											`[ExerciseDetail] Image failed to load: "${exerciseImageUrl}"`,
+											e,
+										)
+										setImageLoadError(true)
+									}}
+								/>
+							) : (
+								<div className="aspect-video w-full flex flex-col items-center justify-center text-center px-4 py-10">
+									<i className="ph ph-image-square text-3xl text-[hsl(var(--muted))] mb-2"></i>
+									<p className="text-sm font-medium text-[hsl(var(--fg))]">
+										{isExerciseLoading
+											? "Loading WGER preview..."
+											: imageLoadError
+												? "Image failed to load"
+												: "Preview unavailable"}
+									</p>
+									<p className="text-xs text-[hsl(var(--muted))] mt-1">
+										{imageLoadError
+											? exerciseImageUrl
+											: exerciseError || "Using local exercise details."}
+									</p>
+								</div>
+							)}
+						</div>
+					</div>
+
+					<div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+						<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4">
+							<p className="text-xs uppercase tracking-[0.16em] text-[hsl(var(--muted))]">
+								Name
 							</p>
-							<p className="text-xs text-[hsl(var(--muted))] mt-1">
-								Add image, GIF, or embed here
+							<p className="mt-2 font-semibold text-[hsl(var(--fg))]">
+								{wgerData?.name || selectedExercise.name}
+							</p>
+						</div>
+						<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4">
+							<p className="text-xs uppercase tracking-[0.16em] text-[hsl(var(--muted))]">
+								Category
+							</p>
+							<p className="mt-2 font-semibold text-[hsl(var(--fg))]">
+								{wgerData?.category || muscleGroup.title}
+							</p>
+						</div>
+						<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4">
+							<p className="text-xs uppercase tracking-[0.16em] text-[hsl(var(--muted))]">
+								Equipment
+							</p>
+							<p className="mt-2 font-semibold text-[hsl(var(--fg))]">
+								{wgerData?.equipment || "Bodyweight"}
+							</p>
+						</div>
+						<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/50 p-4 sm:col-span-2 xl:col-span-1">
+							<p className="text-xs uppercase tracking-[0.16em] text-[hsl(var(--muted))]">
+								Target Muscle
+							</p>
+							<p className="mt-2 font-semibold text-[hsl(var(--fg))]">
+								{wgerData?.muscles || selectedExercise.targetMuscles}
 							</p>
 						</div>
 					</div>
