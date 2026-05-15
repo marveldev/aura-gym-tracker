@@ -76,57 +76,113 @@ export interface WgerExercise {
 // ---------------------------------------------------------------------------
 
 const NAME_MAP: Record<string, string> = {
+	// Weight Loss category
 	"jump squat": "jump squat",
 	burpees: "burpee",
 	"mountain climbers": "mountain climber",
+	"high knees": "high knees",
+	"walking lunges": "walking lunge",
+	"walking lunge": "walking lunge",
+	"jumping jacks": "jumping jack",
+	"battle ropes": "battle ropes",
+	"box jumps": "box jump",
+	"rowing sprint": "rowing machine",
+
+	// Muscle Gain category
 	"bench press": "bench press",
+	"pull-up": "pull-up",
+	"seated shoulder press": "seated shoulder press",
+	"back squat": "back squat",
+	"bulgarian split squat": "bulgarian split squat",
+
+	// Chest exercises
 	"incline bench press": "incline bench press",
 	"decline bench press": "decline bench press",
 	"dumbbell bench press": "dumbbell bench press",
 	"incline dumbbell press": "incline dumbbell press",
+	"flat dumbbell press": "dumbbell bench press",
 	"chest fly (dumbbell)": "dumbbell flyes",
 	"cable fly": "cable crossover flyes",
 	"push-up": "push-up",
 	"push up": "push-up",
+	"weighted dip": "dips",
+
+	// Shoulder exercises
 	"overhead press": "overhead press",
 	"dumbbell shoulder press": "dumbbell shoulder press",
 	"lateral raise": "side raise",
 	"front raise": "front raise",
 	"face pull": "face pull",
 	"upright row": "upright row",
-	"pull-up": "pull-up",
+	"arnold press": "arnold press",
+	"rear delt fly": "dumbbell flyes",
+
+	// Back exercises
+	"weighted pull-up": "pull-up",
 	"chin-up": "chin-up",
 	"lat pulldown": "lat pulldown",
 	"seated cable row": "seated row",
 	"bent over row": "bent over row",
+	"barbell row": "barbell row",
+	"t-bar row": "t-bar row",
+	"rack pull": "rack pull",
 	"dumbbell row": "one-arm dumbbell row",
+
+	// Leg exercises
 	deadlift: "deadlift",
 	"romanian deadlift": "romanian deadlift",
+	"sumo deadlift": "sumo deadlift",
 	squat: "barbell squat",
+	"front squat": "front squat",
 	"goblet squat": "goblet squat",
+	"air squat": "air squat",
 	"leg press": "leg press",
 	"leg extension": "leg extension",
 	"leg curl": "leg curl",
 	lunge: "lunge",
 	"dumbbell lunge": "dumbbell lunge",
+	"step-up": "step-up",
+	"step-ups": "step-up",
 	"calf raise": "calf raise",
 	"seated calf raise": "seated calf raise",
+
+	// Glute exercises
+	"barbell hip thrust": "hip thrust",
+	"hip thrust": "hip thrust",
+	"smith machine hip thrust": "hip thrust",
+	"bodyweight glute bridge": "glute bridge",
+	"glute bridge": "glute bridge",
+	"cable kickback": "cable kickback",
+
+	// Arm exercises
 	"bicep curl": "barbell curl",
+	"barbell curl": "barbell curl",
 	"dumbbell curl": "dumbbell curl",
 	"hammer curl": "hammer curl",
 	"preacher curl": "preacher curl",
 	"tricep pushdown": "triceps pushdown",
+	"triceps pushdown": "triceps pushdown",
 	"skull crusher": "skull crusher",
 	"overhead tricep extension": "triceps extension",
-	dips: "dips",
+	"close-grip bench press": "close-grip bench press",
+
+	// Core exercises
 	plank: "plank",
+	"side plank": "side plank",
 	crunch: "crunch",
 	"sit-up": "sit-up",
+	dips: "dips",
 	"mountain climber": "mountain climber",
 	"bicycle crunch": "bicycle crunch",
 	"russian twist": "russian twist",
-	"hip thrust": "hip thrust",
-	"glute bridge": "glute bridge",
+	"leg raise": "leg raise",
+	"dead bug": "dead bug",
+
+	// Full body exercises
+	"kettlebell swing": "kettlebell swing",
+	thruster: "thruster",
+	"burpee pull-up": "burpee",
+	"farmer carry": "farmer carry",
 }
 
 const normalizeExerciseName = (name: string): string =>

@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext.jsx"
 import TrackerDashboard from "../components/TrackerDashboard.jsx"
 import WorkoutList from "../components/WorkoutList.jsx"
 import AnalyticsPanel from "../components/AnalyticsPanel.jsx"
-import WorkoutTab from "../components/WorkoutTab.jsx"
 import HandbookPage from "./HandbookPage.jsx"
 import WorkoutModal from "../components/WorkoutModal.jsx"
 import ToastContainer from "../components/ToastContainer.jsx"
@@ -283,9 +282,7 @@ function DashboardPage() {
 						onViewHistory={() => handleViewChange("history")}
 					/>
 				)}
-				{activeView === "workout" && (
-					<WorkoutTab onCompleteWorkout={handleSaveWorkout} />
-				)}
+				{activeView === "workout" && null}
 				{activeView === "handbook" && <HandbookPage embedded />}
 				{activeView === "history" && (
 					<WorkoutList
