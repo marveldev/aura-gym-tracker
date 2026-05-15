@@ -99,7 +99,10 @@ function DashboardPage() {
 			location.pathname,
 			location.search,
 		)
-		if (redirectPath && `${location.pathname}${location.search}` !== redirectPath) {
+		if (
+			redirectPath &&
+			`${location.pathname}${location.search}` !== redirectPath
+		) {
 			navigate(redirectPath, { replace: true })
 		}
 	}, [location.pathname, location.search, navigate])

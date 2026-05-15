@@ -7,6 +7,7 @@ import AnalyticsPage from "./pages/AnalyticsPage.jsx"
 import AuthPage from "./pages/AuthPage.jsx"
 import OnboardingPage from "./pages/OnboardingPage.jsx"
 import HandbookPage from "./pages/HandbookPage.jsx"
+import HandbookDashboardPage from "./pages/HandbookDashboardPage.jsx"
 import HandbookSectionPage from "./pages/HandbookSectionPage.jsx"
 import HandbookEncyclopediaTopicPage from "./pages/HandbookEncyclopediaTopicPage.jsx"
 import HandbookNutritionPage from "./pages/HandbookNutritionPage.jsx"
@@ -66,7 +67,7 @@ function App() {
 					path="/handbook"
 					element={
 						<ProtectedRoute>
-							<DashboardPage />
+							<HandbookDashboardPage />
 						</ProtectedRoute>
 					}
 				/>
