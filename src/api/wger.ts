@@ -130,11 +130,7 @@ const NAME_MAP: Record<string, string> = {
 }
 
 const normalizeExerciseName = (name: string): string =>
-	name
-		.trim()
-		.toLowerCase()
-		.replace(/[()]/g, "")
-		.replace(/\s+/g, " ")
+	name.trim().toLowerCase().replace(/[()]/g, "").replace(/\s+/g, " ")
 
 const buildSearchVariants = (name: string): string[] => {
 	const normalized = normalizeExerciseName(name)
@@ -277,56 +273,21 @@ const toWgerExercise = (
 	}
 }
 
-type WgerImageListResponse =
-	| { count: number; results: WgerImage[] }
-	| WgerImage[]
+const findExerciseMatchByName = async (
+	localExerciseName: string,
+): Promise<{ exercise: WgerExercise; queryUsed: string } | null> => {
+	const variants = buildSearchVariants(localExerciseName)
 
-const normalizeImageResults = (data: WgerImageListResponse): WgerImage[] => {
-	if (Array.isArray(data)) return data
-	return Array.isArray(data.results) ? data.results : []
-}
+	for (const variant of variants) {
+		const match = await getExerciseByName(variant)
+		if (!match) continue
 
-const fetchExerciseImagesById = async (
-	exerciseId: number,
-): Promise<WgerImage[]> => {
-	const params = new URLSearchParams({
-		format: "json",
-		exercise_base: String(exerciseId),
-	})
-
-	const response = await fetch(
-		`${BASE_URL}/exerciseimage/?${params.toString()}`,
-	)
-	if (!response.ok) {
-		throw new Error(`WGER API error ${response.status}: ${response.statusText}`)
+		if (match.imageUrl) {
+			return { exercise: match, queryUsed: variant }
+		}
 	}
 
-	const data: WgerImageListResponse = await response.json()
-	const images = normalizeImageResults(data)
-
-	if (images.length) return images
-
-	const fallbackParams = new URLSearchParams({
-		format: "json",
-		exercise: String(exerciseId),
-	})
-	const fallbackResponse = await fetch(
-		`${BASE_URL}/exerciseimage/?${fallbackParams.toString()}`,
-	)
-	if (!fallbackResponse.ok) {
-		throw new Error(
-			`WGER API error ${fallbackResponse.status}: ${fallbackResponse.statusText}`,
-		)
-	}
-
-	const fallbackData: WgerImageListResponse = await fallbackResponse.json()
-	return normalizeImageResults(fallbackData)
-}
-
-const pickImageUrl = (images: WgerImage[]): string => {
-	if (!images.length) return ""
-	const preferred = images.find((img) => img.is_main) ?? images[0]
-	return toHttps(preferred.image)
+	return null
 }
 
 export const getExerciseImageFromApi = async ({
@@ -341,33 +302,21 @@ export const getExerciseImageFromApi = async ({
 	const cached = readImageCache(lookupKey)
 	if (cached !== undefined) {
 		console.log(
-			`[WGER:image] Matched (cache) "${exerciseName ?? "unknown"}" -> "${cached ?? "fallback"}"`,
+			`[WGER:image] Local "${exerciseName ?? "unknown"}" matched (cache) -> "${cached ?? "fallback"}"`,
 		)
 		return cached ?? ""
 	}
 
-	let resolvedExerciseId = exerciseId
-	if (!resolvedExerciseId && normalizedName) {
-		const variants = buildSearchVariants(normalizedName)
-		for (const variant of variants) {
-			const byName = await getExerciseByName(variant)
-			if (byName?.id) {
-				resolvedExerciseId = byName.id
-				break
-			}
-		}
-	}
-
-	if (!resolvedExerciseId) {
+	if (!normalizedName) {
 		writeImageCache(lookupKey, null)
 		console.log(
-			`[WGER:image] Matched "${exerciseName ?? "unknown"}" -> "fallback"`,
+			`[WGER:image] Local "${exerciseName ?? "unknown"}" matched WGER "none" (query "none") -> "fallback"`,
 		)
 		return ""
 	}
 
-	const images = await fetchExerciseImagesById(resolvedExerciseId)
-	const imageUrl = pickImageUrl(images)
+	const matched = await findExerciseMatchByName(normalizedName)
+	const imageUrl = matched?.exercise.imageUrl ?? ""
 
 	writeImageCache(lookupKey, imageUrl || null)
 	if (normalizedName) {
@@ -375,7 +324,7 @@ export const getExerciseImageFromApi = async ({
 	}
 
 	console.log(
-		`[WGER:image] Matched "${exerciseName ?? "unknown"}" -> "${imageUrl || "fallback"}"`,
+		`[WGER:image] Local "${exerciseName ?? "unknown"}" matched WGER "${matched?.exercise.name ?? "none"}" (query "${matched?.queryUsed ?? "none"}") -> "${imageUrl || "fallback"}"`,
 	)
 
 	return imageUrl

@@ -1,10 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import {
-	Link,
-	useLocation,
-	useNavigate,
-	useSearchParams,
-} from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext.jsx"
 import TrackerDashboard from "../components/TrackerDashboard.jsx"
 import WorkoutList from "../components/WorkoutList.jsx"
@@ -24,15 +19,39 @@ import {
 } from "../services/workoutStorage.js"
 
 const views = ["dashboard", "workout", "handbook", "history", "analytics"]
+const viewPathMap = {
+	dashboard: "/dashboard",
+	workout: "/workout",
+	handbook: "/handbook",
+	history: "/history",
+	analytics: "/analytics",
+}
+
+const getViewFromPathname = (pathname) => {
+	if (pathname === "/workout") return "workout"
+	if (pathname === "/handbook") return "handbook"
+	if (pathname === "/history") return "history"
+	if (pathname === "/analytics") return "analytics"
+	return "dashboard"
+}
+
+const getLegacyViewRedirectPath = (pathname, search) => {
+	const params = new URLSearchParams(search)
+	const legacyView = params.get("view")
+	if (!legacyView) return null
+
+	if (views.includes(legacyView)) {
+		return viewPathMap[legacyView] ?? "/dashboard"
+	}
+
+	return pathname || "/dashboard"
+}
 
 function DashboardPage() {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const { logout } = useAuth()
-	const [searchParams, setSearchParams] = useSearchParams()
-	const initialView = views.includes(searchParams.get("view"))
-		? searchParams.get("view")
-		: "dashboard"
+	const initialView = getViewFromPathname(location.pathname)
 	const [activeView, setActiveView] = useState(initialView)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [prefillExerciseName, setPrefillExerciseName] = useState("")
@@ -76,16 +95,21 @@ function DashboardPage() {
 	}, [])
 
 	useEffect(() => {
-		const nextView = searchParams.get("view")
-		if (views.includes(nextView) && nextView !== activeView) {
-			setActiveView(nextView)
-			return
+		const redirectPath = getLegacyViewRedirectPath(
+			location.pathname,
+			location.search,
+		)
+		if (redirectPath && `${location.pathname}${location.search}` !== redirectPath) {
+			navigate(redirectPath, { replace: true })
 		}
+	}, [location.pathname, location.search, navigate])
 
-		if (!nextView && activeView !== "dashboard") {
-			setSearchParams({ view: activeView }, { replace: true })
+	useEffect(() => {
+		const nextView = getViewFromPathname(location.pathname)
+		if (nextView !== activeView) {
+			setActiveView(nextView)
 		}
-	}, [activeView, searchParams, setSearchParams])
+	}, [activeView, location.pathname])
 
 	useEffect(() => {
 		if (!location.state?.openWorkoutModal) {
@@ -98,17 +122,12 @@ function DashboardPage() {
 		setPrefillFocus((prefillWorkout?.focus || "").trim())
 		setIsModalOpen(true)
 
-		navigate(`/dashboard?view=${activeView}`, { replace: true, state: null })
+		navigate("/dashboard", { replace: true, state: null })
 	}, [location.state, navigate])
 
 	const handleViewChange = (view) => {
 		setActiveView(view)
-		if (view === "dashboard") {
-			setSearchParams({}, { replace: true })
-			return
-		}
-
-		setSearchParams({ view }, { replace: true })
+		navigate(viewPathMap[view] ?? "/dashboard", { replace: true })
 	}
 
 	const stats = useMemo(() => calculateStats(workouts), [workouts])
@@ -261,13 +280,10 @@ function DashboardPage() {
 						onViewHistory={() => handleViewChange("history")}
 					/>
 				)}
-
 				{activeView === "workout" && (
 					<WorkoutTab onCompleteWorkout={handleSaveWorkout} />
 				)}
-
 				{activeView === "handbook" && <HandbookPage embedded />}
-
 				{activeView === "history" && (
 					<WorkoutList
 						workouts={workouts}
@@ -275,7 +291,6 @@ function DashboardPage() {
 						onDeleteWorkout={handleDeleteWorkout}
 					/>
 				)}
-
 				{activeView === "analytics" && (
 					<AnalyticsPanel
 						exercises={uniqueExercises}
