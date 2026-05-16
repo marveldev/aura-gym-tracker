@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import LandingPage from "./pages/LandingPage.jsx"
 import DashboardPage from "./pages/DashboardPage.jsx"
-import WorkoutPage from "./pages/WorkoutPage"
+import WorkoutPage from "./pages/WorkoutPage.jsx"
 import HistoryPage from "./pages/HistoryPage.jsx"
 import AnalyticsPage from "./pages/AnalyticsPage.jsx"
 import AuthPage from "./pages/AuthPage.jsx"

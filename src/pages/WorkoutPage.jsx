@@ -2,28 +2,10 @@ import { useEffect, useMemo, useState } from "react"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import FlatList from "../components/FlatList"
 
-interface ExerciseDbExercise {
-	id: string
-	name: string
-	bodyPart: string
-	target: string
-	equipment: string
-	gifUrl: string
-}
-
-interface ExerciseDbRawExercise {
-	id?: string | number
-	name?: string
-	bodyPart?: string
-	target?: string
-	equipment?: string
-	gifUrl?: string
-}
-
 const EXERCISE_DB_ENDPOINT = "https://oss.exercisedb.dev/api/v1/exercises"
 const INITIAL_FETCH_LIMIT = 50
 
-const toExercise = (item: ExerciseDbRawExercise): ExerciseDbExercise => ({
+const toExercise = (item) => ({
 	id: String(item.id ?? `${item.name ?? "exercise"}-${Math.random()}`),
 	name: (item.name || "Unknown Exercise").trim(),
 	bodyPart: (item.bodyPart || "Unknown").trim(),
@@ -32,18 +14,17 @@ const toExercise = (item: ExerciseDbRawExercise): ExerciseDbExercise => ({
 	gifUrl: (item.gifUrl || "").trim(),
 })
 
-const readExerciseList = (payload: unknown): ExerciseDbRawExercise[] => {
+const readExerciseList = (payload) => {
 	if (Array.isArray(payload)) {
-		return payload as ExerciseDbRawExercise[]
+		return payload
 	}
 
 	if (payload && typeof payload === "object") {
-		const asRecord = payload as Record<string, unknown>
-		if (Array.isArray(asRecord.data)) {
-			return asRecord.data as ExerciseDbRawExercise[]
+		if (Array.isArray(payload.data)) {
+			return payload.data
 		}
-		if (Array.isArray(asRecord.results)) {
-			return asRecord.results as ExerciseDbRawExercise[]
+		if (Array.isArray(payload.results)) {
+			return payload.results
 		}
 	}
 
@@ -53,8 +34,8 @@ const readExerciseList = (payload: unknown): ExerciseDbRawExercise[] => {
 const fetchExercises = async (
 	limit = INITIAL_FETCH_LIMIT,
 	offset = 0,
-	signal?: AbortSignal,
-): Promise<ExerciseDbExercise[]> => {
+	signal,
+) => {
 	const url = new URL(EXERCISE_DB_ENDPOINT)
 	url.searchParams.set("limit", String(limit))
 	url.searchParams.set("offset", String(offset))
@@ -70,19 +51,19 @@ const fetchExercises = async (
 		)
 	}
 
-	const payload: unknown = await response.json()
+	const payload = await response.json()
 	return readExerciseList(payload).map(toExercise)
 }
 
 function WorkoutPage() {
-	const [exercises, setExercises] = useState<ExerciseDbExercise[]>([])
+	const [exercises, setExercises] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 	const [isLoadingMore, setIsLoadingMore] = useState(false)
 	const [error, setError] = useState("")
 	const [offset, setOffset] = useState(0)
-	const [seenIds] = useState(() => new Set<string>())
+	const [seenIds] = useState(() => new Set())
 
-	const loadExercises = async (signal?: AbortSignal) => {
+	const loadExercises = async (signal) => {
 		setIsLoading(true)
 		setError("")
 		setOffset(0)
@@ -144,7 +125,7 @@ function WorkoutPage() {
 		[exercises.length],
 	)
 
-	const renderExerciseCard = (exercise: ExerciseDbExercise) => (
+	const renderExerciseCard = (exercise) => (
 		<article className="card p-4 sm:p-5 shadow-md shadow-black/5 rounded-2xl">
 			<div className="flex gap-4 items-start">
 				<div className="h-24 w-24 sm:h-28 sm:w-28 rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--bg))] overflow-hidden shrink-0">
