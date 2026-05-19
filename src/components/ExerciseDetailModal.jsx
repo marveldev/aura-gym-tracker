@@ -115,6 +115,16 @@ function ExerciseDetailModal({ exercise, onClose }) {
 						</div>
 					</div>
 
+					{/* Overview */}
+					<div>
+						<h3 className="text-sm font-semibold text-[hsl(var(--muted))] uppercase tracking-widest mb-2">
+							Overview
+						</h3>
+						<p className="text-sm leading-relaxed text-[hsl(var(--fg))]/80 bg-[hsl(var(--bg))]/60 border border-[hsl(var(--border))] rounded-2xl p-4 min-h-16">
+							{exercise.overview?.trim() || "—"}
+						</p>
+					</div>
+
 					{/* Muscles */}
 					<div>
 						<h3 className="text-sm font-semibold text-[hsl(var(--muted))] uppercase tracking-widest mb-2">

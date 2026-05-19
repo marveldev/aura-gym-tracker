@@ -284,7 +284,7 @@ function WorkoutPage() {
 
 					{/* Grid */}
 					{filtered.length > 0 ? (
-						<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 animate-fade-in">
+						<div className="grid grid-cols-1 gap-4 animate-fade-in">
 							{filtered.map((exercise) => (
 								<ExerciseCard
 									key={exercise.exerciseId}
