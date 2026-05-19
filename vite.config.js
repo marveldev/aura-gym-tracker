@@ -5,11 +5,10 @@ export default defineConfig({
 	plugins: [react()],
 	server: {
 		proxy: {
-			"/api/exercises": {
+			"/api": {
 				target: "https://oss.exercisedb.dev",
 				changeOrigin: true,
-				rewrite: (path) =>
-					path.replace(/^\/api\/exercises/, "/api/v1/exercises"),
+				rewrite: (path) => path.replace(/^\/api/, "/api/v1"),
 			},
 		},
 	},
