@@ -15,6 +15,7 @@ import HandbookFoodCategoryPage from "./pages/HandbookFoodCategoryPage.jsx"
 import HandbookExerciseMusclePage from "./pages/HandbookExerciseMusclePage.jsx"
 import HandbookExerciseDetailPage from "./pages/HandbookExerciseDetailPage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
+import WorkoutPage from "./pages/WorkoutPage.jsx"
 
 function App() {
 	return (
@@ -115,6 +116,14 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<HandbookExerciseDetailPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/workout"
+					element={
+						<ProtectedRoute>
+							<WorkoutPage />
 						</ProtectedRoute>
 					}
 				/>
