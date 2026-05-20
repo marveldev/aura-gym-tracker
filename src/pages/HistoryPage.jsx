@@ -53,7 +53,7 @@ function HistoryPage() {
 	return (
 		<AppPageFrame>
 			<div className="px-4 sm:px-6 lg:px-8 py-4">
-				<div className="max-w-5xl mx-auto space-y-6">
+				<div className="w-full space-y-6">
 					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 						History
 					</h1>

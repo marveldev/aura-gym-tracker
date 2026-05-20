@@ -33,7 +33,7 @@ function HandbookPage({ embedded = false }) {
 			className={`${
 				embedded ? "" : "min-h-screen"
 			} bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8`}>
-			<div className="max-w-5xl mx-auto">
+			<div className="w-full">
 				<div className="flex items-center justify-between mb-8">
 					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 						Handbook

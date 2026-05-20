@@ -21,13 +21,13 @@ const nutritionSections = [
 function NutritionPage() {
 	return (
 		<AppPageFrame>
-			<div className="bg-zinc-950 text-zinc-100 pb-24 min-h-[calc(100vh-7rem)] rounded-2xl">
-				<main className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-5 sm:py-7 space-y-6">
+			<div className="pb-24">
+				<main className="w-full px-4 sm:px-6 lg:px-8 py-5 sm:py-7 space-y-6">
 					<div>
 						<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 							Nutrition
 						</h1>
-						<p className="mt-1 text-sm text-zinc-400">
+						<p className="mt-1 text-sm text-[hsl(var(--muted))]">
 							Choose a nutrition area to continue.
 						</p>
 					</div>
@@ -37,17 +37,17 @@ function NutritionPage() {
 							const Icon = section.icon
 							return (
 								<Link key={section.title} to={section.to}>
-									<BaseCard className="p-5 transition hover:border-orange-500/40 hover:bg-zinc-900">
+									<BaseCard className="p-5 transition hover:border-[hsl(var(--primary))]/40 hover:bg-[hsl(var(--bg))]">
 										<div className="flex items-start justify-between gap-4">
-											<span className="rounded-2xl bg-zinc-800 p-2.5 text-orange-400">
+											<span className="rounded-2xl bg-[hsl(var(--bg))] p-2.5 text-[hsl(var(--primary))]">
 												<Icon className="h-5 w-5" />
 											</span>
-											<ChevronRight className="h-5 w-5 text-zinc-500" />
+											<ChevronRight className="h-5 w-5 text-[hsl(var(--muted))]" />
 										</div>
 										<h2 className="mt-4 text-lg font-semibold">
 											{section.title}
 										</h2>
-										<p className="mt-1 text-sm text-zinc-400 leading-relaxed">
+										<p className="mt-1 text-sm text-[hsl(var(--muted))] leading-relaxed">
 											{section.description}
 										</p>
 									</BaseCard>

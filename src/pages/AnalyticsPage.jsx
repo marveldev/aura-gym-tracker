@@ -43,8 +43,8 @@ function AnalyticsPage() {
 
 	return (
 		<AppPageFrame>
-			<div className="bg-zinc-950 text-zinc-100 pb-24 min-h-[calc(100vh-7rem)] rounded-2xl">
-				<div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-5 sm:py-7 space-y-6">
+			<div className="pb-24">
+				<div className="w-full px-4 sm:px-6 lg:px-8 py-5 sm:py-7 space-y-6">
 					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 						Analytics
 					</h1>
