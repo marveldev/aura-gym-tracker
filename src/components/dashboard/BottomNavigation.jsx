@@ -24,7 +24,7 @@ function BottomNavigation() {
 	const location = useLocation()
 
 	return (
-		<nav className="fixed inset-x-0 bottom-0 z-40 border-t border-zinc-800 bg-zinc-950/95 px-2 pb-safe backdrop-blur md:hidden">
+		<nav className="fixed inset-x-0 bottom-0 z-40 border-t border-[hsl(var(--border))] bg-[hsl(var(--surface))]/95 px-2 pb-safe backdrop-blur md:hidden">
 			<div className="grid grid-cols-5 gap-1 py-2">
 				{tabs.map((tab) => {
 					const Icon = tab.icon
@@ -36,7 +36,9 @@ function BottomNavigation() {
 							key={tab.key}
 							to={tab.to}
 							className={`flex flex-col items-center gap-1 rounded-xl px-2 py-1.5 transition active:scale-95 ${
-								isActive ? "text-orange-400" : "text-zinc-500"
+								isActive
+									? "text-[hsl(var(--primary))]"
+									: "text-[hsl(var(--muted))]"
 							}`}>
 							<Icon className="h-4.5 w-4.5" />
 							<span className="text-[10px] font-medium">{tab.label}</span>

@@ -10,7 +10,9 @@ import {
 
 function WeightProgressChart({ data, isLoading = false }) {
 	if (isLoading) {
-		return <div className="h-64 animate-pulse rounded-2xl bg-zinc-800" />
+		return (
+			<div className="h-64 animate-pulse rounded-2xl bg-[hsl(var(--border))]" />
+		)
 	}
 
 	return (
@@ -19,28 +21,28 @@ function WeightProgressChart({ data, isLoading = false }) {
 				<LineChart
 					data={data}
 					margin={{ left: -18, right: 8, top: 10, bottom: 4 }}>
-					<CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
+					<CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
 					<XAxis
 						dataKey="week"
-						stroke="#71717a"
+						stroke="hsl(var(--muted))"
 						tickLine={false}
 						axisLine={false}
 					/>
-					<YAxis stroke="#71717a" tickLine={false} axisLine={false} />
+					<YAxis stroke="hsl(var(--muted))" tickLine={false} axisLine={false} />
 					<Tooltip
 						contentStyle={{
-							background: "#18181b",
-							border: "1px solid #3f3f46",
+							background: "hsl(var(--surface))",
+							border: "1px solid hsl(var(--border))",
 							borderRadius: "12px",
-							color: "#e4e4e7",
+							color: "hsl(var(--fg))",
 						}}
 					/>
 					<Line
 						type="monotone"
 						dataKey="weight"
-						stroke="#f97316"
+						stroke="hsl(var(--primary))"
 						strokeWidth={2.5}
-						dot={{ fill: "#fb923c", r: 4 }}
+						dot={{ fill: "hsl(var(--primary))", r: 4 }}
 						activeDot={{ r: 6 }}
 					/>
 				</LineChart>

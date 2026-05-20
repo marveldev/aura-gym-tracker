@@ -6,7 +6,7 @@ function BaseCard({ children, className = "" }) {
 			initial={{ opacity: 0, y: 8 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.35, ease: "easeOut" }}
-			className={`rounded-2xl border border-zinc-800 bg-zinc-900/90 shadow-[0_8px_24px_rgba(0,0,0,0.35)] ${className}`}>
+			className={`rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] shadow-sm ${className}`}>
 			{children}
 		</motion.div>
 	)
