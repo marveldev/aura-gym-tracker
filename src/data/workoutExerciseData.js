@@ -1,23 +1,6 @@
 const workoutExerciseData = {
 	data: [
 		{
-			exerciseId: "01qpYSe",
-			name: "upward facing dog",
-			gifUrl: "https://static.exercisedb.dev/media/01qpYSe.gif",
-			bodyParts: ["back"],
-			equipments: ["body weight"],
-			targetMuscles: ["spine"],
-			secondaryMuscles: ["shoulders", "chest"],
-			instructions: [
-				"Step:1 Lie face down on the floor with your legs extended behind you.",
-				"Step:2 Place your hands on the floor next to your lower ribs, fingers pointing forward.",
-				"Step:3 Press your hands firmly into the floor and straighten your arms, lifting your torso and thighs off the ground.",
-				"Step:4 Roll your shoulders back and down, opening your chest and lifting your gaze towards the ceiling.",
-				"Step:5 Hold this position for a few breaths, then slowly lower your body back down to the starting position.",
-				"Step:6 Repeat for the desired number of repetitions.",
-			],
-		},
-		{
 			exerciseId: "edb_2Gp7xOe",
 			name: "hack calf raise",
 			bodyParts: ["lower legs"],
@@ -535,6 +518,25 @@ const workoutExerciseData = {
 			],
 		},
 		{
+			exerciseId: "01qpYSe",
+			name: "upward facing dog",
+			gifUrl: "https://static.exercisedb.dev/media/01qpYSe.gif",
+			bodyParts: ["back"],
+			equipments: ["body weight"],
+			targetMuscles: ["spine"],
+			secondaryMuscles: ["shoulders", "chest"],
+			overview:
+				"Upward Facing Dog is a yoga-based back extension exercise that strengthens the spine while opening the chest and shoulders. It helps improve posture, spinal mobility, and upper body flexibility by lifting the torso off the ground while keeping the legs extended.",
+			instructions: [
+				"Step:1 Lie face down on the floor with your legs extended behind you.",
+				"Step:2 Place your hands on the floor next to your lower ribs, fingers pointing forward.",
+				"Step:3 Press your hands firmly into the floor and straighten your arms, lifting your torso and thighs off the ground.",
+				"Step:4 Roll your shoulders back and down, opening your chest and lifting your gaze towards the ceiling.",
+				"Step:5 Hold this position for a few breaths, then slowly lower your body back down to the starting position.",
+				"Step:6 Repeat for the desired number of repetitions.",
+			],
+		},
+		{
 			exerciseId: "edb_PAjWkza",
 			name: "assisted hanging knee raise with throw down",
 			bodyParts: ["waist"],
@@ -648,6 +650,8 @@ const workoutExerciseData = {
 				"Step:4 Slowly lower your legs back down to the starting position.",
 				"Step:5 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"An assisted core exercise that strengthens the abdominal muscles by raising the knees toward the chest while hanging, helping improve core stability and hip flexor strength.",
 		},
 		{
 			exerciseId: "05Cf2v8",
@@ -664,6 +668,8 @@ const workoutExerciseData = {
 				"Step:4 Pause for a moment, then push yourself back up to the starting position by straightening your arms.",
 				"Step:5 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A challenging bodyweight dip variation that heavily targets the triceps while also engaging the chest and shoulders for upper-body strength development.",
 		},
 		{
 			exerciseId: "0br45wL",
@@ -680,6 +686,8 @@ const workoutExerciseData = {
 				"Step:4 Lower your leg back down and repeat the push-up, then switch to the other leg.",
 				"Step:5 Continue alternating leg kicks with each push-up repetition.",
 			],
+			overview:
+				"A full-body movement combining push-ups and lateral leg kicks to build upper-body strength, core stability, and glute activation.",
 		},
 		{
 			exerciseId: "0CXGHya",
@@ -698,6 +706,8 @@ const workoutExerciseData = {
 				"Step:6 Pause for a moment, then slowly return your arms back to the starting position.",
 				"Step:7 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A cable-based chest fly variation that isolates the pectorals while improving muscle control and upper-body coordination.",
 		},
 		{
 			exerciseId: "0dCyly0",
@@ -714,11 +724,14 @@ const workoutExerciseData = {
 				"Step:4 Press the barbell overhead, fully extending your arms.",
 				"Step:5 Lower the barbell back to shoulder height and repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A shoulder press variation that targets the deltoids while improving overhead pressing strength and shoulder stability.",
 		},
 		{
 			exerciseId: "0I5fUyn",
 			name: "band underhand pulldown with classic",
-			gifUrl: "https://fitnessvolt.com/wp-content/uploads/2023/09/close-grip-lat-pulldown.gif",
+			gifUrl:
+				"https://fitnessvolt.com/wp-content/uploads/2023/09/close-grip-lat-pulldown.gif",
 			bodyParts: ["back"],
 			equipments: ["band"],
 			targetMuscles: ["lats"],
@@ -732,6 +745,8 @@ const workoutExerciseData = {
 				"Step:6 Pause for a moment at the bottom of the movement, then slowly release the tension and return to the starting position.",
 				"Step:7 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A resistance band lat pulldown variation that strengthens the back muscles, especially the lats, while improving pulling strength.",
 		},
 		{
 			exerciseId: "0IgNjSM",
@@ -748,6 +763,8 @@ const workoutExerciseData = {
 				"Step:4 Inhale and slowly begin to lower the dumbbells back to the starting position.",
 				"Step:5 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A biceps and forearm exercise performed with a reverse grip to improve brachialis development and grip strength.",
 		},
 		{
 			exerciseId: "0jp9Rlz",
@@ -764,6 +781,8 @@ const workoutExerciseData = {
 				"Step:4 Pause for a moment at the top, then slowly lower your heel back down to the starting position.",
 				"Step:5 Repeat for the desired number of repetitions, then switch legs and repeat.",
 			],
+			overview:
+				"A single-leg calf exercise that strengthens the lower leg muscles while improving balance and ankle stability.",
 		},
 		{
 			exerciseId: "0JtKWum",
@@ -790,6 +809,8 @@ const workoutExerciseData = {
 				"Step:7 Press the dumbbells overhead, fully extending your arms.",
 				"Step:8 Lower the dumbbells back to your shoulders and repeat the entire sequence for the desired number of repetitions.",
 			],
+			overview:
+				"A high-intensity full-body exercise combining strength and cardio to improve endurance, coordination, and overall conditioning.",
 		},
 		{
 			exerciseId: "0L2KwtI",
@@ -806,6 +827,8 @@ const workoutExerciseData = {
 				"Step:4 Hold the stretch for a few seconds, then roll back to the starting position.",
 				"Step:5 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A mobility exercise using a roller to release tightness in the hips and improve glute flexibility.",
 		},
 		{
 			exerciseId: "0lQnxMZ",
@@ -823,6 +846,8 @@ const workoutExerciseData = {
 				"Step:5 Pause for a moment at the bottom, then push through your heels to return to the starting position.",
 				"Step:6 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A quad-dominant squat variation that increases strength and knee control while heavily targeting the front of the thighs.",
 		},
 		{
 			exerciseId: "0mB6wHO",
@@ -839,11 +864,14 @@ const workoutExerciseData = {
 				"Step:4 Place your hands on your right thigh for support.",
 				"Step:5 Hold the stretch for 20-30 seconds, then switch sides and repeat.",
 			],
+			overview:
+				"A dynamic hamstring stretch that improves flexibility in the posterior chain and supports running mobility.",
 		},
 		{
 			exerciseId: "0MlxeMn",
 			name: "gentle style cable pulldown (pro lat bar)",
-			gifUrl: "https://i.pinimg.com/originals/28/89/f2/2889f2aec66e3a7c7b7ff2ab78675b77.gif",
+			gifUrl:
+				"https://i.pinimg.com/originals/28/89/f2/2889f2aec66e3a7c7b7ff2ab78675b77.gif",
 			bodyParts: ["back"],
 			equipments: ["cable"],
 			targetMuscles: ["lats"],
@@ -856,6 +884,8 @@ const workoutExerciseData = {
 				"Step:5 Pause for a moment at the bottom of the movement, then slowly release the bar back up to the starting position.",
 				"Step:6 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A controlled lat pulldown variation focused on smooth tension and back engagement for beginners and rehab-style training.",
 		},
 		{
 			exerciseId: "0rHfvy9",
@@ -873,6 +903,8 @@ const workoutExerciseData = {
 				"Step:5 Pause for a moment at the top of the movement, then slowly lower your legs back to the starting position.",
 				"Step:6 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A hamstring isolation exercise using a cable machine that strengthens the back of the legs and improves knee flexion control.",
 		},
 		{
 			exerciseId: "0S75mYG",
@@ -889,6 +921,8 @@ const workoutExerciseData = {
 				"Step:4 Pause for a moment at the top, then slowly lower your heel back down to the starting position.",
 				"Step:5 Repeat for the desired number of repetitions, then switch legs and repeat.",
 			],
+			overview:
+				"A unilateral calf exercise that builds lower-leg strength and improves balance and ankle stability.",
 		},
 		{
 			exerciseId: "0V2YQjW",
@@ -906,6 +940,8 @@ const workoutExerciseData = {
 				"Step:5 Pause for a moment at the top, then slowly lower your body back down to the starting position with control.",
 				"Step:6 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A neutral-grip pull-up that targets the lats and biceps while reducing shoulder strain compared to wider grips.",
 		},
 		{
 			exerciseId: "0xDpB4L",
@@ -923,6 +959,8 @@ const workoutExerciseData = {
 				"Step:5 Pause for a moment at the end of the movement, then slowly bring your knees back together.",
 				"Step:6 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A glute and hip stability exercise that strengthens the outer thighs using a resistance band.",
 		},
 		{
 			exerciseId: "0Yz8WdV",
@@ -940,6 +978,8 @@ const workoutExerciseData = {
 				"Step:5 Maintain a steady pace and keep your core tight throughout the exercise.",
 				"Step:6 Continue for the desired distance or time.",
 			],
+			overview:
+				"A full-body cardio movement that improves coordination, endurance, and core stability through crawling mechanics.",
 		},
 		{
 			exerciseId: "10Z2DXU",
@@ -958,6 +998,8 @@ const workoutExerciseData = {
 				"Step:6 Pause for a moment at the top of the movement, then slowly lower the footplate back towards your body by bending your knees.",
 				"Step:7 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A leg press variation using a sled machine that develops lower-body strength with emphasis on glutes and quads.",
 		},
 		{
 			exerciseId: "11wrviz",
@@ -976,6 +1018,8 @@ const workoutExerciseData = {
 				"Step:6 Repeat the movement, this time lowering your legs to the opposite side.",
 				"Step:7 Continue alternating sides for the desired number of repetitions.",
 			],
+			overview:
+				"A core-intensive isometric movement that strengthens the abs, obliques, and chest stabilizers through controlled leg rotation.",
 		},
 		{
 			exerciseId: "13TpY4H",
@@ -992,6 +1036,8 @@ const workoutExerciseData = {
 				"Step:4 Push back up to the starting position, using your chest muscles to lift your body.",
 				"Step:5 Repeat with the other arm extended.",
 			],
+			overview:
+				"An advanced push-up variation that builds unilateral chest strength, core stability, and shoulder control.",
 		},
 		{
 			exerciseId: "13VW2VO",
@@ -1009,6 +1055,8 @@ const workoutExerciseData = {
 				"Step:5 Repeat with your left leg.",
 				"Step:6 Continue alternating legs for the desired number of repetitions.",
 			],
+			overview:
+				"A weighted lunge variation that improves lower-body strength, flexibility, and hip mobility.",
 		},
 		{
 			exerciseId: "17bqEXD",
@@ -1025,6 +1073,8 @@ const workoutExerciseData = {
 				"Step:4 Hold the stretch for 20-30 seconds.",
 				"Step:5 Switch legs and repeat the stretch.",
 			],
+			overview:
+				"A seated mobility stretch that improves calf flexibility and helps reduce lower-leg tightness.",
 		},
 		{
 			exerciseId: "17lJ1kr",
@@ -1043,6 +1093,8 @@ const workoutExerciseData = {
 				"Step:6 Inhale and slowly lower the lever back to the starting position.",
 				"Step:7 Repeat for the desired number of repetitions.",
 			],
+			overview:
+				"A machine-based hamstring curl that isolates the back of the legs to improve strength and knee flexion control.",
 		},
 	],
 }

@@ -57,7 +57,8 @@ function AppPageFrame({ children }) {
 	}
 
 	return (
-		<div className="min-h-screen bg-[hsl(var(--bg))] text-[hsl(var(--fg))]">
+		<div className="app-container">
+			{/* Top nav */}
 			<nav className="fixed w-full top-0 z-50 transition-all duration-300 backdrop-blur-md bg-[hsl(var(--bg))]/80 border-b border-[hsl(var(--border))]/50">
 				<div className="px-4 md:px-6 h-16 flex items-center justify-between">
 					<Link to="/" className="flex items-center gap-3">
@@ -90,8 +91,25 @@ function AppPageFrame({ children }) {
 				</div>
 			</nav>
 
-			<main className="pt-20 md:pt-24 pb-24 md:pb-8">{children}</main>
+			{/* Desktop sidebar */}
+			<aside className="sidebar pt-16">
+				<div className="p-6">
+					<nav className="flex flex-col gap-2">
+						{NAV_ITEMS.map((item) => (
+							<Link
+								key={item.key}
+								to={item.to}
+								replace
+								className={`nav-link ${isActiveRoute(location.pathname, item.to) ? "active" : ""}`}>
+								<i className={`ph text-xl ${item.icon}`} />
+								{item.label}
+							</Link>
+						))}
+					</nav>
+				</div>
+			</aside>
 
+			{/* Mobile bottom nav */}
 			<nav className="mobile-nav">
 				{NAV_ITEMS.map((item) => (
 					<div key={item.key} className="contents">
@@ -105,6 +123,9 @@ function AppPageFrame({ children }) {
 					</div>
 				))}
 			</nav>
+
+			{/* Main content */}
+			<main className="main-content pt-20 md:pt-24">{children}</main>
 		</div>
 	)
 }
