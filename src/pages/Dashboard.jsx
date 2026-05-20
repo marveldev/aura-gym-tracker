@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { Bell, Flame, ChevronRight, Dumbbell } from "lucide-react"
+import { Flame, ChevronRight, Dumbbell } from "lucide-react"
 import { motion } from "framer-motion"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import BaseCard from "../components/dashboard/BaseCard"
@@ -32,31 +32,20 @@ function Dashboard() {
 
 	return (
 		<AppPageFrame>
-			<div className="-mx-6 md:-mx-10 -mt-6 md:-mt-10 pb-24">
+			<div className="-mx-6 md:-mx-10 pb-24">
 				<div className="w-full px-6 sm:px-8 lg:px-10 pt-5 sm:pt-6 pb-7 sm:pb-8 space-y-6 sm:space-y-7">
-					<header className="flex items-center justify-between">
-						<div>
+					<header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+						<div className="min-w-0">
 							<p className="text-sm text-[hsl(var(--muted))]">{greeting}</p>
-							<h1 className="mt-1 text-2xl sm:text-3xl font-bold tracking-tight">
+							<h1 className="mt-1 text-2xl sm:text-3xl font-bold tracking-tight leading-tight">
 								{data.profile.name}
 							</h1>
 						</div>
-						<div className="flex items-center gap-2.5">
-							<div className="hidden sm:inline-flex items-center gap-1.5 rounded-2xl border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-3 py-2 text-xs font-semibold text-[hsl(var(--primary))]">
+						<div className="flex items-center gap-2 self-start md:self-auto">
+							<div className="hidden lg:inline-flex items-center gap-1.5 rounded-xl border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-2.5 py-1.5 text-xs font-semibold text-[hsl(var(--primary))]">
 								<Flame className="h-3.5 w-3.5" />
 								{data.profile.streakDays} day streak
 							</div>
-							<button className="relative rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-2.5 transition hover:bg-[hsl(var(--bg))]">
-								<Bell className="h-4.5 w-4.5 text-[hsl(var(--muted))]" />
-								<span className="absolute -right-0.5 -top-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-[hsl(var(--primary))] px-1 text-[10px] font-semibold text-[hsl(var(--primary-fg))]">
-									{data.profile.unreadNotifications}
-								</span>
-							</button>
-							<img
-								src={data.profile.avatarUrl}
-								alt="User avatar"
-								className="h-10 w-10 rounded-2xl border border-[hsl(var(--border))] object-cover"
-							/>
 						</div>
 					</header>
 
