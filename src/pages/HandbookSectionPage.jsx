@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom"
+import AppPageFrame from "../components/AppPageFrame.jsx"
 import { encyclopediaTopics } from "../data/encyclopediaTopics.js"
 
 const sectionMeta = {
@@ -50,20 +51,24 @@ const sectionMeta = {
 
 function SectionLayout({ title, children, backTo = "/handbook" }) {
 	return (
-		<div className="min-h-screen bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
-			<div className="max-w-4xl mx-auto">
-				<div className="flex items-center justify-between mb-8">
-					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-						{title}
-					</h1>
-					<Link to={backTo} className="btn btn-secondary rounded-lg px-4 py-2">
-						Back
-					</Link>
-				</div>
+		<AppPageFrame>
+			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
+				<div className="max-w-4xl mx-auto">
+					<div className="flex items-center justify-between mb-8">
+						<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+							{title}
+						</h1>
+						<Link
+							to={backTo}
+							className="btn btn-secondary rounded-lg px-4 py-2">
+							Back
+						</Link>
+					</div>
 
-				<div className="card p-6 sm:p-8">{children}</div>
+					<div className="card p-6 sm:p-8">{children}</div>
+				</div>
 			</div>
-		</div>
+		</AppPageFrame>
 	)
 }
 
