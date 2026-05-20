@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import LandingPage from "./pages/LandingPage.jsx"
-import DashboardPage from "./pages/DashboardPage.jsx"
+import Dashboard from "./pages/Dashboard"
 import HistoryPage from "./pages/HistoryPage.jsx"
 import AnalyticsPage from "./pages/AnalyticsPage.jsx"
 import AuthPage from "./pages/AuthPage.jsx"
@@ -35,7 +35,7 @@ function App() {
 					path="/dashboard"
 					element={
 						<ProtectedRoute>
-							<DashboardPage />
+							<Dashboard />
 						</ProtectedRoute>
 					}
 				/>
