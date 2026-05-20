@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage.jsx"
 import Dashboard from "./pages/Dashboard"
 import HistoryPage from "./pages/HistoryPage.jsx"
 import AnalyticsPage from "./pages/AnalyticsPage.jsx"
+import NutritionPage from "./pages/NutritionPage.jsx"
 import AuthPage from "./pages/AuthPage.jsx"
 import OnboardingPage from "./pages/OnboardingPage.jsx"
 import HandbookPage from "./pages/HandbookPage.jsx"
@@ -52,6 +53,14 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<AnalyticsPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/nutrition"
+					element={
+						<ProtectedRoute>
+							<NutritionPage />
 						</ProtectedRoute>
 					}
 				/>

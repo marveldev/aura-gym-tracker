@@ -16,7 +16,7 @@ const tabs = [
 		icon: ChartNoAxesCombined,
 		to: "/analytics",
 	},
-	{ key: "nutrition", label: "Nutrition", icon: Apple, to: "/handbook/food" },
+	{ key: "nutrition", label: "Nutrition", icon: Apple, to: "/nutrition" },
 	{ key: "profile", label: "Profile", icon: UserRound, to: "/dashboard" },
 ]
 

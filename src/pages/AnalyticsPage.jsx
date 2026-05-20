@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
-import AppPageFrame from "../components/AppPageFrame.jsx"
 import AnalyticsPanel from "../components/AnalyticsPanel.jsx"
+import BottomNavigation from "../components/dashboard/BottomNavigation"
 import { initMockDataIfEmpty } from "../data/mockData.js"
 import {
 	getExerciseHistory,
@@ -42,22 +42,22 @@ function AnalyticsPage() {
 	)
 
 	return (
-		<AppPageFrame>
-			<div className="px-4 sm:px-6 lg:px-8 py-4">
-				<div className="max-w-5xl mx-auto space-y-6">
-					<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-						Analytics
-					</h1>
-					<AnalyticsPanel
-						exercises={exercises}
-						selectedExercise={selectedExercise}
-						onSelectExercise={setSelectedExercise}
-						history={history}
-						isDarkTheme={isDarkTheme}
-					/>
-				</div>
+		<div className="min-h-screen bg-zinc-950 text-zinc-100 pb-24">
+			<div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-5 sm:py-7 space-y-6">
+				<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+					Analytics
+				</h1>
+				<AnalyticsPanel
+					exercises={exercises}
+					selectedExercise={selectedExercise}
+					onSelectExercise={setSelectedExercise}
+					history={history}
+					isDarkTheme={isDarkTheme}
+				/>
 			</div>
-		</AppPageFrame>
+
+			<BottomNavigation />
+		</div>
 	)
 }
 
