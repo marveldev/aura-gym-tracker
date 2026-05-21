@@ -30,6 +30,9 @@ function WorkoutConsistencyChart({ data, isLoading = false }) {
 					/>
 					<YAxis stroke="hsl(var(--muted))" tickLine={false} axisLine={false} />
 					<Tooltip
+						cursor={{ fill: "hsl(var(--primary) / 0.08)" }}
+						labelStyle={{ color: "hsl(var(--fg))", fontWeight: 600 }}
+						formatter={(value) => [`${value} sessions`, "Workouts"]}
 						contentStyle={{
 							background: "hsl(var(--surface))",
 							border: "1px solid hsl(var(--border))",
@@ -40,6 +43,7 @@ function WorkoutConsistencyChart({ data, isLoading = false }) {
 					<Bar
 						dataKey="workouts"
 						fill="hsl(var(--primary))"
+						activeBar={{ fill: "hsl(var(--primary-hover))" }}
 						radius={[8, 8, 0, 0]}
 					/>
 				</BarChart>
