@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Flame, ChevronRight, Dumbbell } from "lucide-react"
 import { motion } from "framer-motion"
 import AppPageFrame from "../components/AppPageFrame.jsx"
@@ -6,7 +7,6 @@ import ExerciseDetailModal from "../components/ExerciseDetailModal.jsx"
 import BaseCard from "../components/dashboard/BaseCard"
 import HeroWorkoutCard from "../components/dashboard/HeroWorkoutCard"
 import DailyStatCard from "../components/dashboard/DailyStatCard"
-import QuickActionButton from "../components/dashboard/QuickActionButton"
 import RecommendedWorkoutCard from "../components/dashboard/RecommendedWorkoutCard"
 import ActivityFeedItem from "../components/dashboard/ActivityFeedItem"
 import WeightProgressChart from "../components/dashboard/WeightProgressChart"
@@ -75,10 +75,62 @@ const getWeekStart = (date) => {
 	return weekStart
 }
 
+const formatActivityTime = (dateString = "") => {
+	const workoutDate = parseWorkoutDate(dateString)
+	if (!workoutDate) {
+		return "Recently"
+	}
+
+	const today = new Date()
+	const todayKey = getDateKey(today)
+	const yesterday = new Date(today)
+	yesterday.setDate(today.getDate() - 1)
+	const yesterdayKey = getDateKey(yesterday)
+
+	if (dateString === todayKey) {
+		return "Today"
+	}
+	if (dateString === yesterdayKey) {
+		return "Yesterday"
+	}
+
+	return workoutDate.toLocaleDateString(undefined, {
+		month: "short",
+		day: "numeric",
+	})
+}
+
+const getWorkoutStreakDays = (workouts = []) => {
+	const uniqueDates = Array.from(
+		new Set(workouts.map((workout) => workout.date).filter(Boolean)),
+	)
+		.map(parseWorkoutDate)
+		.filter(Boolean)
+		.sort((a, b) => b.getTime() - a.getTime())
+
+	if (!uniqueDates.length) {
+		return 0
+	}
+
+	let streak = 1
+	for (let index = 1; index < uniqueDates.length; index += 1) {
+		const prev = uniqueDates[index - 1]
+		const current = uniqueDates[index]
+		const diffDays = Math.round((prev.getTime() - current.getTime()) / 86400000)
+		if (diffDays !== 1) {
+			break
+		}
+		streak += 1
+	}
+
+	return streak
+}
+
 function Dashboard() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedExercise, setSelectedExercise] = useState(null)
 	const [workouts, setWorkouts] = useState([])
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const timer = window.setTimeout(() => setIsLoading(false), 850)
@@ -106,6 +158,33 @@ function Dashboard() {
 		if (todayWorkout.exercise) {
 			setSelectedExercise(todayWorkout.exercise)
 		}
+	}
+
+	const handleOpenWorkoutLibrary = () => {
+		navigate("/workout")
+	}
+
+	const handleRecommendedWorkoutClick = (recommendedWorkout) => {
+		const exercises = workoutExerciseData?.data ?? []
+		const targetDifficulty = (
+			recommendedWorkout?.difficulty || ""
+		).toLowerCase()
+		const difficultyMatches = exercises.filter(
+			(exercise) =>
+				(exercise?.difficulty || "").toLowerCase() === targetDifficulty,
+		)
+
+		const candidates = difficultyMatches.length ? difficultyMatches : exercises
+		if (!candidates.length) {
+			handleOpenWorkoutLibrary()
+			return
+		}
+
+		const titleSeed = (recommendedWorkout?.title || "")
+			.split("")
+			.reduce((sum, char) => sum + char.charCodeAt(0), 0)
+		const selected = candidates[titleSeed % candidates.length]
+		setSelectedExercise(selected)
 	}
 
 	const greeting = useMemo(() => {
@@ -240,6 +319,78 @@ function Dashboard() {
 		})
 	}, [workouts])
 
+	const recentActivity = useMemo(() => {
+		const sortedWorkouts = [...workouts].sort(
+			(a, b) => new Date(b.date) - new Date(a.date),
+		)
+
+		if (!sortedWorkouts.length) {
+			return [
+				{
+					id: "activity-empty",
+					type: "workout",
+					title: "No workouts logged yet",
+					description: "Log your first session to start your activity feed.",
+					time: "Now",
+				},
+			]
+		}
+
+		const activities = sortedWorkouts.slice(0, 2).map((workout) => {
+			const exerciseCount = (workout.exercises ?? []).length
+			const setCount = getWorkoutSetCount(workout)
+			const volume = Math.round(getWorkoutVolume(workout)).toLocaleString()
+			return {
+				id: `activity-workout-${workout.id}`,
+				type: "workout",
+				title: `Completed ${workout.focus || "Workout"}`,
+				description: `${exerciseCount} exercises • ${setCount} sets • ${volume} kg volume`,
+				time: formatActivityTime(workout.date),
+			}
+		})
+
+		const topSet = sortedWorkouts.reduce((best, workout) => {
+			for (const exercise of workout.exercises ?? []) {
+				for (const set of exercise.sets ?? []) {
+					const weight = parseFloat(set.weight) || 0
+					const reps = parseInt(set.reps, 10) || 0
+					if (!best || weight > best.weight) {
+						best = {
+							weight,
+							reps,
+							exerciseName: exercise.name || "Exercise",
+							date: workout.date,
+						}
+					}
+				}
+			}
+			return best
+		}, null)
+
+		if (topSet && topSet.weight > 0) {
+			activities.push({
+				id: "activity-record",
+				type: "record",
+				title: `Top Lift: ${topSet.exerciseName}`,
+				description: `${topSet.weight} kg × ${topSet.reps} reps`,
+				time: formatActivityTime(topSet.date),
+			})
+		}
+
+		const streakDays = getWorkoutStreakDays(sortedWorkouts)
+		if (streakDays > 1) {
+			activities.push({
+				id: "activity-streak",
+				type: "streak",
+				title: `${streakDays}-Day Streak`,
+				description: "You have logged workouts on consecutive days.",
+				time: "Current",
+			})
+		}
+
+		return activities.slice(0, 3)
+	}, [workouts])
+
 	const todayWorkout = useMemo(() => {
 		const exercises = workoutExerciseData?.data ?? []
 		if (!exercises.length) {
@@ -371,27 +522,12 @@ function Dashboard() {
 					<section>
 						<div className="mb-3 flex items-center justify-between">
 							<h2 className="text-base font-semibold tracking-tight">
-								Quick Actions
-							</h2>
-						</div>
-						<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-							{data.quickActions.map((action) => (
-								<QuickActionButton
-									key={action.id}
-									label={action.label}
-									icon={action.icon}
-									isLoading={isLoading}
-								/>
-							))}
-						</div>
-					</section>
-
-					<section>
-						<div className="mb-3 flex items-center justify-between">
-							<h2 className="text-base font-semibold tracking-tight">
 								Recommended Workouts
 							</h2>
-							<button className="inline-flex items-center gap-1 text-sm text-[hsl(var(--muted))] transition hover:text-[hsl(var(--fg))]">
+							<button
+								type="button"
+								onClick={handleOpenWorkoutLibrary}
+								className="inline-flex items-center gap-1 text-sm text-[hsl(var(--muted))] transition hover:text-[hsl(var(--fg))]">
 								See all <ChevronRight className="h-4 w-4" />
 							</button>
 						</div>
@@ -400,6 +536,7 @@ function Dashboard() {
 								<div key={workout.id} className="snap-start">
 									<RecommendedWorkoutCard
 										workout={workout}
+										onClick={() => handleRecommendedWorkoutClick(workout)}
 										isLoading={isLoading}
 									/>
 								</div>
@@ -415,7 +552,7 @@ function Dashboard() {
 						</div>
 						<BaseCard className="p-4 sm:p-5">
 							<div className="space-y-2.5">
-								{data.recentActivity.map((item) => (
+								{recentActivity.map((item) => (
 									<ActivityFeedItem
 										key={item.id}
 										item={item}

@@ -2,7 +2,7 @@ import { Flame, Timer, Zap, GaugeCircle } from "lucide-react"
 import BaseCard from "./BaseCard"
 import AnimatedProgressBar from "./AnimatedProgressBar"
 
-function HeroWorkoutCard({
+function rHeroWorkoutCard({
 	title,
 	type,
 	durationMinutes,
@@ -12,6 +12,7 @@ function HeroWorkoutCard({
 	onStartWorkout,
 	isLoading = false,
 }) {
+	de
 	return (
 		<BaseCard className="p-5 sm:p-6">
 			{isLoading ? (

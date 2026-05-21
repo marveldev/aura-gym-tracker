@@ -1,7 +1,7 @@
 import { Clock3, BarChart3 } from "lucide-react"
 import { motion } from "framer-motion"
 
-function RecommendedWorkoutCard({ workout, isLoading = false }) {
+function RecommendedWorkoutCard({ workout, onClick, isLoading = false }) {
 	if (isLoading) {
 		return (
 			<div className="h-52 min-w-[250px] animate-pulse rounded-2xl bg-[hsl(var(--border))]" />
@@ -9,9 +9,11 @@ function RecommendedWorkoutCard({ workout, isLoading = false }) {
 	}
 
 	return (
-		<motion.div
+		<motion.button
+			type="button"
+			onClick={onClick}
 			whileHover={{ y: -3 }}
-			className="min-w-[250px] overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]">
+			className="min-w-[250px] overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] text-left transition hover:border-[hsl(var(--primary))]/60">
 			<img
 				src={workout.imageUrl}
 				alt={workout.title}
@@ -32,7 +34,7 @@ function RecommendedWorkoutCard({ workout, isLoading = false }) {
 					</span>
 				</div>
 			</div>
-		</motion.div>
+		</motion.button>
 	)
 }
 
