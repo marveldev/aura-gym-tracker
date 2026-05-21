@@ -9,6 +9,7 @@ function HeroWorkoutCard({
 	difficulty,
 	estimatedCalories,
 	weeklyCompletionPercent,
+	onStartWorkout,
 	isLoading = false,
 }) {
 	return (
@@ -72,7 +73,9 @@ function HeroWorkoutCard({
 						</div>
 					</div>
 
-					<button className="mt-5 w-full sm:w-auto rounded-2xl bg-[hsl(var(--primary))] px-6 py-3 text-sm font-semibold text-[hsl(var(--primary-fg))] transition hover:bg-[hsl(var(--primary-hover))] active:scale-[0.98]">
+					<button
+						onClick={onStartWorkout}
+						className="mt-5 w-full sm:w-auto rounded-2xl bg-[hsl(var(--primary))] px-6 py-3 text-sm font-semibold text-[hsl(var(--primary-fg))] transition hover:bg-[hsl(var(--primary-hover))] active:scale-[0.98]">
 						Start Workout
 					</button>
 
