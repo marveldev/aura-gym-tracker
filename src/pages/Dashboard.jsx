@@ -391,6 +391,8 @@ function Dashboard() {
 		return activities.slice(0, 3)
 	}, [workouts])
 
+	const streakDays = useMemo(() => getWorkoutStreakDays(workouts), [workouts])
+
 	const todayWorkout = useMemo(() => {
 		const exercises = workoutExerciseData?.data ?? []
 		if (!exercises.length) {
@@ -455,7 +457,7 @@ function Dashboard() {
 						<div className="flex items-center gap-2 self-start md:self-auto">
 							<div className="hidden lg:inline-flex items-center gap-1.5 rounded-xl border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-2.5 py-1.5 text-xs font-semibold text-[hsl(var(--primary))]">
 								<Flame className="h-3.5 w-3.5" />
-								{data.profile.streakDays} day streak
+								{streakDays} day streak
 							</div>
 						</div>
 					</header>
