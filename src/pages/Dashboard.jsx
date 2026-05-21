@@ -66,6 +66,15 @@ const getWorkoutSetCount = (workout) =>
 		0,
 	)
 
+const getWeekStart = (date) => {
+	const weekStart = new Date(date)
+	const day = weekStart.getDay()
+	const offsetToMonday = day === 0 ? 6 : day - 1
+	weekStart.setDate(weekStart.getDate() - offsetToMonday)
+	weekStart.setHours(0, 0, 0, 0)
+	return weekStart
+}
+
 function Dashboard() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedExercise, setSelectedExercise] = useState(null)
@@ -178,11 +187,7 @@ function Dashboard() {
 		}
 
 		const now = new Date()
-		const startOfWeek = new Date(now)
-		const day = startOfWeek.getDay()
-		const offsetToMonday = day === 0 ? 6 : day - 1
-		startOfWeek.setDate(startOfWeek.getDate() - offsetToMonday)
-		startOfWeek.setHours(0, 0, 0, 0)
+		const startOfWeek = getWeekStart(now)
 
 		const completedThisWeek = workouts.filter((workout) => {
 			const workoutDate = parseWorkoutDate(workout.date)
@@ -195,6 +200,45 @@ function Dashboard() {
 		const percent = (completedThisWeek / target) * 100
 		return Math.round(Math.max(0, Math.min(100, percent)))
 	}, [data.todayWorkout.weeklyCompletionPercent, data.weeklyGoals, workouts])
+
+	const progressChartData = useMemo(() => {
+		const now = new Date()
+		const currentWeekStart = getWeekStart(now)
+
+		return Array.from({ length: 6 }, (_, index) => {
+			const weekOffset = 5 - index
+			const weekStart = new Date(currentWeekStart)
+			weekStart.setDate(currentWeekStart.getDate() - weekOffset * 7)
+
+			const weekEnd = new Date(weekStart)
+			weekEnd.setDate(weekStart.getDate() + 6)
+			weekEnd.setHours(23, 59, 59, 999)
+
+			const weekWorkouts = workouts.filter((workout) => {
+				const workoutDate = parseWorkoutDate(workout.date)
+				if (!workoutDate) {
+					return false
+				}
+				return workoutDate >= weekStart && workoutDate <= weekEnd
+			})
+
+			const allSetWeights = weekWorkouts.flatMap((workout) =>
+				(workout.exercises ?? []).flatMap((exercise) =>
+					(exercise.sets ?? []).map((set) => parseFloat(set.weight) || 0),
+				),
+			)
+
+			const totalWeight = allSetWeights.reduce((sum, value) => sum + value, 0)
+			const averageWeight =
+				allSetWeights.length > 0 ? totalWeight / allSetWeights.length : 0
+
+			return {
+				week: `W${index + 1}`,
+				weight: Number(averageWeight.toFixed(1)),
+				workouts: weekWorkouts.length,
+			}
+		})
+	}, [workouts])
 
 	const todayWorkout = useMemo(() => {
 		const exercises = workoutExerciseData?.data ?? []
@@ -305,10 +349,10 @@ function Dashboard() {
 						<div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
 							<BaseCard className="p-4 sm:p-5">
 								<div className="mb-3 flex items-center justify-between">
-									<h3 className="font-semibold">Weight Progress</h3>
+									<h3 className="font-semibold">Average Lifted Weight</h3>
 								</div>
 								<WeightProgressChart
-									data={data.weightProgress}
+									data={progressChartData}
 									isLoading={isLoading}
 								/>
 							</BaseCard>
@@ -317,7 +361,7 @@ function Dashboard() {
 									<h3 className="font-semibold">Workout Consistency</h3>
 								</div>
 								<WorkoutConsistencyChart
-									data={data.workoutConsistency}
+									data={progressChartData}
 									isLoading={isLoading}
 								/>
 							</BaseCard>
