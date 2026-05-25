@@ -1,8 +1,13 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import ExerciseCard from "../components/ExerciseCard.jsx"
 import ExerciseDetailModal from "../components/ExerciseDetailModal.jsx"
 import AppPageFrame from "../components/AppPageFrame.jsx"
+import ToastContainer from "../components/ToastContainer.jsx"
+import WorkoutCompletionConfetti from "../components/workout/WorkoutCompletionConfetti.jsx"
+import WorkoutCompletionModal from "../components/workout/WorkoutCompletionModal.jsx"
 import workoutExerciseData from "../data/workoutExerciseData.js"
+import { useWorkoutCompletion } from "../hooks/workout/useWorkoutCompletion.js"
 
 const ALL_EXERCISES = workoutExerciseData.data ?? []
 
@@ -33,10 +38,37 @@ const BODY_PART_LABELS = {
 }
 
 function WorkoutPage() {
+	const navigate = useNavigate()
 	const [search, setSearch] = useState("")
 	const [activeBodyPart, setActiveBodyPart] = useState("all")
 	const [activeEquipment, setActiveEquipment] = useState("all")
 	const [selectedExercise, setSelectedExercise] = useState(null)
+	const [sessionExercises, setSessionExercises] = useState([])
+	const [durationMinutes, setDurationMinutes] = useState(30)
+	const [caloriesBurned, setCaloriesBurned] = useState(280)
+	const [notes, setNotes] = useState("")
+	const [showConfetti, setShowConfetti] = useState(false)
+	const [toasts, setToasts] = useState([])
+
+	const {
+		completeWorkout,
+		isSaving,
+		isSuccess,
+		completedSession,
+		resetSuccess,
+	} = useWorkoutCompletion()
+
+	useEffect(() => {
+		if (!sessionExercises.length) {
+			setDurationMinutes(30)
+			setCaloriesBurned(280)
+			return
+		}
+
+		const nextDuration = Math.max(15, sessionExercises.length * 8)
+		setDurationMinutes(nextDuration)
+		setCaloriesBurned(Math.round(nextDuration * 8.5))
+	}, [sessionExercises.length])
 
 	const filtered = useMemo(() => {
 		const q = search.trim().toLowerCase()
@@ -68,10 +100,98 @@ function WorkoutPage() {
 	const hasActiveFilters =
 		search !== "" || activeBodyPart !== "all" || activeEquipment !== "all"
 
+	const showToast = (message, type = "success") => {
+		const id = `toast_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
+		setToasts((current) => [...current, { id, message, type }])
+		window.setTimeout(() => {
+			setToasts((current) => current.filter((toast) => toast.id !== id))
+		}, 3500)
+	}
+
+	const handleSelectExercise = (exercise) => {
+		setSelectedExercise(exercise)
+		setSessionExercises((current) => {
+			if (current.some((item) => item.exerciseId === exercise.exerciseId)) {
+				return current
+			}
+			return [...current, exercise]
+		})
+	}
+
+	const getWorkoutName = () => {
+		if (activeBodyPart !== "all") {
+			return `${BODY_PART_LABELS[activeBodyPart] ?? activeBodyPart} Session`
+		}
+		if (sessionExercises[0]?.bodyParts?.[0]) {
+			return `${sessionExercises[0].bodyParts[0]} Session`
+		}
+		return "Custom Workout"
+	}
+
+	const handleCompleteWorkout = async () => {
+		if (!sessionExercises.length) {
+			showToast("Add at least one exercise to complete a workout.", "error")
+			return
+		}
+
+		const safeDuration = Number(durationMinutes) || 0
+		const safeCalories = Number(caloriesBurned) || 0
+		if (safeDuration <= 0) {
+			showToast("Duration must be greater than zero.", "error")
+			return
+		}
+
+		const workoutId = `w_${Date.now()}_${sessionExercises
+			.map((item) => item.exerciseId)
+			.join("_")}`
+
+		try {
+			await completeWorkout({
+				workoutId,
+				workoutName: getWorkoutName(),
+				completedAt: new Date().toISOString(),
+				durationMinutes: safeDuration,
+				caloriesBurned: Math.max(0, safeCalories),
+				exercisesCompleted: sessionExercises.length,
+				totalExercises: sessionExercises.length,
+				exercises: sessionExercises.map((exercise) => ({
+					id: exercise.exerciseId,
+					name: exercise.name,
+					sets: [{ reps: 10, weight: 0 }],
+				})),
+				notes,
+			})
+
+			setShowConfetti(true)
+			showToast("Workout completed and saved!", "success")
+		} catch (completionError) {
+			showToast(
+				completionError?.message || "Unable to complete workout.",
+				"error",
+			)
+		}
+	}
+
+	const clearSessionAfterSuccess = () => {
+		setSessionExercises([])
+		setNotes("")
+		resetSuccess()
+	}
+
+	const handleCompleteFromDetail = async () => {
+		await handleCompleteWorkout()
+		setSelectedExercise(null)
+	}
+
 	return (
 		<AppPageFrame>
 			<div className="pb-24">
 				<main className="w-full px-4 sm:px-6 lg:px-8 py-5 sm:py-7 space-y-4">
+					<WorkoutCompletionConfetti
+						active={showConfetti}
+						onDone={() => setShowConfetti(false)}
+					/>
+
 					<div className="pb-2 flex items-center justify-between">
 						<div>
 							<h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
@@ -181,7 +301,7 @@ function WorkoutPage() {
 									<ExerciseCard
 										key={exercise.exerciseId}
 										exercise={exercise}
-										onClick={setSelectedExercise}
+										onClick={handleSelectExercise}
 									/>
 								))}
 							</div>
@@ -224,8 +344,23 @@ function WorkoutPage() {
 					<ExerciseDetailModal
 						exercise={selectedExercise}
 						onClose={() => setSelectedExercise(null)}
+						onCompleteWorkout={handleCompleteFromDetail}
+						isCompleting={isSaving}
+						isCompleted={isSuccess}
 					/>
 				)}
+
+				<WorkoutCompletionModal
+					session={completedSession}
+					isOpen={isSuccess}
+					onClose={clearSessionAfterSuccess}
+					onGoDashboard={() => {
+						clearSessionAfterSuccess()
+						navigate("/dashboard")
+					}}
+				/>
+
+				<ToastContainer toasts={toasts} />
 			</div>
 		</AppPageFrame>
 	)

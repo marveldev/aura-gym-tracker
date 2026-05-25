@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 
-function ExerciseDetailModal({ exercise, onClose }) {
+function ExerciseDetailModal({
+	exercise,
+	onClose,
+	onCompleteWorkout,
+	isCompleting = false,
+	isCompleted = false,
+}) {
 	const overlayRef = useRef(null)
 	const [imgLoaded, setImgLoaded] = useState(false)
 	const [imgError, setImgError] = useState(false)
@@ -168,6 +174,26 @@ function ExerciseDetailModal({ exercise, onClose }) {
 									)
 								})}
 							</ol>
+						</div>
+					)}
+
+					{typeof onCompleteWorkout === "function" && (
+						<div className="pt-1">
+							<button
+								type="button"
+								onClick={onCompleteWorkout}
+								disabled={isCompleting || isCompleted}
+								className={`w-full rounded-2xl px-4 py-3 text-sm font-semibold transition ${
+									isCompleted
+										? "bg-emerald-500 text-white"
+										: "bg-[hsl(var(--primary))] text-[hsl(var(--primary-fg))] hover:bg-[hsl(var(--primary-hover))]"
+								} ${isCompleting || isCompleted ? "opacity-80 cursor-not-allowed" : "active:scale-[0.98]"}`}>
+								{isCompleting
+									? "Completing..."
+									: isCompleted
+										? "Workout Completed"
+										: "Complete Workout"}
+							</button>
 						</div>
 					)}
 				</div>
