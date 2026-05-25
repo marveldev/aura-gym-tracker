@@ -10,6 +10,10 @@ function HeroWorkoutCard({
 	estimatedCalories,
 	weeklyCompletionPercent,
 	onStartWorkout,
+	onCompleteWorkout,
+	isCompletingWorkout = false,
+	isWorkoutCompleted = false,
+	completeWorkoutError = "",
 	isLoading = false,
 }) {
 	return (
@@ -73,11 +77,40 @@ function HeroWorkoutCard({
 						</div>
 					</div>
 
-					<button
-						onClick={onStartWorkout}
-						className="mt-5 w-full sm:w-auto rounded-2xl bg-[hsl(var(--primary))] px-6 py-3 text-sm font-semibold text-[hsl(var(--primary-fg))] transition hover:bg-[hsl(var(--primary-hover))] active:scale-[0.98]">
-						Start Workout
-					</button>
+					<div className="mt-5 flex flex-col sm:flex-row gap-2">
+						<button
+							onClick={onStartWorkout}
+							className="w-full sm:w-auto rounded-2xl bg-[hsl(var(--primary))] px-6 py-3 text-sm font-semibold text-[hsl(var(--primary-fg))] transition hover:bg-[hsl(var(--primary-hover))] active:scale-[0.98]">
+							Start Workout
+						</button>
+						{typeof onCompleteWorkout === "function" && (
+							<button
+								type="button"
+								onClick={onCompleteWorkout}
+								disabled={isCompletingWorkout || isWorkoutCompleted}
+								className={`w-full sm:w-auto rounded-2xl px-6 py-3 text-sm font-semibold transition ${
+									isWorkoutCompleted
+										? "bg-emerald-500 text-white"
+										: "border border-[hsl(var(--border))] bg-[hsl(var(--surface))] text-[hsl(var(--fg))] hover:border-[hsl(var(--primary))]/50"
+								} ${
+									isCompletingWorkout || isWorkoutCompleted
+										? "cursor-not-allowed opacity-80"
+										: "active:scale-[0.98]"
+								}`}>
+								{isCompletingWorkout
+									? "Completing..."
+									: isWorkoutCompleted
+										? "Completed"
+										: "Complete Workout"}
+							</button>
+						)}
+					</div>
+
+					{typeof onCompleteWorkout === "function" && completeWorkoutError && (
+						<p className="mt-2 text-sm text-[hsl(var(--danger))]">
+							{completeWorkoutError}
+						</p>
+					)}
 
 					<div className="mt-5">
 						<div className="mb-2 flex items-center justify-between text-xs text-[hsl(var(--muted))]">

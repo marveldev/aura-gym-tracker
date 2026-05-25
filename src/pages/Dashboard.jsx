@@ -11,9 +11,12 @@ import RecommendedWorkoutCard from "../components/dashboard/RecommendedWorkoutCa
 import ActivityFeedItem from "../components/dashboard/ActivityFeedItem"
 import WeightProgressChart from "../components/dashboard/WeightProgressChart"
 import WorkoutConsistencyChart from "../components/dashboard/WorkoutConsistencyChart"
+import WorkoutCompletionConfetti from "../components/workout/WorkoutCompletionConfetti.jsx"
 import { fitnessDashboardMockData } from "../data/fitnessMockData"
 import workoutExerciseData from "../data/workoutExerciseData.js"
 import { getWorkouts } from "../services/workoutStorage.js"
+import { completeWorkout } from "../services/workout/workoutCompletionService.js"
+import { getWorkoutSessions } from "../store/workout/workoutStore.js"
 
 const toTitleCase = (value = "") =>
 	value
@@ -126,10 +129,51 @@ const getWorkoutStreakDays = (workouts = []) => {
 	return streak
 }
 
+const getSessionStreakDays = (sessions = []) => {
+	const uniqueDates = Array.from(
+		new Set(
+			sessions
+				.map((session) => {
+					const date = new Date(session.completedAt)
+					if (Number.isNaN(date.getTime())) {
+						return null
+					}
+					return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
+				})
+				.filter(Boolean),
+		),
+	)
+		.map(parseWorkoutDate)
+		.filter(Boolean)
+		.sort((a, b) => b.getTime() - a.getTime())
+
+	if (!uniqueDates.length) {
+		return 0
+	}
+
+	let streak = 1
+	for (let index = 1; index < uniqueDates.length; index += 1) {
+		const prev = uniqueDates[index - 1]
+		const current = uniqueDates[index]
+		const diffDays = Math.round((prev.getTime() - current.getTime()) / 86400000)
+		if (diffDays !== 1) {
+			break
+		}
+		streak += 1
+	}
+
+	return streak
+}
+
 function Dashboard() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedExercise, setSelectedExercise] = useState(null)
 	const [workouts, setWorkouts] = useState([])
+	const [completedSessions, setCompletedSessions] = useState([])
+	const [isCompletingWorkout, setIsCompletingWorkout] = useState(false)
+	const [isWorkoutCompleted, setIsWorkoutCompleted] = useState(false)
+	const [completeWorkoutError, setCompleteWorkoutError] = useState("")
+	const [showCompletionConfetti, setShowCompletionConfetti] = useState(false)
 	const navigate = useNavigate()
 
 	useEffect(() => {
@@ -140,13 +184,16 @@ function Dashboard() {
 	useEffect(() => {
 		const refreshWorkouts = () => {
 			setWorkouts(getWorkouts())
+			setCompletedSessions(getWorkoutSessions())
 		}
 
 		refreshWorkouts()
+		window.addEventListener("aura:workout-data-changed", refreshWorkouts)
 		window.addEventListener("focus", refreshWorkouts)
 		window.addEventListener("storage", refreshWorkouts)
 
 		return () => {
+			window.removeEventListener("aura:workout-data-changed", refreshWorkouts)
 			window.removeEventListener("focus", refreshWorkouts)
 			window.removeEventListener("storage", refreshWorkouts)
 		}
@@ -159,6 +206,59 @@ function Dashboard() {
 			setSelectedExercise(todayWorkout.exercise)
 		}
 	}
+
+	const handleCompleteWorkout = async () => {
+		if (!selectedExercise || isCompletingWorkout || isWorkoutCompleted) {
+			return
+		}
+
+		setIsCompletingWorkout(true)
+		setCompleteWorkoutError("")
+
+		try {
+			const now = new Date()
+			const completionToken = `dashboard_${now.getTime()}_${Math.random()
+				.toString(36)
+				.slice(2, 8)}`
+
+			await Promise.resolve(
+				completeWorkout({
+					workoutId: `dashboard_${selectedExercise.exerciseId}_${getDateKey(now)}`,
+					workoutName: toTitleCase(selectedExercise.name || todayWorkout.title),
+					completedAt: now.toISOString(),
+					durationMinutes: todayWorkout.durationMinutes,
+					caloriesBurned: todayWorkout.estimatedCalories,
+					exercisesCompleted: 1,
+					totalExercises: 1,
+					exercises: [
+						{
+							id: selectedExercise.exerciseId,
+							name: selectedExercise.name,
+							sets: [{ reps: 10, weight: 0 }],
+						},
+					],
+					notes: "Completed from dashboard",
+					completionToken,
+				}),
+			)
+
+			setIsWorkoutCompleted(true)
+			setShowCompletionConfetti(true)
+		} catch (error) {
+			setCompleteWorkoutError(
+				error?.message || "Unable to complete workout from dashboard.",
+			)
+		} finally {
+			setIsCompletingWorkout(false)
+		}
+	}
+
+	useEffect(() => {
+		if (selectedExercise) {
+			setIsWorkoutCompleted(false)
+			setCompleteWorkoutError("")
+		}
+	}, [selectedExercise])
 
 	const handleOpenWorkoutLibrary = () => {
 		navigate("/workout")
@@ -259,18 +359,14 @@ function Dashboard() {
 	}, [workouts])
 
 	const weeklyCompletionPercent = useMemo(() => {
-		const workoutsGoal = data.weeklyGoals.find((goal) => goal.id === "workouts")
-		const target = workoutsGoal?.target
-		if (!target) {
-			return data.todayWorkout.weeklyCompletionPercent
-		}
+		const target = 10
 
 		const now = new Date()
 		const startOfWeek = getWeekStart(now)
 
-		const completedThisWeek = workouts.filter((workout) => {
-			const workoutDate = parseWorkoutDate(workout.date)
-			if (!workoutDate) {
+		const completedThisWeek = completedSessions.filter((session) => {
+			const workoutDate = new Date(session.completedAt)
+			if (Number.isNaN(workoutDate.getTime())) {
 				return false
 			}
 			return workoutDate >= startOfWeek && workoutDate <= now
@@ -278,7 +374,12 @@ function Dashboard() {
 
 		const percent = (completedThisWeek / target) * 100
 		return Math.round(Math.max(0, Math.min(100, percent)))
-	}, [data.todayWorkout.weeklyCompletionPercent, data.weeklyGoals, workouts])
+	}, [completedSessions])
+
+	const streakDays = useMemo(
+		() => getSessionStreakDays(completedSessions),
+		[completedSessions],
+	)
 
 	const progressChartData = useMemo(() => {
 		const now = new Date()
@@ -391,8 +492,6 @@ function Dashboard() {
 		return activities.slice(0, 3)
 	}, [workouts])
 
-	const streakDays = useMemo(() => getWorkoutStreakDays(workouts), [workouts])
-
 	const todayWorkout = useMemo(() => {
 		const exercises = workoutExerciseData?.data ?? []
 		if (!exercises.length) {
@@ -447,6 +546,11 @@ function Dashboard() {
 		<AppPageFrame>
 			<div className="-mx-6 md:-mx-10 pb-24">
 				<div className="w-full px-6 sm:px-8 lg:px-10 pt-5 sm:pt-6 pb-7 sm:pb-8 space-y-6 sm:space-y-7">
+					<WorkoutCompletionConfetti
+						active={showCompletionConfetti}
+						onDone={() => setShowCompletionConfetti(false)}
+					/>
+
 					<header className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 						<div className="min-w-0">
 							<p className="text-sm text-[hsl(var(--muted))]">{greeting}</p>
@@ -577,6 +681,10 @@ function Dashboard() {
 						<ExerciseDetailModal
 							exercise={selectedExercise}
 							onClose={() => setSelectedExercise(null)}
+							onCompleteWorkout={handleCompleteWorkout}
+							isCompleting={isCompletingWorkout}
+							isCompleted={isWorkoutCompleted}
+							completeWorkoutError={completeWorkoutError}
 						/>
 					)}
 				</div>

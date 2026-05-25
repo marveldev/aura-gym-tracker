@@ -6,6 +6,7 @@ function ExerciseDetailModal({
 	onCompleteWorkout,
 	isCompleting = false,
 	isCompleted = false,
+	completeWorkoutError = "",
 }) {
 	const overlayRef = useRef(null)
 	const [imgLoaded, setImgLoaded] = useState(false)
@@ -194,6 +195,11 @@ function ExerciseDetailModal({
 										? "Workout Completed"
 										: "Complete Workout"}
 							</button>
+							{completeWorkoutError && (
+								<p className="mt-2 text-sm text-[hsl(var(--danger))]">
+									{completeWorkoutError}
+								</p>
+							)}
 						</div>
 					)}
 				</div>
