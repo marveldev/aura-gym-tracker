@@ -9,6 +9,7 @@ function HeroWorkoutCard({
 	difficulty,
 	estimatedCalories,
 	weeklyCompletionPercent,
+	weeklyCompletionSummary = "",
 	onStartWorkout,
 	onCompleteWorkout,
 	isCompletingWorkout = false,
@@ -118,6 +119,11 @@ function HeroWorkoutCard({
 							<span>{weeklyCompletionPercent}%</span>
 						</div>
 						<AnimatedProgressBar value={weeklyCompletionPercent} />
+						{weeklyCompletionSummary && (
+							<p className="mt-2 text-xs text-[hsl(var(--muted))]">
+								{weeklyCompletionSummary}
+							</p>
+						)}
 					</div>
 				</>
 			)}

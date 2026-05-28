@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Flame, ChevronRight, Dumbbell } from "lucide-react"
+import { ChevronRight, Dumbbell } from "lucide-react"
 import { motion } from "framer-motion"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import ExerciseDetailModal from "../components/ExerciseDetailModal.jsx"
@@ -50,6 +50,14 @@ const getDateKey = (date) =>
 	`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(
 		date.getDate(),
 	).padStart(2, "0")}`
+
+const getSessionDateKey = (session) => {
+	const date = new Date(session?.completedAt)
+	if (Number.isNaN(date.getTime())) {
+		return null
+	}
+	return getDateKey(date)
+}
 
 const getWorkoutVolume = (workout) =>
 	(workout.exercises ?? []).reduce(
@@ -129,42 +137,6 @@ const getWorkoutStreakDays = (workouts = []) => {
 	return streak
 }
 
-const getSessionStreakDays = (sessions = []) => {
-	const uniqueDates = Array.from(
-		new Set(
-			sessions
-				.map((session) => {
-					const date = new Date(session.completedAt)
-					if (Number.isNaN(date.getTime())) {
-						return null
-					}
-					return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`
-				})
-				.filter(Boolean),
-		),
-	)
-		.map(parseWorkoutDate)
-		.filter(Boolean)
-		.sort((a, b) => b.getTime() - a.getTime())
-
-	if (!uniqueDates.length) {
-		return 0
-	}
-
-	let streak = 1
-	for (let index = 1; index < uniqueDates.length; index += 1) {
-		const prev = uniqueDates[index - 1]
-		const current = uniqueDates[index]
-		const diffDays = Math.round((prev.getTime() - current.getTime()) / 86400000)
-		if (diffDays !== 1) {
-			break
-		}
-		streak += 1
-	}
-
-	return streak
-}
-
 function Dashboard() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedExercise, setSelectedExercise] = useState(null)
@@ -174,11 +146,23 @@ function Dashboard() {
 	const [isWorkoutCompleted, setIsWorkoutCompleted] = useState(false)
 	const [completeWorkoutError, setCompleteWorkoutError] = useState("")
 	const [showCompletionConfetti, setShowCompletionConfetti] = useState(false)
+	const [now, setNow] = useState(() => new Date())
 	const navigate = useNavigate()
 
 	useEffect(() => {
 		const timer = window.setTimeout(() => setIsLoading(false), 850)
 		return () => window.clearTimeout(timer)
+	}, [])
+
+	useEffect(() => {
+		const tick = () => setNow(new Date())
+		const intervalId = window.setInterval(tick, 60000)
+		window.addEventListener("visibilitychange", tick)
+
+		return () => {
+			window.clearInterval(intervalId)
+			window.removeEventListener("visibilitychange", tick)
+		}
 	}, [])
 
 	useEffect(() => {
@@ -207,8 +191,20 @@ function Dashboard() {
 		}
 	}
 
+	const hasCompletedToday = useMemo(() => {
+		const todayKey = getDateKey(now)
+		return completedSessions.some(
+			(session) => getSessionDateKey(session) === todayKey,
+		)
+	}, [completedSessions, now])
+
 	const handleCompleteWorkout = async () => {
-		if (!selectedExercise || isCompletingWorkout || isWorkoutCompleted) {
+		if (
+			!selectedExercise ||
+			isCompletingWorkout ||
+			isWorkoutCompleted ||
+			hasCompletedToday
+		) {
 			return
 		}
 
@@ -217,13 +213,14 @@ function Dashboard() {
 
 		try {
 			const now = new Date()
+			const todayKey = getDateKey(now)
 			const completionToken = `dashboard_${now.getTime()}_${Math.random()
 				.toString(36)
 				.slice(2, 8)}`
 
 			await Promise.resolve(
 				completeWorkout({
-					workoutId: `dashboard_${selectedExercise.exerciseId}_${getDateKey(now)}`,
+					workoutId: `dashboard_${todayKey}`,
 					workoutName: toTitleCase(selectedExercise.name || todayWorkout.title),
 					completedAt: now.toISOString(),
 					durationMinutes: todayWorkout.durationMinutes,
@@ -238,7 +235,7 @@ function Dashboard() {
 						},
 					],
 					notes: "Completed from dashboard",
-					completionToken,
+					completionToken: `dashboard_${todayKey}`,
 				}),
 			)
 
@@ -255,10 +252,10 @@ function Dashboard() {
 
 	useEffect(() => {
 		if (selectedExercise) {
-			setIsWorkoutCompleted(false)
+			setIsWorkoutCompleted(hasCompletedToday)
 			setCompleteWorkoutError("")
 		}
-	}, [selectedExercise])
+	}, [hasCompletedToday, selectedExercise])
 
 	const handleOpenWorkoutLibrary = () => {
 		navigate("/workout")
@@ -283,7 +280,10 @@ function Dashboard() {
 		const titleSeed = (recommendedWorkout?.title || "")
 			.split("")
 			.reduce((sum, char) => sum + char.charCodeAt(0), 0)
-		const selected = candidates[titleSeed % candidates.length]
+		const daySeed = getDaySeed(now)
+		const selected = candidates[
+			Math.abs(titleSeed + daySeed * 13) % candidates.length
+		]
 		setSelectedExercise(selected)
 	}
 
@@ -358,28 +358,40 @@ function Dashboard() {
 		]
 	}, [workouts])
 
-	const weeklyCompletionPercent = useMemo(() => {
-		const target = 10
-
-		const now = new Date()
+	const weeklyProgress = useMemo(() => {
 		const startOfWeek = getWeekStart(now)
+		const endOfWeek = new Date(startOfWeek)
+		endOfWeek.setDate(startOfWeek.getDate() + 6)
+		endOfWeek.setHours(23, 59, 59, 999)
 
-		const completedThisWeek = completedSessions.filter((session) => {
+		const uniqueCompletedDays = new Set()
+		completedSessions.forEach((session) => {
 			const workoutDate = new Date(session.completedAt)
 			if (Number.isNaN(workoutDate.getTime())) {
-				return false
+				return
 			}
-			return workoutDate >= startOfWeek && workoutDate <= now
-		}).length
+			if (workoutDate >= startOfWeek && workoutDate <= endOfWeek) {
+				uniqueCompletedDays.add(getDateKey(workoutDate))
+			}
+		})
 
-		const percent = (completedThisWeek / target) * 100
-		return Math.round(Math.max(0, Math.min(100, percent)))
-	}, [completedSessions])
+		const completedDays = uniqueCompletedDays.size
+		if (completedDays >= 7) {
+			return { percent: 100, completedDays: 7 }
+		}
+		if (completedDays === 0) {
+			return { percent: 0, completedDays: 0 }
+		}
 
-	const streakDays = useMemo(
-		() => getSessionStreakDays(completedSessions),
-		[completedSessions],
-	)
+		const rawPercent = (completedDays / 7) * 100
+		return {
+			percent: Math.max(10, Math.round(rawPercent / 10) * 10),
+			completedDays,
+		}
+	}, [completedSessions, now])
+
+	const weeklyCompletionPercent = weeklyProgress.percent
+	const weeklyCompletionSummary = `${weeklyProgress.completedDays} of 7 days completed this week`
 
 	const progressChartData = useMemo(() => {
 		const now = new Date()
@@ -558,12 +570,6 @@ function Dashboard() {
 								{data.profile.name}
 							</h1>
 						</div>
-						<div className="flex items-center gap-2 self-start md:self-auto">
-							<div className="hidden lg:inline-flex items-center gap-1.5 rounded-xl border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-2.5 py-1.5 text-xs font-semibold text-[hsl(var(--primary))]">
-								<Flame className="h-3.5 w-3.5" />
-								{streakDays} day streak
-							</div>
-						</div>
 					</header>
 
 					<HeroWorkoutCard
@@ -573,6 +579,7 @@ function Dashboard() {
 						difficulty={todayWorkout.difficulty}
 						estimatedCalories={todayWorkout.estimatedCalories}
 						weeklyCompletionPercent={todayWorkout.weeklyCompletionPercent}
+						weeklyCompletionSummary={weeklyCompletionSummary}
 						onStartWorkout={handleStartWorkout}
 						isLoading={isLoading}
 					/>
