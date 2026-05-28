@@ -441,6 +441,42 @@ function Dashboard() {
 	}, [workouts])
 
 	const recentActivity = useMemo(() => {
+		// Merge completion sessions (richer data) with legacy workout logs
+		const sessionActivities = [...completedSessions]
+			.sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt))
+			.slice(0, 3)
+			.map((session) => {
+				const sessionDate = new Date(session.completedAt)
+				const dateKey = Number.isNaN(sessionDate.getTime())
+					? ""
+					: getDateKey(sessionDate)
+				const parts = []
+				if (session.durationMinutes) {
+					parts.push(`${session.durationMinutes} min`)
+				}
+				if (session.caloriesBurned) {
+					parts.push(`${session.caloriesBurned} cal`)
+				}
+				if (session.exercisesCompleted) {
+					parts.push(
+						`${session.exercisesCompleted} exercise${session.exercisesCompleted !== 1 ? "s" : ""}`,
+					)
+				}
+				return {
+					id: `activity-session-${session.id}`,
+					type: "workout",
+					title: `Completed ${session.workoutName || "Workout"}`,
+					description: parts.length
+						? parts.join(" • ")
+						: "Workout session completed",
+					time: formatActivityTime(dateKey),
+				}
+			})
+
+		if (sessionActivities.length) {
+			return sessionActivities
+		}
+
 		const sortedWorkouts = [...workouts].sort(
 			(a, b) => new Date(b.date) - new Date(a.date),
 		)
@@ -510,7 +546,7 @@ function Dashboard() {
 		}
 
 		return activities.slice(0, 3)
-	}, [workouts])
+	}, [workouts, completedSessions])
 
 	const todayWorkout = useMemo(() => {
 		const exercises = workoutExerciseData?.data ?? []
