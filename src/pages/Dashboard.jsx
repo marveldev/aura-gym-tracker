@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { ChevronRight, Dumbbell } from "lucide-react"
-import { motion } from "framer-motion"
+import { ChevronRight } from "lucide-react"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import ExerciseDetailModal from "../components/ExerciseDetailModal.jsx"
 import WorkoutModal from "../components/WorkoutModal.jsx"
@@ -616,6 +615,7 @@ function Dashboard() {
 						weeklyCompletionPercent={todayWorkout.weeklyCompletionPercent}
 						weeklyCompletionSummary={weeklyCompletionSummary}
 						onStartWorkout={handleStartWorkout}
+						onStartCustomWorkout={handleOpenCustomWorkoutModal}
 						isLoading={isLoading}
 					/>
 
@@ -710,23 +710,6 @@ function Dashboard() {
 							</div>
 						</BaseCard>
 					</section>
-
-					<div className="hidden md:flex fixed bottom-7 right-7 items-center gap-3">
-						<motion.button
-							whileTap={{ scale: 0.98 }}
-							onClick={handleOpenCustomWorkoutModal}
-							className="inline-flex items-center gap-2 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-5 py-3 text-sm font-semibold text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/60 hover:text-[hsl(var(--primary))]">
-							Start Custom Workout
-						</motion.button>
-
-						<motion.button
-							whileTap={{ scale: 0.98 }}
-							onClick={handleStartWorkout}
-							className="inline-flex items-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-5 py-3 text-sm font-semibold text-[hsl(var(--primary-fg))] shadow-lg shadow-[hsl(var(--primary))]/30 transition hover:bg-[hsl(var(--primary-hover))]">
-							<Dumbbell className="h-4 w-4" />
-							Start Workout
-						</motion.button>
-					</div>
 
 					{selectedExercise && (
 						<ExerciseDetailModal
