@@ -4,6 +4,8 @@ import { ChevronRight, Dumbbell } from "lucide-react"
 import { motion } from "framer-motion"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import ExerciseDetailModal from "../components/ExerciseDetailModal.jsx"
+import WorkoutModal from "../components/WorkoutModal.jsx"
+import ToastContainer from "../components/ToastContainer.jsx"
 import BaseCard from "../components/dashboard/BaseCard"
 import HeroWorkoutCard from "../components/dashboard/HeroWorkoutCard"
 import DailyStatCard from "../components/dashboard/DailyStatCard"
@@ -14,7 +16,7 @@ import WorkoutConsistencyChart from "../components/dashboard/WorkoutConsistencyC
 import WorkoutCompletionConfetti from "../components/workout/WorkoutCompletionConfetti.jsx"
 import { fitnessDashboardMockData } from "../data/fitnessMockData"
 import workoutExerciseData from "../data/workoutExerciseData.js"
-import { getWorkouts } from "../services/workoutStorage.js"
+import { addWorkout, getWorkouts } from "../services/workoutStorage.js"
 import { completeWorkout } from "../services/workout/workoutCompletionService.js"
 import { getWorkoutSessions } from "../store/workout/workoutStore.js"
 
@@ -146,6 +148,8 @@ function Dashboard() {
 	const [isWorkoutCompleted, setIsWorkoutCompleted] = useState(false)
 	const [completeWorkoutError, setCompleteWorkoutError] = useState("")
 	const [showCompletionConfetti, setShowCompletionConfetti] = useState(false)
+	const [isCustomWorkoutModalOpen, setIsCustomWorkoutModalOpen] = useState(false)
+	const [toasts, setToasts] = useState([])
 	const [now, setNow] = useState(() => new Date())
 	const navigate = useNavigate()
 
@@ -268,6 +272,25 @@ function Dashboard() {
 
 	const handleOpenWorkoutLibrary = () => {
 		navigate("/workout")
+	}
+
+	const showToast = (message, type = "success") => {
+		const id = `toast_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`
+		setToasts((current) => [...current, { id, message, type }])
+		window.setTimeout(() => {
+			setToasts((current) => current.filter((toast) => toast.id !== id))
+		}, 3500)
+	}
+
+	const handleOpenCustomWorkoutModal = () => {
+		setIsCustomWorkoutModalOpen(true)
+	}
+
+	const handleSaveCustomWorkout = (workout) => {
+		addWorkout(workout)
+		setWorkouts(getWorkouts())
+		showToast("Custom workout saved successfully!", "success")
+		setIsCustomWorkoutModalOpen(false)
 	}
 
 	const handleRecommendedWorkoutClick = (recommendedWorkout) => {
@@ -441,47 +464,66 @@ function Dashboard() {
 	}, [workouts])
 
 	const recentActivity = useMemo(() => {
-		// Merge completion sessions (richer data) with legacy workout logs
-		const sessionActivities = [...completedSessions]
-			.sort((a, b) => new Date(b.completedAt) - new Date(a.completedAt))
-			.slice(0, 3)
-			.map((session) => {
-				const sessionDate = new Date(session.completedAt)
-				const dateKey = Number.isNaN(sessionDate.getTime())
-					? ""
-					: getDateKey(sessionDate)
-				const parts = []
-				if (session.durationMinutes) {
-					parts.push(`${session.durationMinutes} min`)
-				}
-				if (session.caloriesBurned) {
-					parts.push(`${session.caloriesBurned} cal`)
-				}
-				if (session.exercisesCompleted) {
-					parts.push(
-						`${session.exercisesCompleted} exercise${session.exercisesCompleted !== 1 ? "s" : ""}`,
-					)
-				}
+		const completedSessionIds = new Set(
+			completedSessions.map((session) => String(session.id)),
+		)
+
+		const sessionActivities = completedSessions.map((session) => {
+			const sessionDate = new Date(session.completedAt)
+			const timestamp = Number.isNaN(sessionDate.getTime())
+				? 0
+				: sessionDate.getTime()
+			const dateKey = timestamp ? getDateKey(sessionDate) : ""
+			const parts = []
+			if (session.durationMinutes) {
+				parts.push(`${session.durationMinutes} min`)
+			}
+			if (session.caloriesBurned) {
+				parts.push(`${session.caloriesBurned} cal`)
+			}
+			if (session.exercisesCompleted) {
+				parts.push(
+					`${session.exercisesCompleted} exercise${session.exercisesCompleted !== 1 ? "s" : ""}`,
+				)
+			}
+
+			return {
+				id: `activity-session-${session.id}`,
+				type: "workout",
+				title: `Completed ${session.workoutName || "Workout"}`,
+				description: parts.length
+					? parts.join(" • ")
+					: "Workout session completed",
+				time: formatActivityTime(dateKey),
+				timestamp,
+			}
+		})
+
+		const customWorkoutActivities = workouts
+			.filter((workout) => !completedSessionIds.has(String(workout.id)))
+			.map((workout) => {
+				const workoutDate = parseWorkoutDate(workout.date)
+				const timestamp = workoutDate ? workoutDate.getTime() : 0
+				const exerciseCount = (workout.exercises ?? []).length
+				const setCount = getWorkoutSetCount(workout)
+				const volume = Math.round(getWorkoutVolume(workout)).toLocaleString()
+
 				return {
-					id: `activity-session-${session.id}`,
+					id: `activity-workout-${workout.id}`,
 					type: "workout",
-					title: `Completed ${session.workoutName || "Workout"}`,
-					description: parts.length
-						? parts.join(" • ")
-						: "Workout session completed",
-					time: formatActivityTime(dateKey),
+					title: `Completed ${workout.focus || "Workout"}`,
+					description: `${exerciseCount} exercises • ${setCount} sets • ${volume} kg volume`,
+					time: formatActivityTime(workout.date),
+					timestamp,
 				}
 			})
 
-		if (sessionActivities.length) {
-			return sessionActivities
-		}
+		const mergedActivities = [...sessionActivities, ...customWorkoutActivities]
+			.sort((a, b) => b.timestamp - a.timestamp)
+			.slice(0, 3)
+			.map(({ timestamp, ...activity }) => activity)
 
-		const sortedWorkouts = [...workouts].sort(
-			(a, b) => new Date(b.date) - new Date(a.date),
-		)
-
-		if (!sortedWorkouts.length) {
+		if (!mergedActivities.length) {
 			return [
 				{
 					id: "activity-empty",
@@ -493,59 +535,7 @@ function Dashboard() {
 			]
 		}
 
-		const activities = sortedWorkouts.slice(0, 2).map((workout) => {
-			const exerciseCount = (workout.exercises ?? []).length
-			const setCount = getWorkoutSetCount(workout)
-			const volume = Math.round(getWorkoutVolume(workout)).toLocaleString()
-			return {
-				id: `activity-workout-${workout.id}`,
-				type: "workout",
-				title: `Completed ${workout.focus || "Workout"}`,
-				description: `${exerciseCount} exercises • ${setCount} sets • ${volume} kg volume`,
-				time: formatActivityTime(workout.date),
-			}
-		})
-
-		const topSet = sortedWorkouts.reduce((best, workout) => {
-			for (const exercise of workout.exercises ?? []) {
-				for (const set of exercise.sets ?? []) {
-					const weight = parseFloat(set.weight) || 0
-					const reps = parseInt(set.reps, 10) || 0
-					if (!best || weight > best.weight) {
-						best = {
-							weight,
-							reps,
-							exerciseName: exercise.name || "Exercise",
-							date: workout.date,
-						}
-					}
-				}
-			}
-			return best
-		}, null)
-
-		if (topSet && topSet.weight > 0) {
-			activities.push({
-				id: "activity-record",
-				type: "record",
-				title: `Top Lift: ${topSet.exerciseName}`,
-				description: `${topSet.weight} kg × ${topSet.reps} reps`,
-				time: formatActivityTime(topSet.date),
-			})
-		}
-
-		const streakDays = getWorkoutStreakDays(sortedWorkouts)
-		if (streakDays > 1) {
-			activities.push({
-				id: "activity-streak",
-				type: "streak",
-				title: `${streakDays}-Day Streak`,
-				description: "You have logged workouts on consecutive days.",
-				time: "Current",
-			})
-		}
-
-		return activities.slice(0, 3)
+		return mergedActivities
 	}, [workouts, completedSessions])
 
 	const todayWorkout = useMemo(() => {
@@ -720,13 +710,22 @@ function Dashboard() {
 						</BaseCard>
 					</section>
 
-					<motion.button
-						whileTap={{ scale: 0.98 }}
-						onClick={handleStartWorkout}
-						className="hidden md:flex fixed bottom-7 right-7 items-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-5 py-3 text-sm font-semibold text-[hsl(var(--primary-fg))] shadow-lg shadow-[hsl(var(--primary))]/30 transition hover:bg-[hsl(var(--primary-hover))]">
-						<Dumbbell className="h-4 w-4" />
-						Start Workout
-					</motion.button>
+					<div className="hidden md:flex fixed bottom-7 right-7 items-center gap-3">
+						<motion.button
+							whileTap={{ scale: 0.98 }}
+							onClick={handleOpenCustomWorkoutModal}
+							className="inline-flex items-center gap-2 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-5 py-3 text-sm font-semibold text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/60 hover:text-[hsl(var(--primary))]">
+							Start Custom Workout
+						</motion.button>
+
+						<motion.button
+							whileTap={{ scale: 0.98 }}
+							onClick={handleStartWorkout}
+							className="inline-flex items-center gap-2 rounded-2xl bg-[hsl(var(--primary))] px-5 py-3 text-sm font-semibold text-[hsl(var(--primary-fg))] shadow-lg shadow-[hsl(var(--primary))]/30 transition hover:bg-[hsl(var(--primary-hover))]">
+							<Dumbbell className="h-4 w-4" />
+							Start Workout
+						</motion.button>
+					</div>
 
 					{selectedExercise && (
 						<ExerciseDetailModal
@@ -738,6 +737,15 @@ function Dashboard() {
 							completeWorkoutError={completeWorkoutError}
 						/>
 					)}
+
+					<WorkoutModal
+						isOpen={isCustomWorkoutModalOpen}
+						onClose={() => setIsCustomWorkoutModalOpen(false)}
+						onSave={handleSaveCustomWorkout}
+						onError={(message) => showToast(message, "error")}
+					/>
+
+					<ToastContainer toasts={toasts} />
 				</div>
 			</div>
 		</AppPageFrame>
