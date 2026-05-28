@@ -148,7 +148,8 @@ function Dashboard() {
 	const [isWorkoutCompleted, setIsWorkoutCompleted] = useState(false)
 	const [completeWorkoutError, setCompleteWorkoutError] = useState("")
 	const [showCompletionConfetti, setShowCompletionConfetti] = useState(false)
-	const [isCustomWorkoutModalOpen, setIsCustomWorkoutModalOpen] = useState(false)
+	const [isCustomWorkoutModalOpen, setIsCustomWorkoutModalOpen] =
+		useState(false)
 	const [toasts, setToasts] = useState([])
 	const [now, setNow] = useState(() => new Date())
 	const navigate = useNavigate()
