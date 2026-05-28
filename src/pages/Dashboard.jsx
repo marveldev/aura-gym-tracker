@@ -281,9 +281,8 @@ function Dashboard() {
 			.split("")
 			.reduce((sum, char) => sum + char.charCodeAt(0), 0)
 		const daySeed = getDaySeed(now)
-		const selected = candidates[
-			Math.abs(titleSeed + daySeed * 13) % candidates.length
-		]
+		const selected =
+			candidates[Math.abs(titleSeed + daySeed * 13) % candidates.length]
 		setSelectedExercise(selected)
 	}
 
