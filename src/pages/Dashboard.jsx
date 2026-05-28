@@ -191,19 +191,29 @@ function Dashboard() {
 		}
 	}
 
-	const hasCompletedToday = useMemo(() => {
+	const hasCompletedSelectedExerciseToday = useMemo(() => {
+		if (!selectedExercise?.exerciseId) {
+			return false
+		}
+
 		const todayKey = getDateKey(now)
-		return completedSessions.some(
-			(session) => getSessionDateKey(session) === todayKey,
-		)
-	}, [completedSessions, now])
+		return completedSessions.some((session) => {
+			if (getSessionDateKey(session) !== todayKey) {
+				return false
+			}
+			return (session?.exercises ?? []).some(
+				(exercise) =>
+					String(exercise?.id) === String(selectedExercise.exerciseId),
+			)
+		})
+	}, [completedSessions, now, selectedExercise])
 
 	const handleCompleteWorkout = async () => {
 		if (
 			!selectedExercise ||
 			isCompletingWorkout ||
 			isWorkoutCompleted ||
-			hasCompletedToday
+			hasCompletedSelectedExerciseToday
 		) {
 			return
 		}
@@ -214,13 +224,12 @@ function Dashboard() {
 		try {
 			const now = new Date()
 			const todayKey = getDateKey(now)
-			const completionToken = `dashboard_${now.getTime()}_${Math.random()
-				.toString(36)
-				.slice(2, 8)}`
+			const exerciseId = selectedExercise.exerciseId || "unknown"
+			const completionToken = `dashboard_${todayKey}_${exerciseId}`
 
 			await Promise.resolve(
 				completeWorkout({
-					workoutId: `dashboard_${todayKey}`,
+					workoutId: `dashboard_${todayKey}_${exerciseId}`,
 					workoutName: toTitleCase(selectedExercise.name || todayWorkout.title),
 					completedAt: now.toISOString(),
 					durationMinutes: todayWorkout.durationMinutes,
@@ -235,7 +244,7 @@ function Dashboard() {
 						},
 					],
 					notes: "Completed from dashboard",
-					completionToken: `dashboard_${todayKey}`,
+					completionToken,
 				}),
 			)
 
@@ -252,10 +261,10 @@ function Dashboard() {
 
 	useEffect(() => {
 		if (selectedExercise) {
-			setIsWorkoutCompleted(hasCompletedToday)
+			setIsWorkoutCompleted(hasCompletedSelectedExerciseToday)
 			setCompleteWorkoutError("")
 		}
-	}, [hasCompletedToday, selectedExercise])
+	}, [hasCompletedSelectedExerciseToday, selectedExercise])
 
 	const handleOpenWorkoutLibrary = () => {
 		navigate("/workout")
