@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ChevronRight } from "lucide-react"
+import { motion } from "framer-motion"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import ExerciseDetailModal from "../components/ExerciseDetailModal.jsx"
 import WorkoutModal from "../components/WorkoutModal.jsx"
@@ -615,7 +616,6 @@ function Dashboard() {
 						weeklyCompletionPercent={todayWorkout.weeklyCompletionPercent}
 						weeklyCompletionSummary={weeklyCompletionSummary}
 						onStartWorkout={handleStartWorkout}
-						onStartCustomWorkout={handleOpenCustomWorkoutModal}
 						isLoading={isLoading}
 					/>
 
@@ -710,6 +710,15 @@ function Dashboard() {
 							</div>
 						</BaseCard>
 					</section>
+
+					<div className="fixed bottom-20 md:bottom-7 right-4 md:right-7 z-40">
+						<motion.button
+							whileTap={{ scale: 0.98 }}
+							onClick={handleOpenCustomWorkoutModal}
+							className="inline-flex items-center gap-2 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-5 py-3 text-sm font-semibold text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/60 hover:text-[hsl(var(--primary))]">
+							Start Custom Workout
+						</motion.button>
+					</div>
 
 					{selectedExercise && (
 						<ExerciseDetailModal

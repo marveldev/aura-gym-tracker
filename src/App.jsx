@@ -14,6 +14,7 @@ import HandbookFoodPage from "./pages/HandbookFoodPage.jsx"
 import HandbookFoodCategoryPage from "./pages/HandbookFoodCategoryPage.jsx"
 import HandbookExerciseMusclePage from "./pages/HandbookExerciseMusclePage.jsx"
 import HandbookExerciseDetailPage from "./pages/HandbookExerciseDetailPage.jsx"
+import HandbookArticleDetailPage from "./pages/HandbookArticleDetailPage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 import WorkoutPage from "./pages/WorkoutPage.jsx"
 
@@ -124,6 +125,14 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<HandbookExerciseDetailPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/article/:slug"
+					element={
+						<ProtectedRoute>
+							<HandbookArticleDetailPage />
 						</ProtectedRoute>
 					}
 				/>
