@@ -246,7 +246,7 @@ function FoodCaloriesPage() {
 									onClick={() => setSelectedCategory(category)}
 									className={`whitespace-nowrap rounded-full border px-3 py-1.5 text-sm transition ${
 										selectedCategory === category
-											? "border-[hsl(var(--primary))] bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]"
+											? "border-[hsl(var(--primary))] bg-[hsl(var(--primary))] text-[hsl(var(--primary-fg))] hover:bg-[hsl(var(--primary-hover))]"
 											: "border-[hsl(var(--border))] text-[hsl(var(--muted))] hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--fg))]"
 									}`}>
 									{category}
@@ -288,7 +288,7 @@ function FoodCaloriesPage() {
 									<button
 										type="button"
 										onClick={() => addToDailyLog(food)}
-										className="w-full rounded-lg bg-[hsl(var(--primary))] px-3 py-2 text-sm font-semibold text-[hsl(var(--primary-fg))] transition hover:bg-[hsl(var(--primary-hover))]">
+										className="w-full rounded-lg bg-[hsl(var(--primary))]/10 px-3 py-2 text-sm font-semibold text-[hsl(var(--primary))] transition hover:bg-[hsl(var(--primary))]/20">
 										Add to daily log
 									</button>
 								</div>
