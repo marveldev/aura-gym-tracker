@@ -1,9 +1,46 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link } from "react-router-dom"
 import AppPageFrame from "../components/AppPageFrame.jsx"
+import ToastContainer from "../components/ToastContainer.jsx"
 import { foodCategories, foodItems } from "../data/foodCaloriesData.js"
 
 const DAILY_LOG_STORAGE_KEY = "food_calories_daily_log"
+
+function getTodayKey() {
+	return new Date().toISOString().slice(0, 10)
+}
+
+function getInitialDailyLog() {
+	if (typeof window === "undefined") {
+		return []
+	}
+
+	const storedLog = window.localStorage.getItem(DAILY_LOG_STORAGE_KEY)
+	if (!storedLog) {
+		return []
+	}
+
+	try {
+		const parsed = JSON.parse(storedLog)
+
+		if (Array.isArray(parsed)) {
+			return parsed
+		}
+
+		if (
+			parsed &&
+			typeof parsed === "object" &&
+			parsed.date === getTodayKey() &&
+			Array.isArray(parsed.items)
+		) {
+			return parsed.items
+		}
+
+		return []
+	} catch {
+		return []
+	}
+}
 
 function formatMacro(value) {
 	return Number.isInteger(value) ? String(value) : value.toFixed(1)
@@ -13,26 +50,14 @@ function FoodCaloriesPage() {
 	const [searchQuery, setSearchQuery] = useState("")
 	const [selectedCategory, setSelectedCategory] = useState("All")
 	const [selectedFood, setSelectedFood] = useState(null)
-	const [dailyLog, setDailyLog] = useState([])
+	const [dailyLog, setDailyLog] = useState(getInitialDailyLog)
+	const [toasts, setToasts] = useState([])
 
 	useEffect(() => {
-		const storedLog = window.localStorage.getItem(DAILY_LOG_STORAGE_KEY)
-		if (!storedLog) {
-			return
-		}
-
-		try {
-			const parsed = JSON.parse(storedLog)
-			if (Array.isArray(parsed)) {
-				setDailyLog(parsed)
-			}
-		} catch {
-			setDailyLog([])
-		}
-	}, [])
-
-	useEffect(() => {
-		window.localStorage.setItem(DAILY_LOG_STORAGE_KEY, JSON.stringify(dailyLog))
+		window.localStorage.setItem(
+			DAILY_LOG_STORAGE_KEY,
+			JSON.stringify({ date: getTodayKey(), items: dailyLog }),
+		)
 	}, [dailyLog])
 
 	const filteredFoods = useMemo(() => {
@@ -66,10 +91,46 @@ function FoodCaloriesPage() {
 				category: food.category,
 			},
 		])
+
+		const toastId = `${food.id}-${Date.now()}`
+		setToasts((currentToasts) => [
+			...currentToasts,
+			{
+				id: toastId,
+				type: "success",
+				message: `${food.name} added to daily log`,
+			},
+		])
+
+		window.setTimeout(() => {
+			setToasts((currentToasts) =>
+				currentToasts.filter((toast) => toast.id !== toastId),
+			)
+		}, 2800)
 	}
 
 	const removeFromDailyLog = (logId) => {
 		setDailyLog((currentLog) => currentLog.filter((item) => item.id !== logId))
+	}
+
+	const removeAllFromDailyLog = () => {
+		setDailyLog([])
+
+		const toastId = `clear-log-${Date.now()}`
+		setToasts((currentToasts) => [
+			...currentToasts,
+			{
+				id: toastId,
+				type: "success",
+				message: "All food items removed from daily log",
+			},
+		])
+
+		window.setTimeout(() => {
+			setToasts((currentToasts) =>
+				currentToasts.filter((toast) => toast.id !== toastId),
+			)
+		}, 2800)
 	}
 
 	return (
@@ -88,7 +149,17 @@ function FoodCaloriesPage() {
 					</header>
 
 					<section className="card p-5 sm:p-6 mb-6">
-						<h2 className="text-lg font-semibold mb-4">Daily Calories</h2>
+						<div className="mb-4 flex items-center justify-between gap-3">
+							<h2 className="text-lg font-semibold">Daily Calories</h2>
+							{dailyLog.length > 0 && (
+								<button
+									type="button"
+									onClick={removeAllFromDailyLog}
+									className="rounded-lg border border-[hsl(var(--danger))]/35 px-3 py-1.5 text-xs font-semibold text-[hsl(var(--danger))] transition hover:bg-[hsl(var(--danger))]/10">
+									Remove all
+								</button>
+							)}
+						</div>
 						<div className="grid gap-3 sm:grid-cols-3 mb-5">
 							<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 p-4">
 								<p className="text-xs uppercase tracking-wide text-[hsl(var(--muted))]">
@@ -96,7 +167,9 @@ function FoodCaloriesPage() {
 								</p>
 								<p className="mt-2 text-2xl font-bold text-[hsl(var(--primary))]">
 									{totalCaloriesConsumed}
-									<span className="ml-1 text-sm text-[hsl(var(--muted))]">kcal</span>
+									<span className="ml-1 text-sm text-[hsl(var(--muted))]">
+										kcal
+									</span>
 								</p>
 							</div>
 							<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 p-4">
@@ -113,7 +186,9 @@ function FoodCaloriesPage() {
 									{dailyLog.length > 0
 										? Math.round(totalCaloriesConsumed / dailyLog.length)
 										: 0}
-									<span className="ml-1 text-sm text-[hsl(var(--muted))]">kcal</span>
+									<span className="ml-1 text-sm text-[hsl(var(--muted))]">
+										kcal
+									</span>
 								</p>
 							</div>
 						</div>
@@ -195,7 +270,9 @@ function FoodCaloriesPage() {
 									/>
 									<div className="p-4">
 										<div className="mb-2 flex items-center justify-between gap-2">
-											<h3 className="font-semibold leading-tight">{food.name}</h3>
+											<h3 className="font-semibold leading-tight">
+												{food.name}
+											</h3>
 											<span className="rounded-full bg-[hsl(var(--primary))]/10 px-2 py-0.5 text-xs text-[hsl(var(--primary))]">
 												{food.category}
 											</span>
@@ -294,6 +371,8 @@ function FoodCaloriesPage() {
 					/>
 				</div>
 			)}
+
+			<ToastContainer toasts={toasts} />
 		</AppPageFrame>
 	)
 }
