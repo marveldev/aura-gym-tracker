@@ -194,6 +194,10 @@ function HandbookPage({ embedded = false }) {
 		}),
 	}
 
+	if (!activeArticle) {
+		return null
+	}
+
 	return (
 		<div
 			className={`${
@@ -263,6 +267,10 @@ function HandbookPage({ embedded = false }) {
 								<img
 									src={activeArticle.coverImage}
 									alt={activeArticle.title}
+									onError={(event) => {
+										event.currentTarget.src =
+											"https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1800&q=80"
+									}}
 									loading="eager"
 									className="h-full w-full object-cover"
 								/>
