@@ -53,7 +53,7 @@ const handbookSections = [
 	},
 	{
 		title: "Food & Calories",
-		slug: "food",
+		slug: "food-calories",
 		description: "Common foods with calorie and macronutrient information.",
 		icon: "ph-bowl-food",
 		imageUrl:

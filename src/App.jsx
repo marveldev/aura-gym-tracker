@@ -10,8 +10,8 @@ import HandbookDashboardPage from "./pages/HandbookDashboardPage.jsx"
 import HandbookSectionPage from "./pages/HandbookSectionPage.jsx"
 import HandbookEncyclopediaTopicPage from "./pages/HandbookEncyclopediaTopicPage.jsx"
 import HandbookNutritionPage from "./pages/HandbookNutritionPage.jsx"
-import HandbookFoodPage from "./pages/HandbookFoodPage.jsx"
 import HandbookFoodCategoryPage from "./pages/HandbookFoodCategoryPage.jsx"
+import FoodCaloriesPage from "./pages/FoodCaloriesPage.jsx"
 import HandbookExerciseMusclePage from "./pages/HandbookExerciseMusclePage.jsx"
 import HandbookExerciseDetailPage from "./pages/HandbookExerciseDetailPage.jsx"
 import HandbookArticleDetailPage from "./pages/HandbookArticleDetailPage.jsx"
@@ -89,10 +89,18 @@ function App() {
 					}
 				/>
 				<Route
+					path="/handbook/food-calories"
+					element={
+						<ProtectedRoute>
+							<FoodCaloriesPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
 					path="/handbook/food"
 					element={
 						<ProtectedRoute>
-							<HandbookFoodPage />
+							<FoodCaloriesPage />
 						</ProtectedRoute>
 					}
 				/>
