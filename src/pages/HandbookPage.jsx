@@ -275,7 +275,7 @@ function HandbookPage({ embedded = false }) {
 									className="h-full w-full object-cover"
 								/>
 								<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/10" />
-								<div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 pr-20 sm:pr-24">
+								<div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 pr-20 sm:pr-24 z-20">
 									<p className="text-xs uppercase tracking-wider text-white/80">
 										Featured Guide
 									</p>
@@ -310,8 +310,8 @@ function HandbookPage({ embedded = false }) {
 							<ChevronRight className="h-5 w-5" />
 						</button>
 
-						<div className="absolute inset-x-0 bottom-4 z-10 flex justify-center px-4">
-							<div className="flex items-center gap-2 rounded-full bg-black/25 px-3 py-2 backdrop-blur-sm">
+						<div className="absolute inset-x-0 bottom-4 z-30 flex justify-center px-4 pointer-events-none">
+							<div className="flex items-center gap-2 rounded-full bg-black/25 px-3 py-2 backdrop-blur-sm pointer-events-auto">
 								{featuredArticles.map((article, index) => (
 									<button
 										key={article.slug}

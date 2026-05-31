@@ -84,20 +84,6 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 	return (
 		<AppPageFrame>
 			<div className="min-h-screen bg-[hsl(var(--bg))] text-[hsl(var(--fg))]">
-				{/* Reading Progress Bar */}
-				<div
-					className="fixed top-0 left-0 right-0 h-1 bg-[hsl(var(--border))] z-50"
-					role="progressbar"
-					aria-valuenow={Math.round(readProgress)}
-					aria-valuemin="0"
-					aria-valuemax="100">
-					<motion.div
-						className="h-full bg-[hsl(var(--primary))]"
-						style={{ width: `${readProgress}%` }}
-						transition={{ duration: 0.3 }}
-					/>
-				</div>
-
 				{/* Hero Image Banner */}
 				<motion.div
 					initial={{ opacity: 0 }}
@@ -116,6 +102,12 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 					) : (
 						<div className="w-full h-full bg-gradient-to-br from-[hsl(var(--primary))]/20 to-[hsl(var(--primary))]/5" />
 					)}
+					<Link
+						to="/handbook"
+						className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-black/35 px-3 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-black/50">
+						<ArrowLeft className="w-4 h-4" />
+						Handbook
+					</Link>
 				</motion.div>
 
 				{/* Main Content */}
@@ -136,7 +128,7 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 									)}`}>
 									{article.difficulty}
 								</span>
-								<span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[hsl(var(--border))] text-xs font-medium text-[hsl(var(--muted))]">
+								<span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-green-500/10 text-xs font-medium">
 									<Clock className="w-3 h-3" />
 									{article.readTime} min read
 								</span>
