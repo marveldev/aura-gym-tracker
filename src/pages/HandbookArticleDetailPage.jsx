@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 import { useParams, Link } from "react-router-dom"
-import { ArrowLeft, Clock, Zap, Bookmark } from "lucide-react"
+import { ArrowLeft, Clock, Zap } from "lucide-react"
 import { motion } from "framer-motion"
 import handbookArticles from "../data/handbookArticles"
+import AppPageFrame from "../components/AppPageFrame.jsx"
 
 function HandbookArticleDetailPage({ slugOverride = null }) {
 	const { slug, section } = useParams()
 	const articleSlug = slugOverride || slug || section
 	const [readProgress, setReadProgress] = useState(0)
-	const [isBookmarked, setIsBookmarked] = useState(false)
 	const contentRef = useRef(null)
 
 	const article = handbookArticles.find((a) => a.slug === articleSlug)
@@ -38,6 +38,7 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 
 	if (!article) {
 		return (
+			<AppPageFrame>
 			<div className="min-h-screen bg-[hsl(var(--bg))] text-[hsl(var(--fg))] flex items-center justify-center px-4">
 				<div className="text-center">
 					<h1 className="text-2xl font-bold mb-2">Article not found</h1>
@@ -52,6 +53,7 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 					</Link>
 				</div>
 			</div>
+			</AppPageFrame>
 		)
 	}
 
@@ -80,6 +82,7 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 	}
 
 	return (
+		<AppPageFrame>
 		<div className="min-h-screen bg-[hsl(var(--bg))] text-[hsl(var(--fg))]">
 			{/* Reading Progress Bar */}
 			<div
@@ -94,31 +97,6 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 					transition={{ duration: 0.3 }}
 				/>
 			</div>
-
-			{/* Header Navigation */}
-			<header className="sticky top-1 z-40 bg-[hsl(var(--bg))]/90 backdrop-blur-md border-b border-[hsl(var(--border))]">
-				<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-					<Link
-						to="/handbook"
-						className="inline-flex items-center gap-2 text-[hsl(var(--muted))] hover:text-[hsl(var(--fg))] transition">
-						<ArrowLeft className="w-4 h-4" />
-						<span className="text-sm">Handbook</span>
-					</Link>
-					<button
-						onClick={() => setIsBookmarked(!isBookmarked)}
-						className={`p-2 rounded-lg transition ${
-							isBookmarked
-								? "bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]"
-								: "hover:bg-[hsl(var(--surface))] text-[hsl(var(--muted))]"
-						}`}
-						aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}>
-						<Bookmark
-							className="w-5 h-5"
-							fill={isBookmarked ? "currentColor" : "none"}
-						/>
-					</button>
-				</div>
-			</header>
 
 			{/* Hero Image Banner */}
 			<motion.div
@@ -292,24 +270,10 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 						</motion.section>
 					)}
 
-					{/* Footer CTA */}
-					<motion.div
-						initial={{ opacity: 0 }}
-						whileInView={{ opacity: 1 }}
-						viewport={{ once: true }}
-						className="mt-16 pt-8 border-t border-[hsl(var(--border))] text-center">
-						<p className="text-[hsl(var(--muted))] mb-4">
-							Want to track your progress with this training?
-						</p>
-						<Link
-							to="/workout"
-							className="inline-flex items-center gap-2 bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-hover))] text-[hsl(var(--primary-fg))] font-semibold px-6 py-3 rounded-xl transition">
-							Create a Workout
-						</Link>
-					</motion.div>
 				</div>
 			</div>
 		</div>
+		</AppPageFrame>
 	)
 }
 
