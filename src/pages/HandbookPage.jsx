@@ -4,6 +4,28 @@ import { ChevronLeft, ChevronRight, Search } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
 import handbookArticles from "../data/handbookArticles"
 
+const FEATURED_INDEX_STORAGE_KEY = "handbook_featured_index"
+
+const getInitialFeaturedIndex = () => {
+	if (typeof window === "undefined") {
+		return 0
+	}
+
+	const storedIndex = Number(
+		window.sessionStorage.getItem(FEATURED_INDEX_STORAGE_KEY),
+	)
+
+	if (
+		Number.isNaN(storedIndex) ||
+		storedIndex < 0 ||
+		storedIndex >= handbookArticles.length
+	) {
+		return 0
+	}
+
+	return storedIndex
+}
+
 const handbookSections = [
 	{
 		title: "Exercises",
@@ -67,7 +89,7 @@ const trendingArticles = [
 
 function HandbookPage({ embedded = false }) {
 	const [query, setQuery] = useState("")
-	const [activeIndex, setActiveIndex] = useState(0)
+	const [activeIndex, setActiveIndex] = useState(getInitialFeaturedIndex)
 	const [direction, setDirection] = useState(0)
 	const [isAutoplayPaused, setIsAutoplayPaused] = useState(false)
 	const pauseTimeoutRef = useRef(null)
@@ -87,6 +109,23 @@ function HandbookPage({ embedded = false }) {
 	}, [query])
 
 	const activeArticle = featuredArticles[activeIndex]
+
+	useEffect(() => {
+		if (activeIndex >= featuredArticles.length) {
+			setActiveIndex(0)
+		}
+	}, [activeIndex, featuredArticles.length])
+
+	useEffect(() => {
+		if (featuredArticles.length === 0) {
+			return
+		}
+
+		window.sessionStorage.setItem(
+			FEATURED_INDEX_STORAGE_KEY,
+			String(activeIndex),
+		)
+	}, [activeIndex, featuredArticles.length])
 
 	useEffect(() => {
 		if (pauseTimeoutRef.current) {
