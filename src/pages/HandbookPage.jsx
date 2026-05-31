@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { Link } from "react-router-dom"
-import { Search } from "lucide-react"
-import { motion } from "framer-motion"
+import { ChevronLeft, ChevronRight, Search } from "lucide-react"
+import { AnimatePresence, motion } from "framer-motion"
+import handbookArticles from "../data/handbookArticles"
 
 const handbookSections = [
 	{
@@ -66,6 +67,11 @@ const trendingArticles = [
 
 function HandbookPage({ embedded = false }) {
 	const [query, setQuery] = useState("")
+	const [activeIndex, setActiveIndex] = useState(0)
+	const [direction, setDirection] = useState(0)
+	const [isAutoplayPaused, setIsAutoplayPaused] = useState(false)
+	const pauseTimeoutRef = useRef(null)
+	const featuredArticles = handbookArticles
 
 	const filteredSections = useMemo(() => {
 		const normalized = query.trim().toLowerCase()
@@ -79,6 +85,114 @@ function HandbookPage({ embedded = false }) {
 				section.description.toLowerCase().includes(normalized),
 		)
 	}, [query])
+
+	const activeArticle = featuredArticles[activeIndex]
+
+	useEffect(() => {
+		if (pauseTimeoutRef.current) {
+			return () => window.clearTimeout(pauseTimeoutRef.current)
+		}
+	}, [])
+
+	useEffect(() => {
+		if (isAutoplayPaused || featuredArticles.length <= 1) {
+			return undefined
+		}
+
+		const intervalId = window.setInterval(() => {
+			setDirection(1)
+			setActiveIndex(
+				(currentIndex) => (currentIndex + 1) % featuredArticles.length,
+			)
+		}, 6000)
+
+		return () => window.clearInterval(intervalId)
+	}, [featuredArticles.length, isAutoplayPaused])
+
+	const pauseAutoplay = (duration = 12000) => {
+		setIsAutoplayPaused(true)
+		if (pauseTimeoutRef.current) {
+			window.clearTimeout(pauseTimeoutRef.current)
+		}
+		if (duration > 0) {
+			pauseTimeoutRef.current = window.setTimeout(() => {
+				setIsAutoplayPaused(false)
+				pauseTimeoutRef.current = null
+			}, duration)
+		}
+	}
+
+	const resumeAutoplay = () => {
+		if (pauseTimeoutRef.current) {
+			window.clearTimeout(pauseTimeoutRef.current)
+			pauseTimeoutRef.current = null
+		}
+		setIsAutoplayPaused(false)
+	}
+
+	const goToSlide = (nextIndex) => {
+		pauseAutoplay()
+		setDirection(nextIndex > activeIndex ? 1 : -1)
+		setActiveIndex(nextIndex)
+	}
+
+	const paginate = (nextDirection) => {
+		pauseAutoplay()
+		setDirection(nextDirection)
+		setActiveIndex(
+			(currentIndex) =>
+				(currentIndex + nextDirection + featuredArticles.length) %
+				featuredArticles.length,
+		)
+	}
+
+	const handleDragEnd = (_, info) => {
+		const swipeOffset = info.offset.x
+		const swipeVelocity = info.velocity.x
+		const swipePower = Math.abs(swipeOffset) * swipeVelocity
+
+		if (swipeOffset <= -90 || swipePower <= -12000) {
+			paginate(1)
+			return
+		}
+
+		if (swipeOffset >= 90 || swipePower >= 12000) {
+			paginate(-1)
+			return
+		}
+
+		pauseAutoplay(8000)
+	}
+
+	const handleCarouselKeyDown = (event) => {
+		if (event.key === "ArrowLeft") {
+			event.preventDefault()
+			paginate(-1)
+		}
+
+		if (event.key === "ArrowRight") {
+			event.preventDefault()
+			paginate(1)
+		}
+	}
+
+	const slideVariants = {
+		enter: (nextDirection) => ({
+			x: nextDirection > 0 ? 64 : -64,
+			opacity: 0,
+			scale: 0.985,
+		}),
+		center: {
+			x: 0,
+			opacity: 1,
+			scale: 1,
+		},
+		exit: (nextDirection) => ({
+			x: nextDirection > 0 ? -64 : 64,
+			opacity: 0,
+			scale: 0.985,
+		}),
+	}
 
 	return (
 		<div
@@ -111,36 +225,103 @@ function HandbookPage({ embedded = false }) {
 					/>
 				</div>
 
-				<motion.article
+				<motion.section
 					initial={{ opacity: 0, y: 8 }}
 					animate={{ opacity: 1, y: 0 }}
 					whileHover={{ y: -3 }}
+					onMouseEnter={() => setIsAutoplayPaused(true)}
+					onMouseLeave={resumeAutoplay}
+					onFocusCapture={() => pauseAutoplay(0)}
+					onBlurCapture={resumeAutoplay}
+					onTouchStart={() => pauseAutoplay()}
+					onKeyDown={handleCarouselKeyDown}
+					aria-label="Featured handbook articles"
+					aria-roledescription="carousel"
+					tabIndex={0}
 					className="relative mb-7 overflow-hidden rounded-3xl border border-[hsl(var(--border))] shadow-sm">
-					<img
-						src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1800&q=80"
-						alt="Featured training guide"
-						loading="lazy"
-						className="h-64 w-full object-cover sm:h-72"
-					/>
-					<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/10" />
-					<div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-						<p className="text-xs uppercase tracking-wider text-white/80">
-							Featured Guide
-						</p>
-						<h2 className="mt-1 text-xl sm:text-2xl font-bold text-white">
-							The 7-Day Strength Form Reset
-						</h2>
-						<p className="mt-2 max-w-2xl text-sm text-white/85">
-							Refine technique, prevent injury, and train smarter with clear
-							cues for your next week of sessions.
-						</p>
-						<Link
-							to="/handbook/article/7-day-strength-form-reset"
-							className="mt-4 inline-flex rounded-xl bg-[hsl(var(--primary))] px-4 py-2 text-sm font-semibold text-[hsl(var(--primary-fg))] transition hover:bg-[hsl(var(--primary-hover))]">
-							Read article
-						</Link>
+					<div className="relative h-64 sm:h-72">
+						<AnimatePresence initial={false} custom={direction} mode="wait">
+							<motion.article
+								key={activeArticle.slug}
+								custom={direction}
+								variants={slideVariants}
+								initial="enter"
+								animate="center"
+								exit="exit"
+								transition={{
+									x: { type: "spring", stiffness: 280, damping: 28 },
+									opacity: { duration: 0.22 },
+									scale: { duration: 0.22 },
+								}}
+								drag="x"
+								dragConstraints={{ left: 0, right: 0 }}
+								dragElastic={0.12}
+								onDragStart={() => pauseAutoplay()}
+								onDragEnd={handleDragEnd}
+								style={{ touchAction: "pan-y" }}
+								className="absolute inset-0 cursor-grab active:cursor-grabbing">
+								<img
+									src={activeArticle.coverImage}
+									alt={activeArticle.title}
+									loading="eager"
+									className="h-full w-full object-cover"
+								/>
+								<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/10" />
+								<div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 pr-20 sm:pr-24">
+									<p className="text-xs uppercase tracking-wider text-white/80">
+										Featured Guide
+									</p>
+									<h2 className="mt-1 text-xl sm:text-2xl font-bold text-white">
+										{activeArticle.title}
+									</h2>
+									<p className="mt-2 max-w-2xl text-sm text-white/85">
+										{activeArticle.excerpt}
+									</p>
+									<Link
+										to={`/handbook/${activeArticle.slug}`}
+										onClick={() => pauseAutoplay()}
+										className="mt-4 inline-flex rounded-xl bg-[hsl(var(--primary))] px-4 py-2 text-sm font-semibold text-[hsl(var(--primary-fg))] transition hover:bg-[hsl(var(--primary-hover))] focus:outline-none focus:ring-2 focus:ring-white/45">
+										Read article
+									</Link>
+								</div>
+							</motion.article>
+						</AnimatePresence>
+
+						<button
+							type="button"
+							onClick={() => paginate(-1)}
+							className="absolute left-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/50 focus:outline-none focus:ring-2 focus:ring-white/45"
+							aria-label="Previous article">
+							<ChevronLeft className="h-5 w-5" />
+						</button>
+						<button
+							type="button"
+							onClick={() => paginate(1)}
+							className="absolute right-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/50 focus:outline-none focus:ring-2 focus:ring-white/45"
+							aria-label="Next article">
+							<ChevronRight className="h-5 w-5" />
+						</button>
+
+						<div className="absolute inset-x-0 bottom-4 z-10 flex justify-center px-4">
+							<div className="flex items-center gap-2 rounded-full bg-black/25 px-3 py-2 backdrop-blur-sm">
+								{featuredArticles.map((article, index) => (
+									<button
+										key={article.slug}
+										type="button"
+										onClick={() => goToSlide(index)}
+										className={`h-2.5 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-white/45 ${
+											index === activeIndex
+												? "w-6 bg-[hsl(var(--primary))]"
+												: "w-2.5 bg-white/45 hover:bg-white/65"
+										}`}
+										aria-label={`Go to article ${index + 1}: ${article.title}`}
+										aria-current={index === activeIndex ? "true" : "false"}
+									/>
+								))}
+							</div>
+						</div>
 					</div>
-				</motion.article>
+				</motion.section>
 
 				<div className="grid gap-4 sm:gap-5 md:grid-cols-2">
 					{filteredSections.map((section) => (

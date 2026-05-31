@@ -4,13 +4,14 @@ import { ArrowLeft, Clock, Zap, Bookmark } from "lucide-react"
 import { motion } from "framer-motion"
 import handbookArticles from "../data/handbookArticles"
 
-function HandbookArticleDetailPage() {
-	const { slug } = useParams()
+function HandbookArticleDetailPage({ slugOverride = null }) {
+	const { slug, section } = useParams()
+	const articleSlug = slugOverride || slug || section
 	const [readProgress, setReadProgress] = useState(0)
 	const [isBookmarked, setIsBookmarked] = useState(false)
 	const contentRef = useRef(null)
 
-	const article = handbookArticles.find((a) => a.slug === slug)
+	const article = handbookArticles.find((a) => a.slug === articleSlug)
 
 	// Calculate reading progress
 	useEffect(() => {
@@ -259,7 +260,7 @@ function HandbookArticleDetailPage() {
 								{relatedArticles.map((relatedArticle) => (
 									<Link
 										key={relatedArticle.slug}
-										to={`/handbook/article/${relatedArticle.slug}`}
+										to={`/handbook/${relatedArticle.slug}`}
 										className="group rounded-xl border border-[hsl(var(--border))] overflow-hidden transition hover:border-[hsl(var(--primary))] hover:shadow-lg">
 										<div className="h-40 bg-gradient-to-br from-[hsl(var(--primary))]/20 to-[hsl(var(--primary))]/5 overflow-hidden">
 											{relatedArticle.coverImage && (

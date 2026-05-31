@@ -1,0 +1,222 @@
+[
+	{
+		"id": "strength-form-reset",
+		"slug": "7-day-strength-form-reset",
+		"title": "The 7-Day Strength Form Reset",
+		"excerpt": "Refine technique, prevent injury, and build stronger movement patterns in just one week.",
+		"category": "Exercises",
+		"difficulty": "Beginner",
+		"readTime": 7,
+		"featured": true,
+		"sections": [
+			{
+				"title": "Why Form Matters",
+				"content": "Proper exercise technique improves performance, reduces injury risk, and ensures the target muscles are doing the work."
+			},
+			{
+				"title": "Day 1: Squat Mechanics",
+				"content": "Focus on stance width, bracing, and depth. Practice bodyweight squats before loading."
+			},
+			{
+				"title": "Day 2: Hip Hinge Fundamentals",
+				"content": "Learn how to move through the hips while maintaining a neutral spine."
+			},
+			{
+				"title": "Day 3: Pressing Technique",
+				"content": "Improve shoulder positioning and pressing mechanics for safer upper-body training."
+			},
+			{
+				"title": "Day 4: Pulling Mechanics",
+				"content": "Develop proper rowing and pull-up movement patterns."
+			},
+			{
+				"title": "Day 5: Core Stability",
+				"content": "Practice bracing and anti-rotation exercises to create a stronger foundation."
+			},
+			{
+				"title": "Day 6: Movement Review",
+				"content": "Review each movement pattern and identify weaknesses."
+			},
+			{
+				"title": "Day 7: Assessment",
+				"content": "Retest your movements and compare them to Day 1."
+			}
+		],
+		"relatedExercises": ["squat", "deadlift", "plank"]
+	},
+	{
+		"id": "progressive-overload",
+		"slug": "beginners-guide-to-progressive-overload",
+		"title": "Beginner's Guide to Progressive Overload",
+		"excerpt": "Learn the most important principle for building strength and muscle.",
+		"category": "Training",
+		"difficulty": "Beginner",
+		"readTime": 6,
+		"featured": true,
+		"sections": [
+			{
+				"title": "What Is Progressive Overload?",
+				"content": "Progressive overload means gradually increasing training demands over time."
+			},
+			{
+				"title": "Ways to Progress",
+				"content": "Increase weight, reps, sets, frequency, or improve exercise quality."
+			},
+			{
+				"title": "Common Mistakes",
+				"content": "Adding weight too quickly and sacrificing form are the most common errors."
+			}
+		],
+		"relatedExercises": ["bench-press", "deadlift", "squat"]
+	},
+	{
+		"id": "nutrition-fundamentals",
+		"slug": "nutrition-fundamentals",
+		"title": "Nutrition Fundamentals",
+		"excerpt": "Understand calories, macronutrients, and healthy eating habits.",
+		"category": "Nutrition",
+		"difficulty": "Beginner",
+		"readTime": 5,
+		"featured": true,
+		"sections": [
+			{
+				"title": "Calories",
+				"content": "Calories are units of energy. Weight change depends largely on energy balance."
+			},
+			{
+				"title": "Protein",
+				"content": "Protein supports muscle repair and recovery."
+			},
+			{
+				"title": "Carbohydrates",
+				"content": "Carbs are the body's preferred energy source during exercise."
+			},
+			{
+				"title": "Fats",
+				"content": "Dietary fats support hormones and overall health."
+			}
+		],
+		"relatedFoods": ["chicken-breast", "rice", "eggs"]
+	},
+	{
+		"id": "protein-intake-explained",
+		"slug": "protein-intake-explained",
+		"title": "Protein Intake Explained",
+		"excerpt": "How much protein do you really need for muscle growth and recovery?",
+		"category": "Nutrition",
+		"difficulty": "Beginner",
+		"readTime": 4,
+		"featured": false,
+		"sections": [
+			{
+				"title": "Why Protein Matters",
+				"content": "Protein provides amino acids needed for tissue repair and growth."
+			},
+			{
+				"title": "Daily Targets",
+				"content": "Active individuals generally benefit from higher protein intake than sedentary individuals."
+			},
+			{
+				"title": "Protein Sources",
+				"content": "Lean meats, fish, eggs, dairy, legumes, and protein supplements are common options."
+			}
+		]
+	},
+	{
+		"id": "mastering-the-squat",
+		"slug": "mastering-the-squat",
+		"title": "Mastering the Squat",
+		"excerpt": "Improve depth, stability, and power with better squat mechanics.",
+		"category": "Exercises",
+		"difficulty": "Intermediate",
+		"readTime": 8,
+		"featured": false,
+		"sections": [
+			{
+				"title": "Setup",
+				"content": "Position your feet shoulder-width apart and brace your core."
+			},
+			{
+				"title": "Descent",
+				"content": "Sit down between your hips while maintaining a neutral spine."
+			},
+			{
+				"title": "Ascent",
+				"content": "Drive through the mid-foot and stand up powerfully."
+			}
+		],
+		"relatedExercises": ["front-squat", "goblet-squat"]
+	},
+	{
+		"id": "deadlift-form-guide",
+		"slug": "deadlift-form-guide",
+		"title": "Deadlift Form Guide",
+		"excerpt": "Build strength safely by mastering the hip hinge movement.",
+		"category": "Exercises",
+		"difficulty": "Intermediate",
+		"readTime": 8,
+		"featured": false,
+		"sections": [
+			{
+				"title": "Setup",
+				"content": "Stand with the bar over the middle of your foot."
+			},
+			{
+				"title": "Brace",
+				"content": "Take a deep breath and create full-body tension."
+			},
+			{
+				"title": "Lift",
+				"content": "Push the floor away while maintaining spinal neutrality."
+			}
+		]
+	},
+	{
+		"id": "recovery-and-sleep",
+		"slug": "recovery-and-sleep",
+		"title": "Recovery and Sleep",
+		"excerpt": "Learn why recovery is where progress actually happens.",
+		"category": "Recovery",
+		"difficulty": "Beginner",
+		"readTime": 5,
+		"featured": false,
+		"sections": [
+			{
+				"title": "Why Recovery Matters",
+				"content": "Training creates stress. Recovery allows adaptation."
+			},
+			{
+				"title": "Sleep",
+				"content": "Sleep quality strongly influences performance and recovery."
+			},
+			{
+				"title": "Recovery Habits",
+				"content": "Hydration, nutrition, and stress management all contribute to recovery."
+			}
+		]
+	},
+	{
+		"id": "building-your-first-workout-plan",
+		"slug": "building-your-first-workout-plan",
+		"title": "Building Your First Workout Plan",
+		"excerpt": "Create a sustainable training program that matches your goals.",
+		"category": "Training",
+		"difficulty": "Beginner",
+		"readTime": 9,
+		"featured": false,
+		"sections": [
+			{
+				"title": "Choose Your Goal",
+				"content": "Define whether your primary goal is strength, muscle gain, fat loss, or general fitness."
+			},
+			{
+				"title": "Select Exercises",
+				"content": "Prioritize compound movements before isolation exercises."
+			},
+			{
+				"title": "Plan Progression",
+				"content": "Track performance and gradually increase training demands."
+			}
+		]
+	}
+]

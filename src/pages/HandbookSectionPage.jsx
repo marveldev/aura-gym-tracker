@@ -1,6 +1,8 @@
 import { Link, useParams } from "react-router-dom"
 import AppPageFrame from "../components/AppPageFrame.jsx"
+import handbookArticles from "../data/handbookArticles"
 import { encyclopediaTopics } from "../data/encyclopediaTopics.js"
+import HandbookArticleDetailPage from "./HandbookArticleDetailPage.jsx"
 
 const sectionMeta = {
 	exercises: {
@@ -76,6 +78,11 @@ function HandbookSectionPage() {
 	const { section } = useParams()
 	const sectionKey = section?.toLowerCase()
 	const current = sectionMeta[sectionKey]
+	const article = handbookArticles.find((item) => item.slug === sectionKey)
+
+	if (article) {
+		return <HandbookArticleDetailPage slugOverride={article.slug} />
+	}
 
 	if (!current) {
 		return (
