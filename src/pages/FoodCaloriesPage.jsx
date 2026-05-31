@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link } from "react-router-dom"
+import { ArrowLeft } from "lucide-react"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import ToastContainer from "../components/ToastContainer.jsx"
 import { foodCategories, foodItems } from "../data/foodCaloriesData.js"
@@ -137,15 +138,16 @@ function FoodCaloriesPage() {
 		<AppPageFrame>
 			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
 				<div className="w-full">
-					<header className="mb-8 flex items-center justify-between">
+					<header className="mb-8 flex items-center gap-3">
+						<Link
+							to="/handbook"
+							aria-label="Back to handbook"
+							className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))] text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--primary))]">
+							<ArrowLeft className="h-5 w-5" />
+						</Link>
 						<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 							Food & Calories
 						</h1>
-						<Link
-							to="/handbook"
-							className="btn btn-secondary rounded-lg px-4 py-2">
-							Back
-						</Link>
 					</header>
 
 					<section className="card p-5 sm:p-6 mb-6">
