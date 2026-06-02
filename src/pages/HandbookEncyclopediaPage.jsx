@@ -26,7 +26,9 @@ function HandbookEncyclopediaPage() {
 	)
 	const [bookmarkedIds, setBookmarkedIds] = useState(getBookmarkedArticleIds)
 	const [recentlyViewedIds] = useState(getRecentlyViewedArticleIds)
-	const [searchHistory, setSearchHistory] = useState(getEncyclopediaSearchHistory)
+	const [searchHistory, setSearchHistory] = useState(
+		getEncyclopediaSearchHistory,
+	)
 
 	useEffect(() => {
 		const params = new URLSearchParams(location.search)
@@ -69,7 +71,9 @@ function HandbookEncyclopediaPage() {
 				article.summary,
 				...(article.keywords || []),
 				...(article.relatedTopics || []),
-			].join(" ").toLowerCase()
+			]
+				.join(" ")
+				.toLowerCase()
 
 			return matchesCategory && keywordBlob.includes(normalized)
 		})
@@ -102,7 +106,9 @@ function HandbookEncyclopediaPage() {
 				<div className="w-full space-y-6">
 					<header className="space-y-4">
 						<div className="flex items-center justify-between gap-3">
-							<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Fitness Encyclopedia</h1>
+							<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+								Fitness Encyclopedia
+							</h1>
 							<Link
 								to="/handbook"
 								className="btn btn-secondary rounded-lg px-4 py-2">
@@ -112,16 +118,28 @@ function HandbookEncyclopediaPage() {
 
 						<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 							<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-4">
-								<p className="text-xs text-[hsl(var(--muted))] uppercase tracking-wide">Total articles</p>
-								<p className="mt-1 text-2xl font-bold">{encyclopediaArticles.length}</p>
+								<p className="text-xs text-[hsl(var(--muted))] uppercase tracking-wide">
+									Total articles
+								</p>
+								<p className="mt-1 text-2xl font-bold">
+									{encyclopediaArticles.length}
+								</p>
 							</div>
 							<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-4">
-								<p className="text-xs text-[hsl(var(--muted))] uppercase tracking-wide">Saved articles</p>
-								<p className="mt-1 text-2xl font-bold">{bookmarkedArticles.length}</p>
+								<p className="text-xs text-[hsl(var(--muted))] uppercase tracking-wide">
+									Saved articles
+								</p>
+								<p className="mt-1 text-2xl font-bold">
+									{bookmarkedArticles.length}
+								</p>
 							</div>
 							<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-4">
-								<p className="text-xs text-[hsl(var(--muted))] uppercase tracking-wide">Recently viewed</p>
-								<p className="mt-1 text-2xl font-bold">{recentlyViewedArticles.length}</p>
+								<p className="text-xs text-[hsl(var(--muted))] uppercase tracking-wide">
+									Recently viewed
+								</p>
+								<p className="mt-1 text-2xl font-bold">
+									{recentlyViewedArticles.length}
+								</p>
 							</div>
 						</div>
 					</header>
@@ -177,10 +195,19 @@ function HandbookEncyclopediaPage() {
 									key={article.id}
 									to={`/handbook/encyclopedia/article/${article.id}`}
 									className="min-w-[280px] max-w-[320px] overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] transition hover:border-[hsl(var(--primary))]/45">
-									<img src={article.image} alt={article.title} className="h-36 w-full object-cover" />
+									<img
+										src={article.image}
+										alt={article.title}
+										className="h-36 w-full object-cover"
+									/>
 									<div className="p-4">
-										<p className="text-sm font-semibold line-clamp-2">{article.title}</p>
-										<p className="mt-2 text-xs text-[hsl(var(--muted))] inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" /> {article.readingTime} min</p>
+										<p className="text-sm font-semibold line-clamp-2">
+											{article.title}
+										</p>
+										<p className="mt-2 text-xs text-[hsl(var(--muted))] inline-flex items-center gap-1">
+											<Clock className="h-3.5 w-3.5" /> {article.readingTime}{" "}
+											min
+										</p>
 									</div>
 								</Link>
 							))}
@@ -189,7 +216,9 @@ function HandbookEncyclopediaPage() {
 
 					{bookmarkedArticles.length > 0 && (
 						<section className="space-y-3">
-							<h2 className="text-xl font-bold inline-flex items-center gap-2"><Bookmark className="h-5 w-5" /> Saved Articles</h2>
+							<h2 className="text-xl font-bold inline-flex items-center gap-2">
+								<Bookmark className="h-5 w-5" /> Saved Articles
+							</h2>
 							<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 								{bookmarkedArticles.map((article) => (
 									<EncyclopediaArticleCard
@@ -213,8 +242,12 @@ function HandbookEncyclopediaPage() {
 										key={`recent-${article.id}`}
 										to={`/handbook/encyclopedia/article/${article.id}`}
 										className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-3 transition hover:border-[hsl(var(--primary))]/45">
-										<p className="text-sm font-medium line-clamp-2">{article.title}</p>
-										<p className="mt-1 text-xs text-[hsl(var(--muted))]">{article.category}</p>
+										<p className="text-sm font-medium line-clamp-2">
+											{article.title}
+										</p>
+										<p className="mt-1 text-xs text-[hsl(var(--muted))]">
+											{article.category}
+										</p>
 									</Link>
 								))}
 							</div>
@@ -224,7 +257,9 @@ function HandbookEncyclopediaPage() {
 					<section className="space-y-3">
 						<div className="flex items-center justify-between gap-2">
 							<h2 className="text-xl font-bold">Articles</h2>
-							<p className="text-sm text-[hsl(var(--muted))]">{filteredArticles.length} results</p>
+							<p className="text-sm text-[hsl(var(--muted))]">
+								{filteredArticles.length} results
+							</p>
 						</div>
 						{filteredArticles.length > 0 ? (
 							<div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -239,7 +274,9 @@ function HandbookEncyclopediaPage() {
 								))}
 							</div>
 						) : (
-							<div className="card p-8 text-center text-[hsl(var(--muted))]">No encyclopedia articles match your filters.</div>
+							<div className="card p-8 text-center text-[hsl(var(--muted))]">
+								No encyclopedia articles match your filters.
+							</div>
 						)}
 					</section>
 				</div>

@@ -31,7 +31,9 @@ function HandbookEncyclopediaArticlePage() {
 			return []
 		}
 
-		const topicSet = new Set((article.relatedTopics || []).map((topic) => topic.toLowerCase()))
+		const topicSet = new Set(
+			(article.relatedTopics || []).map((topic) => topic.toLowerCase()),
+		)
 
 		return encyclopediaArticles
 			.filter((candidate) => candidate.id !== article.id)
@@ -73,9 +75,17 @@ function HandbookEncyclopediaArticlePage() {
 			<AppPageFrame>
 				<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
 					<div className="w-full card p-6 sm:p-8">
-						<h1 className="text-2xl sm:text-3xl font-bold mb-3">Article not found</h1>
-						<p className="text-[hsl(var(--muted))] mb-6">This encyclopedia article could not be found.</p>
-						<Link to="/handbook/encyclopedia" className="btn btn-primary rounded-lg px-4 py-2">Back to Encyclopedia</Link>
+						<h1 className="text-2xl sm:text-3xl font-bold mb-3">
+							Article not found
+						</h1>
+						<p className="text-[hsl(var(--muted))] mb-6">
+							This encyclopedia article could not be found.
+						</p>
+						<Link
+							to="/handbook/encyclopedia"
+							className="btn btn-primary rounded-lg px-4 py-2">
+							Back to Encyclopedia
+						</Link>
 					</div>
 				</div>
 			</AppPageFrame>
@@ -89,33 +99,52 @@ function HandbookEncyclopediaArticlePage() {
 			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
 				<div className="w-full space-y-6">
 					<div className="flex items-center justify-between gap-3">
-						<Link to="/handbook/encyclopedia" className="inline-flex items-center gap-2 rounded-lg border border-[hsl(var(--border))] px-4 py-2 text-sm font-medium hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--primary))] transition">
+						<Link
+							to="/handbook/encyclopedia"
+							className="inline-flex items-center gap-2 rounded-lg border border-[hsl(var(--border))] px-4 py-2 text-sm font-medium hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--primary))] transition">
 							<ArrowLeft className="h-4 w-4" />
 							Back
 						</Link>
 						<button
 							type="button"
-							onClick={() => setBookmarkedIds(toggleBookmarkedArticleId(article.id))}
+							onClick={() =>
+								setBookmarkedIds(toggleBookmarkedArticleId(article.id))
+							}
 							className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition ${
 								isBookmarked
 									? "border-[hsl(var(--primary))] bg-[hsl(var(--primary))] text-[hsl(var(--primary-fg))]"
 									: "border-[hsl(var(--border))] hover:border-[hsl(var(--primary))]/45"
 							}`}>
-							<Bookmark className={`h-4 w-4 ${isBookmarked ? "fill-current" : ""}`} />
+							<Bookmark
+								className={`h-4 w-4 ${isBookmarked ? "fill-current" : ""}`}
+							/>
 							{isBookmarked ? "Saved" : "Save"}
 						</button>
 					</div>
 
 					<div className="overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]">
-						<img src={article.image} alt={article.title} className="h-64 w-full object-cover" />
+						<img
+							src={article.image}
+							alt={article.title}
+							className="h-64 w-full object-cover"
+						/>
 						<div className="space-y-4 p-6 sm:p-8">
 							<div className="flex flex-wrap items-center gap-2">
-								<span className="rounded-full bg-[hsl(var(--primary))]/10 px-3 py-1 text-xs font-medium text-[hsl(var(--primary))]">{article.category}</span>
-								<span className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-xs text-[hsl(var(--muted))] inline-flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{article.readingTime} min</span>
-								<span className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-xs text-[hsl(var(--muted))]">{article.difficulty}</span>
+								<span className="rounded-full bg-[hsl(var(--primary))]/10 px-3 py-1 text-xs font-medium text-[hsl(var(--primary))]">
+									{article.category}
+								</span>
+								<span className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-xs text-[hsl(var(--muted))] inline-flex items-center gap-1">
+									<Clock className="h-3.5 w-3.5" />
+									{article.readingTime} min
+								</span>
+								<span className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-xs text-[hsl(var(--muted))]">
+									{article.difficulty}
+								</span>
 							</div>
 
-							<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">{article.title}</h1>
+							<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+								{article.title}
+							</h1>
 
 							<div className="rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 p-4 text-[hsl(var(--muted))] leading-relaxed whitespace-pre-line">
 								{article.content}
@@ -156,10 +185,18 @@ function HandbookEncyclopediaArticlePage() {
 										key={related.id}
 										to={`/handbook/encyclopedia/${related.id}`}
 										className="overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] transition hover:border-[hsl(var(--primary))]/45">
-										<img src={related.image} alt={related.title} className="h-28 w-full object-cover" />
+										<img
+											src={related.image}
+											alt={related.title}
+											className="h-28 w-full object-cover"
+										/>
 										<div className="p-4">
-											<p className="line-clamp-2 text-sm font-semibold">{related.title}</p>
-											<p className="mt-1 text-xs text-[hsl(var(--muted))]">{related.category}</p>
+											<p className="line-clamp-2 text-sm font-semibold">
+												{related.title}
+											</p>
+											<p className="mt-1 text-xs text-[hsl(var(--muted))]">
+												{related.category}
+											</p>
 										</div>
 									</Link>
 								))}

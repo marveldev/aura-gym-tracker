@@ -133,7 +133,8 @@ const exerciseArticles = [
 	},
 	{
 		title: "Rowing Patterns Explained",
-		summary: "Compare barbell, cable, and dumbbell rows for balanced development.",
+		summary:
+			"Compare barbell, cable, and dumbbell rows for balanced development.",
 		relatedTopics: ["mid-back", "scapula", "pulling"],
 		keywords: ["rows", "back thickness", "scapular retraction"],
 	},
@@ -151,7 +152,8 @@ const exerciseArticles = [
 	},
 	{
 		title: "Leg Press Execution",
-		summary: "Use foot placement and depth cues for efficient lower-body training.",
+		summary:
+			"Use foot placement and depth cues for efficient lower-body training.",
 		relatedTopics: ["quads", "glutes", "machine"],
 		keywords: ["leg press", "quads", "machine", "legs"],
 	},
@@ -274,7 +276,12 @@ const muscleArticles = [
 	title,
 	summary: `${title} explained with practical cues for training and injury prevention.`,
 	relatedTopics: ["muscle anatomy", "movement quality", "strength"],
-	keywords: ["muscle", "anatomy", "training", ...title.toLowerCase().split(" ")],
+	keywords: [
+		"muscle",
+		"anatomy",
+		"training",
+		...title.toLowerCase().split(" "),
+	],
 }))
 
 const nutritionArticles = [
@@ -302,7 +309,12 @@ const nutritionArticles = [
 	title,
 	summary: `${title} with evidence-informed guidance you can apply immediately.`,
 	relatedTopics: ["calories", "macros", "habits"],
-	keywords: ["nutrition", "diet", "calories", ...title.toLowerCase().split(" ")],
+	keywords: [
+		"nutrition",
+		"diet",
+		"calories",
+		...title.toLowerCase().split(" "),
+	],
 }))
 
 const recoveryArticles = [
@@ -356,7 +368,12 @@ const trainingMethodArticles = [
 	title,
 	summary: `${title} with practical programming strategies for long-term progress.`,
 	relatedTopics: ["programming", "progression", "training"],
-	keywords: ["training methods", "programming", "strength", ...title.toLowerCase().split(" ")],
+	keywords: [
+		"training methods",
+		"programming",
+		"strength",
+		...title.toLowerCase().split(" "),
+	],
 }))
 
 const withMeta = (items, category, startReadingTime = 4) =>
@@ -366,7 +383,12 @@ const withMeta = (items, category, startReadingTime = 4) =>
 			category,
 			summary: item.summary,
 			readingTime: startReadingTime + (index % 5),
-			difficulty: index % 3 === 0 ? "Beginner" : index % 3 === 1 ? "Intermediate" : "Advanced",
+			difficulty:
+				index % 3 === 0
+					? "Beginner"
+					: index % 3 === 1
+						? "Intermediate"
+						: "Advanced",
 			relatedTopics: item.relatedTopics,
 			keywords: item.keywords,
 			exerciseName: item.exerciseName,

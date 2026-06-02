@@ -1,7 +1,12 @@
 import { Bookmark, Clock } from "lucide-react"
 import { Link } from "react-router-dom"
 
-function EncyclopediaArticleCard({ article, isBookmarked, onToggleBookmark, to }) {
+function EncyclopediaArticleCard({
+	article,
+	isBookmarked,
+	onToggleBookmark,
+	to,
+}) {
 	return (
 		<Link
 			to={to}
@@ -26,7 +31,9 @@ function EncyclopediaArticleCard({ article, isBookmarked, onToggleBookmark, to }
 							? "border-[hsl(var(--primary))] bg-[hsl(var(--primary))] text-[hsl(var(--primary-fg))]"
 							: "border-[hsl(var(--border))] bg-black/35 text-white hover:border-[hsl(var(--primary))]/45"
 					}`}>
-					<Bookmark className={`h-4 w-4 ${isBookmarked ? "fill-current" : ""}`} />
+					<Bookmark
+						className={`h-4 w-4 ${isBookmarked ? "fill-current" : ""}`}
+					/>
 				</button>
 			</div>
 			<div className="space-y-3 p-4">
@@ -38,7 +45,9 @@ function EncyclopediaArticleCard({ article, isBookmarked, onToggleBookmark, to }
 						{article.category}
 					</span>
 				</div>
-				<p className="line-clamp-3 text-sm text-[hsl(var(--muted))]">{article.summary}</p>
+				<p className="line-clamp-3 text-sm text-[hsl(var(--muted))]">
+					{article.summary}
+				</p>
 				<div className="flex items-center justify-between text-xs text-[hsl(var(--muted))]">
 					<span className="inline-flex items-center gap-1">
 						<Clock className="h-3.5 w-3.5" /> {article.readingTime} min

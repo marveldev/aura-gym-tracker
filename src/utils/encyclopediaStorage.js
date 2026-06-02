@@ -49,7 +49,10 @@ export function getRecentlyViewedArticleIds() {
 
 export function addRecentlyViewedArticleId(articleId) {
 	const current = getRecentlyViewedArticleIds()
-	const next = [articleId, ...current.filter((id) => id !== articleId)].slice(0, 5)
+	const next = [articleId, ...current.filter((id) => id !== articleId)].slice(
+		0,
+		5,
+	)
 	writeJsonArray(ENC_RECENT_KEY, next)
 	return next
 }
