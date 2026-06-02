@@ -9,6 +9,8 @@ import OnboardingPage from "./pages/OnboardingPage.jsx"
 import HandbookDashboardPage from "./pages/HandbookDashboardPage.jsx"
 import HandbookSectionPage from "./pages/HandbookSectionPage.jsx"
 import HandbookEncyclopediaTopicPage from "./pages/HandbookEncyclopediaTopicPage.jsx"
+import HandbookEncyclopediaPage from "./pages/HandbookEncyclopediaPage.jsx"
+import HandbookEncyclopediaArticlePage from "./pages/HandbookEncyclopediaArticlePage.jsx"
 import HandbookNutritionPage from "./pages/HandbookNutritionPage.jsx"
 import HandbookFoodCategoryPage from "./pages/HandbookFoodCategoryPage.jsx"
 import FoodCaloriesPage from "./pages/FoodCaloriesPage.jsx"
@@ -109,6 +111,22 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<HandbookFoodCategoryPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/encyclopedia"
+					element={
+						<ProtectedRoute>
+							<HandbookEncyclopediaPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/encyclopedia/article/:articleId"
+					element={
+						<ProtectedRoute>
+							<HandbookEncyclopediaArticlePage />
 						</ProtectedRoute>
 					}
 				/>

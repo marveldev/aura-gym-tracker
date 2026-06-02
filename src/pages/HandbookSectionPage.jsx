@@ -3,6 +3,7 @@ import AppPageFrame from "../components/AppPageFrame.jsx"
 import handbookArticles from "../data/handbookArticles"
 import { encyclopediaTopics } from "../data/encyclopediaTopics.js"
 import HandbookArticleDetailPage from "./HandbookArticleDetailPage.jsx"
+import HandbookEncyclopediaPage from "./HandbookEncyclopediaPage.jsx"
 
 const sectionMeta = {
 	exercises: {
@@ -79,6 +80,10 @@ function HandbookSectionPage() {
 	const sectionKey = section?.toLowerCase()
 	const current = sectionMeta[sectionKey]
 	const article = handbookArticles.find((item) => item.slug === sectionKey)
+
+	if (sectionKey === "encyclopedia") {
+		return <HandbookEncyclopediaPage />
+	}
 
 	if (article) {
 		return <HandbookArticleDetailPage slugOverride={article.slug} />
