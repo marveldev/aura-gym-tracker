@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom"
 import { ArrowLeft, Clock, Zap } from "lucide-react"
 import { motion } from "framer-motion"
 import handbookArticles from "../data/handbookArticles"
+import workoutExerciseData from "../data/workoutExerciseData.js"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 
 function HandbookArticleDetailPage({ slugOverride = null }) {
@@ -66,6 +67,52 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 				a.featured,
 		)
 		.slice(0, 3)
+
+	const allLibraryExercises = workoutExerciseData.data ?? []
+
+	const findExerciseLibraryMatch = (exerciseId) => {
+		if (!exerciseId) {
+			return null
+		}
+
+		const normalizedId = exerciseId.toLowerCase().replace(/-/g, " ").trim()
+		const idTokens = normalizedId.split(" ").filter(Boolean)
+
+		const exactMatch = allLibraryExercises.find(
+			(exercise) => exercise.name.toLowerCase() === normalizedId,
+		)
+		if (exactMatch) {
+			return exactMatch
+		}
+
+		const strongMatch = allLibraryExercises.find((exercise) => {
+			const exerciseName = exercise.name.toLowerCase()
+			return (
+				idTokens.length > 0 &&
+				idTokens.every((token) => exerciseName.includes(token))
+			)
+		})
+		if (strongMatch) {
+			return strongMatch
+		}
+
+		return allLibraryExercises.find((exercise) => {
+			const exerciseName = exercise.name.toLowerCase()
+			return (
+				exerciseName.includes(normalizedId) ||
+				normalizedId.includes(exerciseName)
+			)
+		})
+	}
+
+	const relatedExerciseCards = Array.from(
+		new Map(
+			(article.relatedExercises || [])
+				.map((exerciseId) => findExerciseLibraryMatch(exerciseId))
+				.filter(Boolean)
+				.map((exercise) => [exercise.exerciseId, exercise]),
+		).values(),
+	)
 
 	// Difficulty color mapping
 	const getDifficultyColor = (difficulty) => {
@@ -183,40 +230,39 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 						</motion.div>
 
 						{/* Related Exercises */}
-						{article.relatedExercises &&
-							article.relatedExercises.length > 0 && (
-								<motion.section
-									initial={{ opacity: 0, y: 16 }}
-									whileInView={{ opacity: 1, y: 0 }}
-									viewport={{ once: true }}
-									className="mb-12">
-									<h2 className="text-2xl sm:text-3xl font-bold mb-4">
-										Related Exercises
-									</h2>
-									<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-										{article.relatedExercises.map((exerciseId) => (
-											<Link
-												key={exerciseId}
-												to={`/handbook/exercises/chest/${exerciseId}`}
-												className="group rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-4 transition hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/5">
-												<div className="flex items-center gap-3">
-													<div className="h-10 w-10 rounded-lg bg-[hsl(var(--primary))]/10 flex items-center justify-center">
-														<Zap className="w-5 h-5 text-[hsl(var(--primary))]" />
-													</div>
-													<div className="flex-grow min-w-0">
-														<p className="font-semibold text-sm capitalize group-hover:text-[hsl(var(--primary))] transition">
-															{exerciseId.replace(/-/g, " ")}
-														</p>
-														<p className="text-xs text-[hsl(var(--muted))]">
-															View form guide
-														</p>
-													</div>
+						{relatedExerciseCards.length > 0 && (
+							<motion.section
+								initial={{ opacity: 0, y: 16 }}
+								whileInView={{ opacity: 1, y: 0 }}
+								viewport={{ once: true }}
+								className="mb-12">
+								<h2 className="text-2xl sm:text-3xl font-bold mb-4">
+									Related Exercises
+								</h2>
+								<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+									{relatedExerciseCards.map((exercise) => (
+										<Link
+											key={exercise.exerciseId}
+											to={`/workout?search=${encodeURIComponent(exercise.name)}`}
+											className="group rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-4 transition hover:border-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/5">
+											<div className="flex items-center gap-3">
+												<div className="h-10 w-10 rounded-lg bg-[hsl(var(--primary))]/10 flex items-center justify-center">
+													<Zap className="w-5 h-5 text-[hsl(var(--primary))]" />
 												</div>
-											</Link>
-										))}
-									</div>
-								</motion.section>
-							)}
+												<div className="flex-grow min-w-0">
+													<p className="font-semibold text-sm capitalize group-hover:text-[hsl(var(--primary))] transition truncate">
+														{exercise.name}
+													</p>
+													<p className="text-xs text-[hsl(var(--muted))]">
+														Open in Exercise Library
+													</p>
+												</div>
+											</div>
+										</Link>
+									))}
+								</div>
+							</motion.section>
+						)}
 
 						{/* Related Articles */}
 						{relatedArticles.length > 0 && (

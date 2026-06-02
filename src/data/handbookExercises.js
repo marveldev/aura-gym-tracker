@@ -137,6 +137,34 @@ export const handbookExerciseData = {
 		title: "Legs",
 		exercises: [
 			{
+				slug: "squat",
+				name: "Squat",
+				description:
+					"Foundational lower-body compound movement for strength and stability.",
+				targetMuscles: "Quads, glutes, hamstrings, core",
+			},
+			{
+				slug: "front-squat",
+				name: "Front Squat",
+				description:
+					"Squat variation that emphasizes quads and upright torso positioning.",
+				targetMuscles: "Quads, core, glutes",
+			},
+			{
+				slug: "goblet-squat",
+				name: "Goblet Squat",
+				description:
+					"Dumbbell or kettlebell squat variation ideal for technique and control.",
+				targetMuscles: "Quads, glutes, core",
+			},
+			{
+				slug: "deadlift",
+				name: "Deadlift",
+				description:
+					"Classic hip-hinge compound lift for full posterior-chain development.",
+				targetMuscles: "Hamstrings, glutes, lower back, upper back",
+			},
+			{
 				slug: "back-squat",
 				name: "Back Squat",
 				description: "Primary compound lift for lower-body strength.",
@@ -153,6 +181,13 @@ export const handbookExerciseData = {
 				name: "Leg Press",
 				description: "Machine press pattern for controlled lower-body volume.",
 				targetMuscles: "Quads, glutes, hamstrings",
+			},
+			{
+				slug: "plank",
+				name: "Plank",
+				type: "bodyweight",
+				description: "Core stability hold that reinforces trunk control.",
+				targetMuscles: "Core, shoulders, glutes",
 			},
 		],
 	},

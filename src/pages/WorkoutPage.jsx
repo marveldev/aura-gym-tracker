@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import ExerciseCard from "../components/ExerciseCard.jsx"
 import ExerciseDetailModal from "../components/ExerciseDetailModal.jsx"
 import AppPageFrame from "../components/AppPageFrame.jsx"
@@ -39,6 +39,7 @@ const BODY_PART_LABELS = {
 
 function WorkoutPage() {
 	const navigate = useNavigate()
+	const location = useLocation()
 	const [search, setSearch] = useState("")
 	const [activeBodyPart, setActiveBodyPart] = useState("all")
 	const [activeEquipment, setActiveEquipment] = useState("all")
@@ -57,6 +58,14 @@ function WorkoutPage() {
 		completedSession,
 		resetSuccess,
 	} = useWorkoutCompletion()
+
+	useEffect(() => {
+		const params = new URLSearchParams(location.search)
+		const searchFromUrl = params.get("search")
+		if (searchFromUrl) {
+			setSearch(searchFromUrl)
+		}
+	}, [location.search])
 
 	useEffect(() => {
 		if (!sessionExercises.length) {
