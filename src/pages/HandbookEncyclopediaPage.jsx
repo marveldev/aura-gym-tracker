@@ -6,6 +6,7 @@ import EncyclopediaArticleCard from "../components/encyclopedia/EncyclopediaArti
 import {
 	encyclopediaArticles,
 	encyclopediaCategories,
+	ENCYCLOPEDIA_FALLBACK_IMAGE,
 	featuredEncyclopediaArticles,
 } from "../data/encyclopediaArticles.js"
 import {
@@ -99,6 +100,15 @@ function HandbookEncyclopediaPage() {
 	const toggleBookmark = (articleId) => {
 		setBookmarkedIds(toggleBookmarkedArticleId(articleId))
 	}
+
+	useEffect(() => {
+		featuredEncyclopediaArticles.forEach((article) => {
+			console.log("[EncyclopediaImageDebug][Featured]", {
+				title: article.title,
+				image: article.image,
+			})
+		})
+	}, [])
 
 	return (
 		<AppPageFrame>
@@ -198,6 +208,13 @@ function HandbookEncyclopediaPage() {
 									<img
 										src={article.image}
 										alt={article.title}
+										onError={(event) => {
+											console.error("[EncyclopediaImageError][Featured]", {
+												title: article.title,
+												image: article.image,
+											})
+											event.currentTarget.src = ENCYCLOPEDIA_FALLBACK_IMAGE
+										}}
 										className="h-36 w-full object-cover"
 									/>
 									<div className="p-4">

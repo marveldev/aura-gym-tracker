@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom"
 import { ArrowLeft, Bookmark, Clock } from "lucide-react"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import {
+	ENCYCLOPEDIA_FALLBACK_IMAGE,
 	encyclopediaArticleById,
 	encyclopediaArticles,
 } from "../data/encyclopediaArticles.js"
@@ -94,6 +95,13 @@ function HandbookEncyclopediaArticlePage() {
 
 	const isBookmarked = bookmarkedIds.includes(article.id)
 
+	useEffect(() => {
+		console.log("[EncyclopediaImageDebug][Detail]", {
+			title: article.title,
+			image: article.image,
+		})
+	}, [article.image, article.title])
+
 	return (
 		<AppPageFrame>
 			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
@@ -126,6 +134,13 @@ function HandbookEncyclopediaArticlePage() {
 						<img
 							src={article.image}
 							alt={article.title}
+							onError={(event) => {
+								console.error("[EncyclopediaImageError][DetailHero]", {
+									title: article.title,
+									image: article.image,
+								})
+								event.currentTarget.src = ENCYCLOPEDIA_FALLBACK_IMAGE
+							}}
 							className="h-64 w-full object-cover"
 						/>
 						<div className="space-y-4 p-6 sm:p-8">
@@ -188,6 +203,13 @@ function HandbookEncyclopediaArticlePage() {
 										<img
 											src={related.image}
 											alt={related.title}
+											onError={(event) => {
+												console.error("[EncyclopediaImageError][Related]", {
+													title: related.title,
+													image: related.image,
+												})
+												event.currentTarget.src = ENCYCLOPEDIA_FALLBACK_IMAGE
+											}}
 											className="h-28 w-full object-cover"
 										/>
 										<div className="p-4">

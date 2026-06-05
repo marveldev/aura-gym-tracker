@@ -49,7 +49,7 @@ const handbookSections = [
 		description: "A-Z fitness and health glossary with concise definitions.",
 		icon: "ph-book-open-text",
 		imageUrl:
-			"https://images.unsplash.com/photo-1549060279-7e168fcee0c2?auto=format&fit=crop&w=1400&q=80",
+			"https://plus.unsplash.com/premium_photo-1677187301660-5e557d9c0724?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGJvb2t8ZW58MHx8MHx8fDA%3D",
 	},
 	{
 		title: "Food & Calories",

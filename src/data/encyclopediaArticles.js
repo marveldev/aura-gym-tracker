@@ -16,6 +16,9 @@ const CATEGORY_ORDER = [
 	"Training Methods",
 ]
 
+export const ENCYCLOPEDIA_FALLBACK_IMAGE =
+	"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80"
+
 const slugify = (value) =>
 	value
 		.toLowerCase()
@@ -23,8 +26,36 @@ const slugify = (value) =>
 		.trim()
 		.replace(/\s+/g, "-")
 
-const createImageUrl = (query) =>
-	`https://source.unsplash.com/1200x800/?fitness,${encodeURIComponent(query)}`
+const STABLE_ENCYCLOPEDIA_IMAGE_POOL = [
+	"https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1434608519344-49d77a699e1d?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1549060279-7e168fcee0c2?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1518310952931-b1de897abd40?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1517344884509-a0c97ec11bcc?auto=format&fit=crop&w=1200&q=80",
+	"https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1200&q=80",
+]
+
+const hashStringToNumber = (value) => {
+	let hash = 0
+	for (let index = 0; index < value.length; index += 1) {
+		hash = (hash << 5) - hash + value.charCodeAt(index)
+		hash |= 0
+	}
+	return Math.abs(hash)
+}
+
+const createImageUrl = (query) => {
+	const hash = hashStringToNumber(query)
+	return STABLE_ENCYCLOPEDIA_IMAGE_POOL[
+		hash % STABLE_ENCYCLOPEDIA_IMAGE_POOL.length
+	]
+}
 
 const createArticle = ({
 	title,

@@ -1,5 +1,6 @@
 import { Bookmark, Clock } from "lucide-react"
 import { Link } from "react-router-dom"
+import { ENCYCLOPEDIA_FALLBACK_IMAGE } from "../../data/encyclopediaArticles.js"
 
 function EncyclopediaArticleCard({
 	article,
@@ -16,6 +17,13 @@ function EncyclopediaArticleCard({
 					src={article.image}
 					alt={article.title}
 					loading="lazy"
+					onError={(event) => {
+						console.error("[EncyclopediaImageError][Card]", {
+							title: article.title,
+							image: article.image,
+						})
+						event.currentTarget.src = ENCYCLOPEDIA_FALLBACK_IMAGE
+					}}
 					className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
 				/>
 				<button
