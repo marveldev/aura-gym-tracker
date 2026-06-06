@@ -67,7 +67,7 @@ function EncyclopediaDetail() {
 
 		const parsed = JSON.parse(
 			window.localStorage.getItem(RECENTLY_VIEWED_KEY) || "[]",
-		) as string[]
+		)
 		const next = [
 			topic.id,
 			...parsed.filter((entry) => entry !== topic.id),

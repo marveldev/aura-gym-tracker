@@ -1,9 +1,7 @@
 import { useMemo, useState } from "react"
 import { motion } from "framer-motion"
 import AppPageFrame from "../components/AppPageFrame.jsx"
-import EncyclopediaCard, {
-	type EncyclopediaTopic,
-} from "../components/encyclopedia/EncyclopediaCard"
+import EncyclopediaCard from "../components/encyclopedia/EncyclopediaCard"
 import EncyclopediaSearch from "../components/encyclopedia/EncyclopediaSearch"
 import FeaturedTopicsCarousel from "../components/encyclopedia/FeaturedTopicsCarousel"
 import EncyclopediaCategoryFilter from "../components/encyclopedia/EncyclopediaCategoryFilter"
