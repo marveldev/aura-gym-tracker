@@ -280,6 +280,40 @@ const exerciseArticles = [
 		relatedTopics: ["programming", "hypertrophy", "strength"],
 		keywords: ["compound", "isolation", "exercise selection"],
 	},
+	{
+		title: "Incline Dumbbell Press Setup",
+		summary:
+			"Set bench angle, grip path, and elbow position for upper-chest focus.",
+		relatedTopics: ["upper chest", "pressing", "dumbbells"],
+		keywords: ["incline dumbbell press", "chest", "hypertrophy"],
+	},
+	{
+		title: "Chest-Supported Row Technique",
+		summary: "Improve back stimulus while reducing lower-back fatigue.",
+		relatedTopics: ["mid-back", "scapula", "row mechanics"],
+		keywords: ["chest-supported row", "back", "form"],
+	},
+	{
+		title: "Trap Bar Deadlift Fundamentals",
+		summary:
+			"Use neutral-grip pulling for strong leg and posterior-chain development.",
+		relatedTopics: ["deadlift", "quads", "posterior chain"],
+		keywords: ["trap bar deadlift", "strength", "hinge"],
+	},
+	{
+		title: "Single-Leg Romanian Deadlift Control",
+		summary:
+			"Build balance, hip stability, and hamstring strength with unilateral hinge work.",
+		relatedTopics: ["single-leg", "hamstrings", "stability"],
+		keywords: ["single-leg RDL", "balance", "glutes"],
+	},
+	{
+		title: "Landmine Press Progressions",
+		summary:
+			"Develop shoulder-friendly pressing strength through angled barbell patterns.",
+		relatedTopics: ["shoulders", "core", "pressing"],
+		keywords: ["landmine press", "shoulder training", "strength"],
+	},
 ]
 
 const muscleArticles = [
@@ -303,6 +337,11 @@ const muscleArticles = [
 	"Rotator Cuff Protection",
 	"Neck and Posture Mechanics",
 	"Serratus Anterior for Pressing",
+	"Long Head Triceps Mechanics",
+	"Glute Medius Stability Role",
+	"Hamstring Length-Tension Training",
+	"Scapular Upward Rotation Basics",
+	"Thoracic Spine Mobility for Lifters",
 ].map((title) => ({
 	title,
 	summary: `${title} explained with practical cues for training and injury prevention.`,
@@ -336,6 +375,11 @@ const nutritionArticles = [
 	"High-Protein Breakfast Ideas",
 	"Nutrition for Rest Days",
 	"Building Sustainable Eating Habits",
+	"Glycemic Load for Athletes",
+	"Eating for Lean Muscle Gain",
+	"Digestive Health and Performance",
+	"Plant-Based Protein Strategy",
+	"Weekend Nutrition Damage Control",
 ].map((title) => ({
 	title,
 	summary: `${title} with evidence-informed guidance you can apply immediately.`,
@@ -359,6 +403,11 @@ const recoveryArticles = [
 	"Cold Therapy: Pros and Cons",
 	"Rest Day Optimization",
 	"Injury Warning Signs",
+	"Post-Session Cooldown Blueprint",
+	"DOMS Management Strategies",
+	"Breathing Drills for Recovery",
+	"Sauna Use and Training Adaptation",
+	"Travel Recovery for Athletes",
 ].map((title) => ({
 	title,
 	summary: `${title} to help you recover faster and train with better consistency.`,
@@ -377,6 +426,11 @@ const equipmentArticles = [
 	"Lifting Straps and Grip Aids",
 	"Foam Roller Usage Guide",
 	"Choosing the Right Shoes",
+	"Adjustable Bench Buying Checklist",
+	"Home Gym Rack Essentials",
+	"Cable Attachment Selection",
+	"Barbell Collar Safety Basics",
+	"Wrist Wraps and Knee Sleeves",
 ].map((title) => ({
 	title,
 	summary: `${title} so you can choose and use equipment more effectively.`,
@@ -395,6 +449,11 @@ const trainingMethodArticles = [
 	"HIIT vs Steady Cardio",
 	"Strength vs Hypertrophy Blocks",
 	"How to Break Plateaus",
+	"Autoregulation in Strength Training",
+	"Weekly Split Design Principles",
+	"Top Set and Back-Off Method",
+	"Minimal Effective Volume",
+	"Training Frequency Optimization",
 ].map((title) => ({
 	title,
 	summary: `${title} with practical programming strategies for long-term progress.`,

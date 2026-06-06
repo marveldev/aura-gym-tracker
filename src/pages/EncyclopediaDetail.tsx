@@ -3,27 +3,57 @@ import { Link, Navigate, useParams } from "react-router-dom"
 import { motion } from "framer-motion"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import type { EncyclopediaTopic } from "../components/encyclopedia/EncyclopediaCard"
-import topicsData from "../data/encyclopediaTopics.json"
+import { encyclopediaArticles } from "../data/encyclopediaArticles.js"
 
-const topics = topicsData as EncyclopediaTopic[]
+type DetailTopic = EncyclopediaTopic & {
+	content?:
+		| string
+		| {
+				intro?: string
+				sections?: Array<{ heading: string; points: string[] }>
+				keyTakeaways?: string[]
+		  }
+	relatedTopics?: string[]
+}
+
+const topics = encyclopediaArticles.map(
+	(article) =>
+		({
+			id: article.id,
+			title: article.title,
+			category: article.category,
+			readTime: `${article.readingTime} min read`,
+			summary: article.summary,
+			coverImage: article.image,
+			featured: false,
+			content: article.content,
+			relatedTopics: article.relatedTopics,
+		}) as DetailTopic,
+)
 const topicById = new Map(topics.map((topic) => [topic.id, topic]))
 
 const RECENTLY_VIEWED_KEY = "encyclopedia_recently_viewed"
 
-function getRelatedTopics(topic: EncyclopediaTopic) {
-	const relatedById = (topic.relatedIds || [])
-		.map((relatedId) => topicById.get(relatedId))
-		.filter(Boolean) as EncyclopediaTopic[]
+function getRelatedTopics(topic: DetailTopic) {
+	const relatedByKeyword = (topic.relatedTopics || [])
+		.map((relatedKeyword) =>
+			topics.find(
+				(candidate) =>
+					candidate.id !== topic.id &&
+					candidate.title.toLowerCase().includes(relatedKeyword.toLowerCase()),
+			),
+		)
+		.filter(Boolean) as DetailTopic[]
 
-	if (relatedById.length >= 3) {
-		return relatedById.slice(0, 3)
+	if (relatedByKeyword.length >= 3) {
+		return relatedByKeyword.slice(0, 3)
 	}
 
 	const categoryRelated = topics.filter(
 		(item) => item.category === topic.category && item.id !== topic.id,
 	)
 
-	return [...relatedById, ...categoryRelated].slice(0, 3)
+	return [...relatedByKeyword, ...categoryRelated].slice(0, 3)
 }
 
 function EncyclopediaDetail() {
@@ -50,6 +80,11 @@ function EncyclopediaDetail() {
 	}
 
 	const relatedTopics = getRelatedTopics(topic)
+	const structuredContent =
+		typeof topic.content === "object" && topic.content
+			? topic.content
+			: undefined
+	const plainContent = typeof topic.content === "string" ? topic.content : ""
 
 	return (
 		<AppPageFrame>
@@ -77,11 +112,11 @@ function EncyclopediaDetail() {
 
 					<div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px]">
 						<article className="space-y-6 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-5 sm:p-6">
-							<p className="text-sm leading-relaxed text-[hsl(var(--muted))] sm:text-base">
-								{topic.content?.intro || topic.summary}
+							<p className="text-sm leading-relaxed text-[hsl(var(--muted))] sm:text-base whitespace-pre-line">
+								{structuredContent?.intro || plainContent || topic.summary}
 							</p>
 
-							{(topic.content?.sections || []).map((section) => (
+							{(structuredContent?.sections || []).map((section) => (
 								<section key={section.heading} className="space-y-3">
 									<h2 className="text-xl font-bold">{section.heading}</h2>
 									<ul className="space-y-2 text-sm text-[hsl(var(--muted))] sm:text-base">
@@ -98,7 +133,7 @@ function EncyclopediaDetail() {
 							<div className="rounded-xl border border-[hsl(var(--primary))]/20 bg-[hsl(var(--primary))]/10 p-4">
 								<h3 className="text-base font-bold">Key Takeaways</h3>
 								<ul className="mt-2 space-y-2 text-sm text-[hsl(var(--fg))]">
-									{(topic.content?.keyTakeaways || []).map((takeaway) => (
+									{(structuredContent?.keyTakeaways || []).map((takeaway) => (
 										<li key={takeaway} className="flex gap-2">
 											<span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" />
 											<span>{takeaway}</span>
