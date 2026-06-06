@@ -17,19 +17,16 @@ const featuredIds = new Set(
 	featuredEncyclopediaArticles.map((article) => article.id),
 )
 
-const topics = encyclopediaArticles.map(
-	(article) =>
-		({
-			id: article.id,
-			title: article.title,
-			category: article.category,
-			tags: article.keywords,
-			featured: featuredIds.has(article.id),
-			readTime: `${article.readingTime} min read`,
-			summary: article.summary,
-			coverImage: article.image,
-		}) as EncyclopediaTopic,
-)
+const topics = encyclopediaArticles.map((article) => ({
+	id: article.id,
+	title: article.title,
+	category: article.category,
+	tags: article.keywords,
+	featured: featuredIds.has(article.id),
+	readTime: `${article.readingTime} min read`,
+	summary: article.summary,
+	coverImage: article.image,
+}))
 
 function EncyclopediaPage() {
 	const [searchQuery, setSearchQuery] = useState("")

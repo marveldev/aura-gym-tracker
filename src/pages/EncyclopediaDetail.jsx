@@ -2,39 +2,24 @@ import { useEffect, useMemo } from "react"
 import { Link, Navigate, useParams } from "react-router-dom"
 import { motion } from "framer-motion"
 import AppPageFrame from "../components/AppPageFrame.jsx"
-import type { EncyclopediaTopic } from "../components/encyclopedia/EncyclopediaCard"
 import { encyclopediaArticles } from "../data/encyclopediaArticles.js"
 
-type DetailTopic = EncyclopediaTopic & {
-	content?:
-		| string
-		| {
-				intro?: string
-				sections?: Array<{ heading: string; points: string[] }>
-				keyTakeaways?: string[]
-		  }
-	relatedTopics?: string[]
-}
-
-const topics = encyclopediaArticles.map(
-	(article) =>
-		({
-			id: article.id,
-			title: article.title,
-			category: article.category,
-			readTime: `${article.readingTime} min read`,
-			summary: article.summary,
-			coverImage: article.image,
-			featured: false,
-			content: article.content,
-			relatedTopics: article.relatedTopics,
-		}) as DetailTopic,
-)
+const topics = encyclopediaArticles.map((article) => ({
+	id: article.id,
+	title: article.title,
+	category: article.category,
+	readTime: `${article.readingTime} min read`,
+	summary: article.summary,
+	coverImage: article.image,
+	featured: false,
+	content: article.content,
+	relatedTopics: article.relatedTopics,
+}))
 const topicById = new Map(topics.map((topic) => [topic.id, topic]))
 
 const RECENTLY_VIEWED_KEY = "encyclopedia_recently_viewed"
 
-function getRelatedTopics(topic: DetailTopic) {
+function getRelatedTopics(topic) {
 	const relatedByKeyword = (topic.relatedTopics || [])
 		.map((relatedKeyword) =>
 			topics.find(
@@ -43,7 +28,7 @@ function getRelatedTopics(topic: DetailTopic) {
 					candidate.title.toLowerCase().includes(relatedKeyword.toLowerCase()),
 			),
 		)
-		.filter(Boolean) as DetailTopic[]
+		.filter(Boolean)
 
 	if (relatedByKeyword.length >= 3) {
 		return relatedByKeyword.slice(0, 3)
