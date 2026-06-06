@@ -13,7 +13,7 @@ function EncyclopediaSearchComponent({
 	onClear,
 }: EncyclopediaSearchProps) {
 	return (
-		<div className="sticky top-16 z-20 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--bg))]/90 p-3 backdrop-blur-md">
+		<div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--bg))]/90 p-3 backdrop-blur-md">
 			<div className="relative">
 				<Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[hsl(var(--muted))]" />
 				<input

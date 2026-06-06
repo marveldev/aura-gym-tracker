@@ -19,17 +19,6 @@ const CATEGORY_CHIPS = [
 	"Gym Questions",
 ]
 
-const TRENDING_TITLES = [
-	"Abdominal Obesity",
-	"Cellulite",
-	"Best Time To Exercise",
-	"Do I Need Gym Straps?",
-	"Progressive Overload",
-	"Creatine",
-	"Sleep and Recovery",
-	"Protein Intake",
-]
-
 const topics = topicsData as EncyclopediaTopic[]
 
 function EncyclopediaPage() {
@@ -68,29 +57,6 @@ function EncyclopediaPage() {
 		[filteredTopics],
 	)
 
-	const trendingTopics = useMemo(() => {
-		const resolved = TRENDING_TITLES.map((title) =>
-			topics.find((topic) => topic.title === title),
-		).filter(Boolean) as EncyclopediaTopic[]
-
-		if (resolved.length === TRENDING_TITLES.length) {
-			return resolved
-		}
-
-		const fallback = topics.filter((topic) =>
-			[
-				"Fat Loss",
-				"Muscle Building",
-				"Nutrition",
-				"Recovery",
-				"Supplements",
-				"Gym Questions",
-			].includes(topic.category),
-		)
-
-		return [...resolved, ...fallback].slice(0, 8)
-	}, [])
-
 	const isEmptyState = filteredTopics.length === 0
 
 	return (
@@ -107,37 +73,25 @@ function EncyclopediaPage() {
 						</p>
 					</header>
 
-					<EncyclopediaSearch
-						value={searchQuery}
-						onChange={setSearchQuery}
-						onClear={() => setSearchQuery("")}
-					/>
+					<section className="space-y-3">
+						<EncyclopediaSearch
+							value={searchQuery}
+							onChange={setSearchQuery}
+							onClear={() => setSearchQuery("")}
+						/>
+						<div className="space-y-3">
+							<h2 className="text-xl font-bold">Browse By Category</h2>
+							<EncyclopediaCategoryFilter
+								categories={CATEGORY_CHIPS}
+								selectedCategory={selectedCategory}
+								onSelectCategory={setSelectedCategory}
+							/>
+						</div>
+					</section>
 
 					<section className="space-y-4">
 						<h2 className="text-xl font-bold">Featured Topics</h2>
 						<FeaturedTopicsCarousel topics={featuredTopics} />
-					</section>
-
-					<section className="space-y-4">
-						<h2 className="text-xl font-bold">Trending Topics</h2>
-						<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-							{trendingTopics.map((topic) => (
-								<EncyclopediaCard
-									key={`trending-${topic.id}`}
-									topic={topic}
-									to={`/encyclopedia/${topic.id}`}
-								/>
-							))}
-						</div>
-					</section>
-
-					<section className="space-y-3">
-						<h2 className="text-xl font-bold">Browse By Category</h2>
-						<EncyclopediaCategoryFilter
-							categories={CATEGORY_CHIPS}
-							selectedCategory={selectedCategory}
-							onSelectCategory={setSelectedCategory}
-						/>
 					</section>
 
 					<section className="space-y-4">
