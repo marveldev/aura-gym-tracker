@@ -9,7 +9,6 @@ import OnboardingPage from "./pages/OnboardingPage.jsx"
 import HandbookDashboardPage from "./pages/HandbookDashboardPage.jsx"
 import HandbookSectionPage from "./pages/HandbookSectionPage.jsx"
 import HandbookEncyclopediaTopicPage from "./pages/HandbookEncyclopediaTopicPage.jsx"
-import HandbookEncyclopediaPage from "./pages/HandbookEncyclopediaPage.jsx"
 import HandbookEncyclopediaArticlePage from "./pages/HandbookEncyclopediaArticlePage.jsx"
 import HandbookNutritionPage from "./pages/HandbookNutritionPage.jsx"
 import HandbookFoodCategoryPage from "./pages/HandbookFoodCategoryPage.jsx"
@@ -19,6 +18,8 @@ import HandbookExerciseDetailPage from "./pages/HandbookExerciseDetailPage.jsx"
 import HandbookArticleDetailPage from "./pages/HandbookArticleDetailPage.jsx"
 import ProtectedRoute from "./components/ProtectedRoute.jsx"
 import WorkoutPage from "./pages/WorkoutPage.jsx"
+import EncyclopediaPage from "./pages/EncyclopediaPage"
+import EncyclopediaDetail from "./pages/EncyclopediaDetail"
 
 function App() {
 	return (
@@ -118,7 +119,7 @@ function App() {
 					path="/handbook/encyclopedia"
 					element={
 						<ProtectedRoute>
-							<HandbookEncyclopediaPage />
+							<EncyclopediaPage />
 						</ProtectedRoute>
 					}
 				/>
@@ -159,6 +160,22 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<HandbookArticleDetailPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/encyclopedia"
+					element={
+						<ProtectedRoute>
+							<EncyclopediaPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/encyclopedia/:id"
+					element={
+						<ProtectedRoute>
+							<EncyclopediaDetail />
 						</ProtectedRoute>
 					}
 				/>
