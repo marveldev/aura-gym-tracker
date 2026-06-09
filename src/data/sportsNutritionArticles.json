@@ -1,0 +1,651 @@
+[
+	{
+		"id": "protein-shakes-necessity",
+		"title": "Do I Need Protein Shakes?",
+		"category": "Protein",
+		"featured": true,
+		"readTime": 5,
+		"summary": "Protein shakes are convenient but not essential. Learn when they make sense and how to use them effectively.",
+		"coverImage": "https://images.unsplash.com/photo-1590080876383-303ffd708f3f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["convenience", "supplements", "meal replacement"],
+		"content": {
+			"intro": "Protein shakes are a tool for convenience, not a requirement. Whole foods should be your foundation, but shakes can help you meet daily targets easily.",
+			"sections": [
+				{
+					"heading": "When Protein Shakes Help",
+					"points": [
+						"When whole-food meals are impractical during busy days.",
+						"Post-workout for quick absorption and convenience.",
+						"When hitting daily protein targets is difficult with food alone."
+					]
+				},
+				{
+					"heading": "When They're Not Necessary",
+					"points": [
+						"If you're already hitting protein goals with food.",
+						"If budget is tight and whole foods are more economical.",
+						"If you prefer eating whole foods and feel satisfied doing so."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Protein shakes are convenient, not mandatory.",
+				"Prioritize whole foods first.",
+				"Use shakes as a tool when it makes sense for your lifestyle."
+			]
+		}
+	},
+	{
+		"id": "how-much-protein-needed",
+		"title": "How Much Protein Do I Need?",
+		"category": "Protein",
+		"featured": true,
+		"readTime": 6,
+		"summary": "Evidence-based protein guidance for muscle building, fat loss, and general health.",
+		"coverImage": "https://images.unsplash.com/photo-1585718081736-e6f42f1d3d8c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["macros", "muscle growth", "daily targets"],
+		"content": {
+			"intro": "Protein requirements depend on your goals, training intensity, and body weight. Getting this right improves body composition and performance.",
+			"sections": [
+				{
+					"heading": "Daily Targets",
+					"points": [
+						"General health: 0.8g per kg of body weight.",
+						"Muscle building: 1.6-2.2g per kg of body weight.",
+						"Fat loss: 1.8-2.4g per kg to preserve muscle."
+					]
+				},
+				{
+					"heading": "Practical Distribution",
+					"points": [
+						"Spread protein across 3-5 meals for consistency.",
+						"Include complete proteins with essential amino acids.",
+						"Combine whole foods and supplements as needed."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Higher protein supports muscle retention during fat loss.",
+				"Distribute intake evenly across meals.",
+				"Use your goals and training to guide targets."
+			]
+		}
+	},
+	{
+		"id": "carbs-performance-energy",
+		"title": "Carbohydrates for Performance and Energy",
+		"category": "Carbohydrates",
+		"featured": true,
+		"readTime": 6,
+		"summary": "Understand how carbs fuel workouts, support recovery, and fit into your nutrition plan.",
+		"coverImage": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["energy", "workouts", "macros"],
+		"content": {
+			"intro": "Carbohydrates are your primary energy source during training. The right amount supports performance, recovery, and body composition goals.",
+			"sections": [
+				{
+					"heading": "Role in Performance",
+					"points": [
+						"Primary fuel for high-intensity exercise.",
+						"Support glycogen stores for strength and power.",
+						"Essential for consistent training quality."
+					]
+				},
+				{
+					"heading": "Pre and Post Workout",
+					"points": [
+						"Pre-workout carbs (1-3 hours): 1-4g per kg body weight.",
+						"Post-workout carbs (0-30 min): 0.8-1.2g per kg to restore glycogen.",
+						"Choose easily digestible sources."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Carbs are essential for training performance.",
+				"Timing matters for optimal recovery.",
+				"Match intake to your activity level and goals."
+			]
+		}
+	},
+	{
+		"id": "healthy-fats-essentials",
+		"title": "Healthy Fats: Essential for Athletes",
+		"category": "Healthy Fats",
+		"featured": false,
+		"readTime": 5,
+		"summary": "Why fats matter for hormones, inflammation, and overall health in athletic performance.",
+		"coverImage": "https://images.unsplash.com/photo-1599599810694-b5ac4dd64c4c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["hormones", "inflammation", "nutrients"],
+		"content": {
+			"intro": "Dietary fats support hormone production, reduce inflammation, and support nutrient absorption. Athletes need adequate fat intake.",
+			"sections": [
+				{
+					"heading": "Why Fats Matter",
+					"points": [
+						"Support testosterone and hormone production.",
+						"Reduce inflammation from intense training.",
+						"Support absorption of fat-soluble vitamins A, D, E, K."
+					]
+				},
+				{
+					"heading": "Best Sources",
+					"points": [
+						"Omega-3s: salmon, sardines, walnuts, flax.",
+						"Monounsaturated: olive oil, avocados, nuts.",
+						"Include whole food sources over supplements."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Aim for 20-35% of calories from fat.",
+				"Prioritize omega-3 rich sources.",
+				"Fat is essential, not something to avoid."
+			]
+		}
+	},
+	{
+		"id": "hydration-performance",
+		"title": "Hydration Optimization for Athletic Performance",
+		"category": "Hydration",
+		"featured": true,
+		"readTime": 6,
+		"summary": "Master hydration strategies to improve performance, reduce fatigue, and speed recovery.",
+		"coverImage": "https://images.unsplash.com/photo-1556839546-43db8fb29faa?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["electrolytes", "performance", "recovery"],
+		"content": {
+			"intro": "Proper hydration is one of the easiest performance levers. Even mild dehydration reduces strength, endurance, and cognitive function.",
+			"sections": [
+				{
+					"heading": "Daily Hydration",
+					"points": [
+						"Drink consistently through the day, not just during training.",
+						"Base needs on body weight and activity level.",
+						"Monitor urine color as a simple gauge."
+					]
+				},
+				{
+					"heading": "During Exercise",
+					"points": [
+						"Sessions under 60 min: plain water.",
+						"Over 60 min: add carbs and electrolytes.",
+						"Sweat rate varies; test your specific needs."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Hydration directly impacts performance.",
+				"Electrolytes matter for sessions over 60 minutes.",
+				"Individual needs vary with climate and intensity."
+			]
+		}
+	},
+	{
+		"id": "creatine-safety-efficacy",
+		"title": "Is Creatine Safe? The Evidence",
+		"category": "Supplements",
+		"featured": true,
+		"readTime": 5,
+		"summary": "Separating fact from fiction about one of the most researched and effective sports supplements.",
+		"coverImage": "https://images.unsplash.com/photo-1693996046514-0406d0773a7d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["supplement safety", "research", "strength"],
+		"content": {
+			"intro": "Creatine monohydrate is one of the most studied supplements. The evidence strongly supports its safety and effectiveness.",
+			"sections": [
+				{
+					"heading": "Safety Profile",
+					"points": [
+						"Decades of research shows no kidney or liver issues in healthy people.",
+						"May increase creatinine (a marker), but this is not harmful.",
+						"Start with consistent dosing rather than loading."
+					]
+				},
+				{
+					"heading": "Effectiveness",
+					"points": [
+						"Improves strength and power output.",
+						"Increases muscle mass when combined with training.",
+						"Works best for high-intensity, short-duration efforts."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Creatine is safe for long-term use.",
+				"Take 3-5g daily consistently.",
+				"Results take 4-8 weeks to become apparent."
+			]
+		}
+	},
+	{
+		"id": "pre-workout-nutrition-timing",
+		"title": "What Should I Eat Before a Workout?",
+		"category": "Performance Nutrition",
+		"featured": true,
+		"readTime": 5,
+		"summary": "Optimize pre-workout meals and timing to fuel better sessions and improve performance.",
+		"coverImage": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["pre-workout", "timing", "energy"],
+		"content": {
+			"intro": "Pre-workout nutrition directly affects training quality. Timing and composition matter for performance.",
+			"sections": [
+				{
+					"heading": "Timing Guidelines",
+					"points": [
+						"3 hours before: large balanced meal.",
+						"1-2 hours before: moderate snack.",
+						"30-60 min before: light carbs if needed."
+					]
+				},
+				{
+					"heading": "Composition",
+					"points": [
+						"Include carbs for energy and performance.",
+						"Include protein for satiety and amino acids.",
+						"Keep fat and fiber moderate to avoid digestion issues."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Eat early enough to digest comfortably.",
+				"Carbs are essential for performance.",
+				"Individual tolerance varies; experiment."
+			]
+		}
+	},
+	{
+		"id": "post-workout-recovery-nutrition",
+		"title": "What Should I Eat After a Workout?",
+		"category": "Performance Nutrition",
+		"featured": true,
+		"readTime": 5,
+		"summary": "Strategic post-workout nutrition accelerates recovery and supports muscle growth.",
+		"coverImage": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["post-workout", "recovery", "muscle growth"],
+		"content": {
+			"intro": "Post-workout nutrition replenishes glycogen, reduces inflammation, and starts the muscle repair process.",
+			"sections": [
+				{
+					"heading": "Optimal Timing",
+					"points": [
+						"Eat within 30-120 min post-workout for best results.",
+						"Don't wait too long; earlier is better for recovery.",
+						"Include both carbs and protein."
+					]
+				},
+				{
+					"heading": "Composition",
+					"points": [
+						"Carbs: 0.8-1.2g per kg body weight.",
+						"Protein: 20-40g of high-quality protein.",
+						"Keep fat moderate; it slows digestion."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Post-workout nutrition speeds recovery.",
+				"Timing within 2 hours is important.",
+				"Focus on carbs and protein combined."
+			]
+		}
+	},
+	{
+		"id": "build-muscle-without-supplements",
+		"title": "Can I Build Muscle Without Supplements?",
+		"category": "Supplements",
+		"featured": false,
+		"readTime": 5,
+		"summary": "Yes. Supplements are optional additions to a strong foundation of training, food, and sleep.",
+		"coverImage": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["muscle growth", "priorities", "fundamentals"],
+		"content": {
+			"intro": "Supplements are optional. The fundamentals—training, nutrition, and sleep—drive 90% of results.",
+			"sections": [
+				{
+					"heading": "What Matters Most",
+					"points": [
+						"Progressive resistance training.",
+						"Adequate protein intake from whole foods.",
+						"Consistent quality sleep (7-9 hours)."
+					]
+				},
+				{
+					"heading": "Supplements Fill Gaps",
+					"points": [
+						"Use only after nailing fundamentals.",
+						"Whey protein: convenient, not necessary.",
+						"Creatine: cheap, effective add-on but optional."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Fundamentals > Supplements every time.",
+				"Train hard, eat enough, sleep well.",
+				"Supplements are nice-to-have, not essential."
+			]
+		}
+	},
+	{
+		"id": "meal-prep-athletes",
+		"title": "Meal Prep for Athletes",
+		"category": "Performance Nutrition",
+		"featured": false,
+		"readTime": 6,
+		"summary": "Simple meal prep strategies to stay consistent with nutrition goals despite busy schedules.",
+		"coverImage": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["meal prep", "consistency", "time-saving"],
+		"content": {
+			"intro": "Consistency beats perfection. Simple meal prep removes friction and helps you hit nutrition goals automatically.",
+			"sections": [
+				{
+					"heading": "Prep Basics",
+					"points": [
+						"Pick 2-3 proteins, 2-3 carbs, 2-3 vegetables.",
+						"Dedicate 1-2 hours on Sunday for the week.",
+						"Use simple recipes and familiar foods."
+					]
+				},
+				{
+					"heading": "Smart Strategy",
+					"points": [
+						"Focus on single ingredients, not complete meals.",
+						"Make double portions during regular cooking.",
+						"Keep it simple to stay consistent."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Meal prep removes decision fatigue.",
+				"Simple is better than complex.",
+				"Consistency beats perfection every time."
+			]
+		}
+	},
+	{
+		"id": "electrolytes-sodium",
+		"title": "Electrolytes and Sodium for Performance",
+		"category": "Hydration",
+		"featured": false,
+		"readTime": 5,
+		"summary": "Why electrolytes matter during intense exercise and how much sodium you should consume.",
+		"coverImage": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["electrolytes", "sodium", "hydration"],
+		"content": {
+			"intro": "Sodium is not the enemy for athletes. Adequate electrolytes support hydration status, performance, and recovery.",
+			"sections": [
+				{
+					"heading": "Why Electrolytes Matter",
+					"points": [
+						"Maintain hydration and fluid balance.",
+						"Support muscle contraction and nerve function.",
+						"Improve fluid absorption and retention."
+					]
+				},
+				{
+					"heading": "During Exercise",
+					"points": [
+						"Sessions over 90 min: add 300-600mg sodium per liter.",
+						"Speeds fluid absorption and maintains performance.",
+						"Prevents hyponatremia (dangerously low sodium)."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Sodium supports performance, not harms it.",
+				"Athletes need more salt than sedentary people.",
+				"Add electrolytes to longer training sessions."
+			]
+		}
+	},
+	{
+		"id": "beta-alanine-endurance",
+		"title": "Beta-Alanine for Endurance and Heat Tolerance",
+		"category": "Supplements",
+		"featured": false,
+		"readTime": 5,
+		"summary": "Understanding beta-alanine, its effects, and whether it's worth taking for your training.",
+		"coverImage": "https://images.unsplash.com/photo-1625961258029-6b93a6e85be8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["supplement", "endurance", "performance"],
+		"content": {
+			"intro": "Beta-alanine may improve high-intensity endurance and heat tolerance. Effects are modest but supported by research.",
+			"sections": [
+				{
+					"heading": "How It Works",
+					"points": [
+						"Increases muscle carnosine, a lactic acid buffer.",
+						"May delay fatigue in 1-4 minute efforts.",
+						"Works best for repeated high-intensity work."
+					]
+				},
+				{
+					"heading": "Practical Use",
+					"points": [
+						"Dose: 3-6g per day in divided doses.",
+						"Takes 4-6 weeks to show effects.",
+						"Most useful for HIIT and conditioning work."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Beta-alanine shows modest benefits for endurance.",
+				"Timing matters less than consistency.",
+				"Best for athletes doing repeated high-intensity work."
+			]
+		}
+	},
+	{
+		"id": "carb-loading-strategy",
+		"title": "Carb Loading: When and How",
+		"category": "Carbohydrates",
+		"featured": false,
+		"readTime": 5,
+		"summary": "Strategic carb loading for events over 90 minutes to maximize glycogen stores.",
+		"coverImage": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["carbs", "competition", "endurance"],
+		"content": {
+			"intro": "Carb loading helps for long events. Timing strategy and amount matter.",
+			"sections": [
+				{
+					"heading": "When You Need It",
+					"points": [
+						"Events lasting over 90 minutes.",
+						"Intense competition or important training.",
+						"Not necessary for regular training sessions."
+					]
+				},
+				{
+					"heading": "Implementation",
+					"points": [
+						"Increase carbs to 10-12g per kg body weight.",
+						"Start 3 days before competition.",
+						"Reduce other nutrients slightly to avoid bloating."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Carb loading is for endurance events only.",
+				"Time it 3 days before competition.",
+				"Increases glycogen stores by 50-100%."
+			]
+		}
+	},
+	{
+		"id": "nutrition-periodization",
+		"title": "Nutrition Periodization with Training Cycles",
+		"category": "Performance Nutrition",
+		"featured": false,
+		"readTime": 6,
+		"summary": "Adjust nutrition strategically with your training phases for better results.",
+		"coverImage": "https://images.unsplash.com/photo-1577720643272-265a622cda1d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["programming", "periodization", "strategy"],
+		"content": {
+			"intro": "Periodizing nutrition with training cycles optimizes performance, recovery, and adaptation.",
+			"sections": [
+				{
+					"heading": "Training Phases",
+					"points": [
+						"Hypertrophy: higher calories and carbs.",
+						"Strength: adequate calories, high protein.",
+						"Deload: slight reduction to support recovery."
+					]
+				},
+				{
+					"heading": "Macronutrient Shifts",
+					"points": [
+						"Volume phases: more carbs.",
+						"Intensity phases: maintain protein.",
+						"Recovery phases: reduce overall volume."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Match nutrition to training phase.",
+				"Higher carbs support volume phases.",
+				"Strategic undereating aids recovery.",
+				"Consistency is still the foundation."
+			]
+		}
+	},
+	{
+		"id": "protein-timing-myth",
+		"title": "The Protein Timing Myth",
+		"category": "Protein",
+		"featured": false,
+		"readTime": 4,
+		"summary": "Separating fact from fiction about the 'anabolic window' and post-workout protein timing.",
+		"coverImage": "https://images.unsplash.com/photo-1585718081736-e6f42f1d3d8c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["myth", "timing", "recovery"],
+		"content": {
+			"intro": "The 'anabolic window' is exaggerated. Daily protein intake matters far more than the exact timing of consumption.",
+			"sections": [
+				{
+					"heading": "The Reality",
+					"points": [
+						"Post-workout benefits extend for hours, not minutes.",
+						"Day-to-day protein total is what matters most.",
+						"Eating within 2-3 hours is fine for recovery."
+					]
+				},
+				{
+					"heading": "Practical Implication",
+					"points": [
+						"Prioritize hitting daily totals.",
+						"Spread protein across meals for convenience.",
+						"Don't stress missing a meal by 30 minutes."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"The anabolic window is not as strict as believed.",
+				"Daily totals matter more than timing.",
+				"Eat protein within a few hours, then relax."
+			]
+		}
+	},
+	{
+		"id": "omega3-inflammation",
+		"title": "Omega-3 Fatty Acids and Inflammation",
+		"category": "Healthy Fats",
+		"featured": false,
+		"readTime": 5,
+		"summary": "How omega-3 fats reduce inflammation, support recovery, and improve training outcomes.",
+		"coverImage": "https://images.unsplash.com/photo-1599599810694-b5ac4dd64c4c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["omega-3", "inflammation", "recovery"],
+		"content": {
+			"intro": "Omega-3 fats powerfully reduce inflammation, improve recovery, and support cardiovascular health in athletes.",
+			"sections": [
+				{
+					"heading": "Benefits for Athletes",
+					"points": [
+						"Reduce muscle soreness post-workout.",
+						"Improve joint health and reduce injury risk.",
+						"Support cardiovascular function during exercise."
+					]
+				},
+				{
+					"heading": "Best Sources",
+					"points": [
+						"Fatty fish: salmon, sardines, mackerel.",
+						"Plant sources: walnuts, flax, chia seeds.",
+						"Target 2-3g EPA+DHA daily."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Omega-3s reduce exercise-induced inflammation.",
+				"Fish are superior to plant sources for bioavailability.",
+				"Consistent intake matters more than supplements."
+			]
+		}
+	},
+	{
+		"id": "caffeine-performance",
+		"title": "Caffeine for Athletic Performance",
+		"category": "Supplements",
+		"featured": false,
+		"readTime": 5,
+		"summary": "Evidence-based caffeine timing and dosing to improve performance and alertness.",
+		"coverImage": "https://images.unsplash.com/photo-1559056199-641a0ac8b3f4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["caffeine", "performance", "energy"],
+		"content": {
+			"intro": "Caffeine is one of the most effective performance supplements. Proper timing and dosing maximize results.",
+			"sections": [
+				{
+					"heading": "Effects",
+					"points": [
+						"Improves strength, power, and endurance.",
+						"Reduces perceived effort during exercise.",
+						"Works within 15-45 minutes of ingestion."
+					]
+				},
+				{
+					"heading": "Optimal Use",
+					"points": [
+						"Dose: 3-6mg per kg body weight.",
+						"Timing: 30-60 min before exercise.",
+						"Tolerance develops; cycle off 1-2 weeks regularly."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Caffeine improves most athletes' performance.",
+				"Time it 30-60 min before exercise.",
+				"Cycle use to maintain sensitivity."
+			]
+		}
+	},
+	{
+		"id": "magnesium-recovery",
+		"title": "Magnesium for Muscle Recovery and Sleep",
+		"category": "Supplements",
+		"featured": false,
+		"readTime": 5,
+		"summary": "Why magnesium matters for recovery, sleep quality, and muscle function in athletes.",
+		"coverImage": "https://images.unsplash.com/photo-1600788148-a7a1d1a0c02c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"tags": ["magnesium", "recovery", "sleep"],
+		"content": {
+			"intro": "Magnesium is essential for muscle function, recovery, and sleep quality. Many athletes are deficient.",
+			"sections": [
+				{
+					"heading": "Role in Athletic Performance",
+					"points": [
+						"Supports muscle relaxation and recovery.",
+						"Improves sleep quality and duration.",
+						"May reduce muscle cramps."
+					]
+				},
+				{
+					"heading": "Supplementation",
+					"points": [
+						"Food sources: dark leafy greens, nuts, seeds.",
+						"Dose: 300-400mg daily.",
+						"Take evening for sleep support benefits."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Magnesium supports recovery and sleep.",
+				"Many athletes are deficient.",
+				"Combine food sources with supplement if needed."
+			]
+		}
+	}
+]

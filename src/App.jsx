@@ -20,6 +20,8 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx"
 import WorkoutPage from "./pages/WorkoutPage.jsx"
 import EncyclopediaPage from "./pages/EncyclopediaPage"
 import EncyclopediaDetail from "./pages/EncyclopediaDetail"
+import SportsNutritionPage from "./pages/SportsNutritionPage.jsx"
+import SportsNutritionDetail from "./pages/SportsNutritionDetail.jsx"
 
 function App() {
 	return (
@@ -176,6 +178,22 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<EncyclopediaDetail />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/sport-nutrition"
+					element={
+						<ProtectedRoute>
+							<SportsNutritionPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path="/handbook/sport-nutrition/:id"
+					element={
+						<ProtectedRoute>
+							<SportsNutritionDetail />
 						</ProtectedRoute>
 					}
 				/>
