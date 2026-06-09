@@ -493,5 +493,284 @@
 			]
 		},
 		"relatedIds": ["protein-intake", "best-time-to-exercise"]
+	},
+	{
+		"id": "body-measurements-correctly",
+		"title": "How to Take Body Measurements Correctly",
+		"category": "Fat Loss",
+		"tags": ["progress tracking", "waist", "hips"],
+		"featured": false,
+		"readTime": "5 min read",
+		"summary": "Use a consistent measurement routine so body composition progress is easier to track than scale weight alone.",
+		"coverImage": "https://plus.unsplash.com/premium_photo-1726876998600-ba6286df9c80?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8SG93JTIwdG8lMjBUYWtlJTIwQm9keSUyME1lYXN1cmVtZW50cyUyMENvcnJlY3RseXxlbnwwfHwwfHx8MA%3D%3D",
+		"content": {
+			"intro": "Body measurements help you track changes in fat loss and muscle gain when body weight fluctuates. Consistency in method matters more than precision to the millimeter.",
+			"sections": [
+				{
+					"heading": "What To Measure",
+					"points": [
+						"Use the same landmarks each time for waist, hips, chest, arms, thighs, and calves.",
+						"Measure at the same time of day, ideally under the same conditions.",
+						"Keep the tape snug but not compressing the skin."
+					]
+				},
+				{
+					"heading": "How To Stay Consistent",
+					"points": [
+						"Record measurements every 2–4 weeks instead of daily.",
+						"Take progress photos alongside measurements for context.",
+						"Use the same tape measure and posture each time."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Measure under the same conditions every time.",
+				"Use measurements to confirm trends, not one-off changes.",
+				"Waist and hips are especially useful for fat-loss tracking."
+			]
+		},
+		"relatedIds": ["abdominal-obesity", "calorie-deficit", "protein-intake"]
+	},
+	{
+		"id": "intervals-between-sets",
+		"title": "Intervals Between Sets",
+		"category": "Muscle Building",
+		"tags": ["rest times", "hypertrophy", "strength"],
+		"featured": false,
+		"readTime": "4 min read",
+		"summary": "Learn how long to rest between sets for strength, hypertrophy, and conditioning goals.",
+		"coverImage": "https://images.unsplash.com/photo-1554284126-aa88f22d8b74?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8SW50ZXJ2YWxzJTIwQmV0d2VlbiUyMFNldHN8ZW58MHx8MHx8fDA%3D",
+		"content": {
+			"intro": "Rest intervals influence performance, fatigue, and the quality of your next set. The right rest time depends on the exercise and the goal.",
+			"sections": [
+				{
+					"heading": "General Guidelines",
+					"points": [
+						"Use longer rests for heavy compound lifts.",
+						"Use moderate rests for hypertrophy work.",
+						"Shorter rests fit isolation and conditioning-focused work."
+					]
+				},
+				{
+					"heading": "Practical Application",
+					"points": [
+						"If reps drop sharply, your rest is probably too short.",
+						"Track rest time the same way you track sets and reps.",
+						"Performance quality should guide your rest choice."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Heavy lifts usually need longer rest.",
+				"Keep rest consistent when tracking progress.",
+				"Goal-specific rest times help you train more effectively."
+			]
+		},
+		"relatedIds": [
+			"progressive-overload",
+			"best-time-to-exercise",
+			"muscle-growth-plateaus"
+		]
+	},
+	{
+		"id": "isolation-exercises",
+		"title": "Isolation Exercises",
+		"category": "Muscle Building",
+		"tags": ["single-joint", "hypertrophy", "muscle targeting"],
+		"featured": false,
+		"readTime": "5 min read",
+		"summary": "Understand when isolation exercises are useful and how to place them in a balanced training plan.",
+		"coverImage": "https://plus.unsplash.com/premium_photo-1666736569172-0c435487b6ef?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8SXNvbGF0aW9uJTIwRXhlcmNpc2VzfGVufDB8fDB8fHww",
+		"content": {
+			"intro": "Isolation exercises focus on a single joint or primary muscle group. They are useful for targeting lagging muscles and adding volume with lower systemic fatigue.",
+			"sections": [
+				{
+					"heading": "When They Help",
+					"points": [
+						"To add extra volume after compound lifts.",
+						"To bring up specific muscles that respond slowly.",
+						"To train around technique or joint limitations."
+					]
+				},
+				{
+					"heading": "Common Examples",
+					"points": [
+						"Biceps curls, triceps pushdowns, leg extensions, and lateral raises.",
+						"Use controlled form and a full range of motion.",
+						"They work best as accessories, not the entire program."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Isolation work complements compound training.",
+				"Use it to target weak points and add volume.",
+				"Quality form matters more than heavy load here."
+			]
+		},
+		"relatedIds": [
+			"progressive-overload",
+			"intervals-between-sets",
+			"muscle-growth-plateaus"
+		]
+	},
+	{
+		"id": "compound-vs-isolation",
+		"title": "Compound vs Isolation Exercises",
+		"category": "Gym Questions",
+		"tags": ["exercise selection", "program design", "hypertrophy"],
+		"featured": false,
+		"readTime": "5 min read",
+		"summary": "Learn when to choose compound movements, when to use isolation work, and how both fit together.",
+		"coverImage": "https://plus.unsplash.com/premium_photo-1664474667047-a20f4e60339a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fENvbXBvdW5kJTIwdnMlMjBJc29sYXRpb24lMjBFeGVyY2lzZXN8ZW58MHx8MHx8fDA%3D",
+		"content": {
+			"intro": "Compound exercises train multiple joints and muscle groups, while isolation exercises target one main muscle. Most good programs use both.",
+			"sections": [
+				{
+					"heading": "Compound Exercises",
+					"points": [
+						"Efficient for building strength and overall mass.",
+						"Include squats, presses, rows, and deadlift variations.",
+						"They usually require more recovery."
+					]
+				},
+				{
+					"heading": "Isolation Exercises",
+					"points": [
+						"Great for adding focused volume.",
+						"Useful for weak-point work and finishing sets.",
+						"They are easier to recover from."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Compound lifts build the base.",
+				"Isolation work fine-tunes the program.",
+				"Use both to support balanced development."
+			]
+		},
+		"relatedIds": [
+			"progressive-overload",
+			"isolation-exercises",
+			"beginner-gym-plan"
+		]
+	},
+	{
+		"id": "warm-up-sets",
+		"title": "Warm-Up Sets",
+		"category": "Gym Questions",
+		"tags": ["preparation", "performance", "technique"],
+		"featured": false,
+		"readTime": "4 min read",
+		"summary": "How to warm up effectively before lifting so your working sets feel better and safer.",
+		"coverImage": "https://plus.unsplash.com/premium_photo-1672352099363-c19e29c22998?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8V2FybS1VcCUyMFNldHMlMjBmaXRuZXNzfGVufDB8fDB8fHww",
+		"content": {
+			"intro": "Warm-up sets prepare the body and nervous system for heavier work without creating unnecessary fatigue.",
+			"sections": [
+				{
+					"heading": "How To Warm Up",
+					"points": [
+						"Start lighter and gradually increase load toward your working weight.",
+						"Use more warm-up sets for heavier lifts.",
+						"Keep warm-ups crisp and low fatigue."
+					]
+				},
+				{
+					"heading": "What To Avoid",
+					"points": [
+						"Do not turn warm-ups into extra workout volume.",
+						"Avoid rushing from cold rest straight into heavy loading.",
+						"Keep the goal readiness, not exhaustion."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"Warm-ups should improve performance, not drain it.",
+				"Heavier lifts usually need more ramp-up sets.",
+				"Treat warm-ups as part of the session plan."
+			]
+		},
+		"relatedIds": ["best-time-to-exercise", "intervals-between-sets"]
+	},
+	{
+		"id": "rpe-rir-basics",
+		"title": "RPE and RIR Basics",
+		"category": "Muscle Building",
+		"tags": ["effort scale", "programming", "autoregulation"],
+		"featured": false,
+		"readTime": "5 min read",
+		"summary": "A simple guide to rating effort so you can train hard without guessing every set.",
+		"coverImage": "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGZpdG5lc3MlMjBtYW58ZW58MHx8MHx8fDA%3D",
+		"content": {
+			"intro": "RPE (rate of perceived exertion) and RIR (reps in reserve) help quantify effort during training and make progression easier to manage.",
+			"sections": [
+				{
+					"heading": "How They Work",
+					"points": [
+						"RIR estimates how many reps you could still perform.",
+						"RPE increases as RIR decreases.",
+						"They help you adjust training when energy is variable."
+					]
+				},
+				{
+					"heading": "Why They Matter",
+					"points": [
+						"They improve consistency across sessions.",
+						"They reduce the need to max out constantly.",
+						"They fit well with progressive overload."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"RPE and RIR are tools for better training decisions.",
+				"Use them to manage effort and recovery.",
+				"They make programs more adaptable."
+			]
+		},
+		"relatedIds": [
+			"progressive-overload",
+			"intervals-between-sets",
+			"sleep-and-recovery"
+		]
+	},
+	{
+		"id": "training-log-basics",
+		"title": "Training Log Basics",
+		"category": "Gym Questions",
+		"tags": ["tracking", "progress", "workout log"],
+		"featured": false,
+		"readTime": "4 min read",
+		"summary": "Why logging workouts matters and what to record so your next session is better than the last.",
+		"coverImage": "https://plus.unsplash.com/premium_photo-1661424060126-3a5b0de5db21?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8VHJhaW5pbmclMjBMb2clMjBCYXNpY3N8ZW58MHx8MHx8fDA%3D",
+		"content": {
+			"intro": "A training log turns guesswork into data. It helps you recognize patterns, make better progress decisions, and avoid repeating mistakes.",
+			"sections": [
+				{
+					"heading": "What To Record",
+					"points": [
+						"Exercise name, sets, reps, load, and rest time.",
+						"Notes on effort, technique, and energy level.",
+						"Any changes in pain, soreness, or recovery."
+					]
+				},
+				{
+					"heading": "How To Use It",
+					"points": [
+						"Review your last session before training again.",
+						"Use it to guide overload and exercise selection.",
+						"Keep the format simple enough to maintain."
+					]
+				}
+			],
+			"keyTakeaways": [
+				"A simple log improves consistency.",
+				"Track both performance and context.",
+				"Data helps you progress faster."
+			]
+		},
+		"relatedIds": [
+			"progressive-overload",
+			"body-measurements-correctly",
+			"rpe-rir-basics"
+		]
 	}
 ]
