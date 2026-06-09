@@ -35,7 +35,7 @@ function FeaturedTopicsCarouselComponent({ topics }) {
 			<div
 				ref={containerRef}
 				onScroll={updateActiveIndex}
-				className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
+				className="flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
 				{topics.map((topic) => (
 					<motion.div
 						key={topic.id}
