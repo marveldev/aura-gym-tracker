@@ -31,11 +31,21 @@ const isActiveRoute = (pathname, to) => {
 	return pathname === to
 }
 
+const HIDE_BACK_BUTTON_ROUTES = new Set([
+	"/dashboard",
+	"/history",
+	"/analytics",
+	"/nutrition",
+	"/workout",
+	"/handbook",
+])
+
 function AppPageFrame({ children }) {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const { logout } = useAuth()
 	const [isDarkTheme, setIsDarkTheme] = useState(true)
+	const shouldShowBackButton = !HIDE_BACK_BUTTON_ROUTES.has(location.pathname)
 
 	useEffect(() => {
 		const savedTheme = localStorage.getItem("aura_theme") || "dark"
@@ -56,20 +66,41 @@ function AppPageFrame({ children }) {
 		navigate("/", { replace: true })
 	}
 
+	const handleBack = () => {
+		if (window.history.length > 1) {
+			navigate(-1)
+			return
+		}
+
+		navigate("/dashboard", { replace: true })
+	}
+
 	return (
 		<div className="app-container">
 			<nav className="fixed w-full top-0 z-50 transition-all duration-300 backdrop-blur-md bg-[hsl(var(--bg))]/80 border-b border-[hsl(var(--border))]/50">
 				<div className="px-4 md:px-6 h-16 flex items-center justify-between">
-					<Link to="/" className="flex items-center gap-3">
-						<img
-							src="/logo.svg"
-							alt="Aura Logo"
-							className="w-7 h-7 sm:w-8 sm:h-8"
-						/>
-						<span className="text-lg sm:text-xl font-bold tracking-tight text-[hsl(var(--fg))]">
-							Aura
-						</span>
-					</Link>
+					<div className="flex items-center gap-3">
+						{shouldShowBackButton && (
+							<button
+								type="button"
+								onClick={handleBack}
+								className="btn-secondary h-10 px-3 rounded flex items-center gap-2 text-sm font-semibold"
+								aria-label="Go back">
+								<i className="ph ph-arrow-left text-base" />
+								Back
+							</button>
+						)}
+						<Link to="/" className="flex items-center gap-3">
+							<img
+								src="/logo.svg"
+								alt="Aura Logo"
+								className="w-7 h-7 sm:w-8 sm:h-8"
+							/>
+							<span className="text-lg sm:text-xl font-bold tracking-tight text-[hsl(var(--fg))]">
+								Aura
+							</span>
+						</Link>
+					</div>
 
 					<div className="flex items-center gap-2 sm:gap-3">
 						<button
