@@ -5,28 +5,13 @@ import EncyclopediaCard from "../components/encyclopedia/EncyclopediaCard"
 import EncyclopediaSearch from "../components/encyclopedia/EncyclopediaSearch"
 import FeaturedTopicsCarousel from "../components/encyclopedia/FeaturedTopicsCarousel"
 import EncyclopediaCategoryFilter from "../components/encyclopedia/EncyclopediaCategoryFilter"
-import {
-	encyclopediaArticles,
-	encyclopediaCategories,
-	featuredEncyclopediaArticles,
-} from "../data/encyclopediaArticles.js"
+import topicsData from "../data/encyclopediaTopics.json"
 
-const CATEGORY_CHIPS = encyclopediaCategories
-
-const featuredIds = new Set(
-	featuredEncyclopediaArticles.map((article) => article.id),
-)
-
-const topics = encyclopediaArticles.map((article) => ({
-	id: article.id,
-	title: article.title,
-	category: article.category,
-	tags: article.keywords,
-	featured: featuredIds.has(article.id),
-	readTime: `${article.readingTime} min read`,
-	summary: article.summary,
-	coverImage: article.image,
-}))
+const topics = topicsData
+const CATEGORY_CHIPS = [
+	"All",
+	...new Set(topics.map((topic) => topic.category)),
+]
 
 function EncyclopediaPage() {
 	const [searchQuery, setSearchQuery] = useState("")
