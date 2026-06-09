@@ -1,17 +1,7 @@
 import { memo } from "react"
 import { Search, X } from "lucide-react"
 
-type EncyclopediaSearchProps = {
-	value: string
-	onChange: (value: string) => void
-	onClear: () => void
-}
-
-function EncyclopediaSearchComponent({
-	value,
-	onChange,
-	onClear,
-}: EncyclopediaSearchProps) {
+function EncyclopediaSearchComponent({ value, onChange, onClear }) {
 	return (
 		<div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--bg))]/90 p-3 backdrop-blur-md">
 			<div className="relative">

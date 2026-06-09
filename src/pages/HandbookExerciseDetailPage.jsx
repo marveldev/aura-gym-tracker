@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { handbookExerciseData } from "../data/handbookExercises.js"
-import { getExerciseByName, getExerciseImageUrl } from "../api/wger.ts"
+import { getExerciseByName, getExerciseImageUrl } from "../api/wger.js"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 
 function HandbookExerciseDetailPage() {

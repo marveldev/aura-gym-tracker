@@ -1,16 +1,9 @@
 import { memo, useCallback, useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
-import type { EncyclopediaTopic } from "./EncyclopediaCard"
 
-type FeaturedTopicsCarouselProps = {
-	topics: EncyclopediaTopic[]
-}
-
-function FeaturedTopicsCarouselComponent({
-	topics,
-}: FeaturedTopicsCarouselProps) {
-	const containerRef = useRef<HTMLDivElement | null>(null)
+function FeaturedTopicsCarouselComponent({ topics }) {
+	const containerRef = useRef(null)
 	const [activeIndex, setActiveIndex] = useState(0)
 
 	const updateActiveIndex = useCallback(() => {
@@ -26,7 +19,7 @@ function FeaturedTopicsCarouselComponent({
 		updateActiveIndex()
 	}, [updateActiveIndex])
 
-	const scrollToIndex = (index: number) => {
+	const scrollToIndex = (index) => {
 		const container = containerRef.current
 		if (!container) return
 		const cardWidth = container.clientWidth * 0.84

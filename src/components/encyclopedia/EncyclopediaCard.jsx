@@ -2,34 +2,7 @@ import { memo } from "react"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 
-export type EncyclopediaContentSection = {
-	heading: string
-	points: string[]
-}
-
-export type EncyclopediaTopic = {
-	id: string
-	title: string
-	category: string
-	tags?: string[]
-	featured: boolean
-	readTime: string
-	summary: string
-	coverImage: string
-	content?: {
-		intro?: string
-		sections?: EncyclopediaContentSection[]
-		keyTakeaways?: string[]
-	}
-	relatedIds?: string[]
-}
-
-type EncyclopediaCardProps = {
-	topic: EncyclopediaTopic
-	to: string
-}
-
-function EncyclopediaCardComponent({ topic, to }: EncyclopediaCardProps) {
+function EncyclopediaCardComponent({ topic, to }) {
 	return (
 		<motion.article whileHover={{ y: -6 }} transition={{ duration: 0.2 }}>
 			<Link

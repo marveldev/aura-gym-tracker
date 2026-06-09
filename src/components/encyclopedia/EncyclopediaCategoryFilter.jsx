@@ -1,16 +1,10 @@
 import { memo } from "react"
 
-type EncyclopediaCategoryFilterProps = {
-	categories: string[]
-	selectedCategory: string
-	onSelectCategory: (category: string) => void
-}
-
 function EncyclopediaCategoryFilterComponent({
 	categories,
 	selectedCategory,
 	onSelectCategory,
-}: EncyclopediaCategoryFilterProps) {
+}) {
 	return (
 		<div className="flex gap-2 overflow-x-auto pb-1">
 			{categories.map((category) => {
