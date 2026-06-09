@@ -6,7 +6,7 @@
 		"featured": true,
 		"readTime": 5,
 		"summary": "Protein shakes are convenient but not essential. Learn when they make sense and how to use them effectively.",
-		"coverImage": "https://images.unsplash.com/photo-1590080876383-303ffd708f3f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://plus.unsplash.com/premium_photo-1727346923052-94d84528992b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8RG8lMjBJJTIwTmVlZCUyMFByb3RlaW4lMjBTaGFrZXMlM0Z8ZW58MHx8MHx8fDA%3D",
 		"tags": ["convenience", "supplements", "meal replacement"],
 		"content": {
 			"intro": "Protein shakes are a tool for convenience, not a requirement. Whole foods should be your foundation, but shakes can help you meet daily targets easily.",
@@ -42,7 +42,7 @@
 		"featured": true,
 		"readTime": 6,
 		"summary": "Evidence-based protein guidance for muscle building, fat loss, and general health.",
-		"coverImage": "https://images.unsplash.com/photo-1585718081736-e6f42f1d3d8c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1693996045300-521e9d08cabc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8RG8lMjBJJTIwTmVlZCUyMFByb3RlaW4lMjBTaGFrZXMlM0Z8ZW58MHx8MHx8fDA%3D",
 		"tags": ["macros", "muscle growth", "daily targets"],
 		"content": {
 			"intro": "Protein requirements depend on your goals, training intensity, and body weight. Getting this right improves body composition and performance.",
@@ -78,7 +78,7 @@
 		"featured": true,
 		"readTime": 6,
 		"summary": "Understand how carbs fuel workouts, support recovery, and fit into your nutrition plan.",
-		"coverImage": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1591100063277-22df3021c611?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcmJvaHlkcmF0ZXN8ZW58MHx8MHx8fDA%3D",
 		"tags": ["energy", "workouts", "macros"],
 		"content": {
 			"intro": "Carbohydrates are your primary energy source during training. The right amount supports performance, recovery, and body composition goals.",
@@ -114,7 +114,7 @@
 		"featured": false,
 		"readTime": 5,
 		"summary": "Why fats matter for hormones, inflammation, and overall health in athletic performance.",
-		"coverImage": "https://images.unsplash.com/photo-1599599810694-b5ac4dd64c4c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1734771657497-e8a65edfc655?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fEhlYWx0aHklMjBGYXRzfGVufDB8fDB8fHww",
 		"tags": ["hormones", "inflammation", "nutrients"],
 		"content": {
 			"intro": "Dietary fats support hormone production, reduce inflammation, and support nutrient absorption. Athletes need adequate fat intake.",
@@ -150,7 +150,7 @@
 		"featured": true,
 		"readTime": 6,
 		"summary": "Master hydration strategies to improve performance, reduce fatigue, and speed recovery.",
-		"coverImage": "https://images.unsplash.com/photo-1556839546-43db8fb29faa?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8d2F0ZXIlMjBib3R0bGV8ZW58MHx8MHx8fDA%3D",
 		"tags": ["electrolytes", "performance", "recovery"],
 		"content": {
 			"intro": "Proper hydration is one of the easiest performance levers. Even mild dehydration reduces strength, endurance, and cognitive function.",
@@ -258,7 +258,7 @@
 		"featured": true,
 		"readTime": 5,
 		"summary": "Strategic post-workout nutrition accelerates recovery and supports muscle growth.",
-		"coverImage": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1644704170910-a0cdf183649b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8V2hhdCUyMFNob3VsZCUyMEklMjBFYXQlMjBBZnRlciUyMGElMjBXb3Jrb3V0JTNGfGVufDB8fDB8fHww",
 		"tags": ["post-workout", "recovery", "muscle growth"],
 		"content": {
 			"intro": "Post-workout nutrition replenishes glycogen, reduces inflammation, and starts the muscle repair process.",
@@ -330,7 +330,7 @@
 		"featured": false,
 		"readTime": 6,
 		"summary": "Simple meal prep strategies to stay consistent with nutrition goals despite busy schedules.",
-		"coverImage": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1543352632-5a4b24e4d2a6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TWVhbCUyMFByZXAlMjBmb3IlMjBBdGhsZXRlc3xlbnwwfHwwfHx8MA%3D%3D",
 		"tags": ["meal prep", "consistency", "time-saving"],
 		"content": {
 			"intro": "Consistency beats perfection. Simple meal prep removes friction and helps you hit nutrition goals automatically.",
