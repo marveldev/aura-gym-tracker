@@ -366,7 +366,7 @@
 		"featured": false,
 		"readTime": 5,
 		"summary": "Why electrolytes matter during intense exercise and how much sodium you should consume.",
-		"coverImage": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://plus.unsplash.com/premium_photo-1778938141663-aa4006fbead4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fEVsZWN0cm9seXRlcyUyMGFuZCUyMFNvZGl1bSUyMGZvciUyMFBlcmZvcm1hbmNlfGVufDB8fDB8fHww",
 		"tags": ["electrolytes", "sodium", "hydration"],
 		"content": {
 			"intro": "Sodium is not the enemy for athletes. Adequate electrolytes support hydration status, performance, and recovery.",
@@ -402,7 +402,7 @@
 		"featured": false,
 		"readTime": 5,
 		"summary": "Understanding beta-alanine, its effects, and whether it's worth taking for your training.",
-		"coverImage": "https://images.unsplash.com/photo-1625961258029-6b93a6e85be8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://plus.unsplash.com/premium_photo-1731884125405-8a2edabb4104?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8QmV0YS1BbGFuaW5lfGVufDB8fDB8fHww",
 		"tags": ["supplement", "endurance", "performance"],
 		"content": {
 			"intro": "Beta-alanine may improve high-intensity endurance and heat tolerance. Effects are modest but supported by research.",
@@ -438,7 +438,7 @@
 		"featured": false,
 		"readTime": 5,
 		"summary": "Strategic carb loading for events over 90 minutes to maximize glycogen stores.",
-		"coverImage": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1581543870486-4435de4749fd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Q2FyYiUyMExvYWRpbmclM0ElMjBXaGVuJTIwYW5kJTIwSG93fGVufDB8fDB8fHww;",
 		"tags": ["carbs", "competition", "endurance"],
 		"content": {
 			"intro": "Carb loading helps for long events. Timing strategy and amount matter.",
@@ -474,7 +474,7 @@
 		"featured": false,
 		"readTime": 6,
 		"summary": "Adjust nutrition strategically with your training phases for better results.",
-		"coverImage": "https://images.unsplash.com/photo-1577720643272-265a622cda1d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1740560052706-fd75ee856b44?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TnV0cml0aW9uJTIwUGVyaW9kaXphdGlvbiUyMHdpdGglMjBUcmFpbmluZyUyMEN5Y2xlc3xlbnwwfHwwfHx8MA%3D%3D",
 		"tags": ["programming", "periodization", "strategy"],
 		"content": {
 			"intro": "Periodizing nutrition with training cycles optimizes performance, recovery, and adaptation.",
@@ -511,7 +511,7 @@
 		"featured": false,
 		"readTime": 4,
 		"summary": "Separating fact from fiction about the 'anabolic window' and post-workout protein timing.",
-		"coverImage": "https://images.unsplash.com/photo-1585718081736-e6f42f1d3d8c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1774793476310-fd7d843184c5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fFRoZSUyMFByb3RlaW4lMjBUaW1pbmclMjBNeXRofGVufDB8fDB8fHww",
 		"tags": ["myth", "timing", "recovery"],
 		"content": {
 			"intro": "The 'anabolic window' is exaggerated. Daily protein intake matters far more than the exact timing of consumption.",
@@ -547,7 +547,7 @@
 		"featured": false,
 		"readTime": 5,
 		"summary": "How omega-3 fats reduce inflammation, support recovery, and improve training outcomes.",
-		"coverImage": "https://images.unsplash.com/photo-1599599810694-b5ac4dd64c4c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1693996047034-311ab7656691?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8T21lZ2EtMyUyMEZhdHR5JTIwQWNpZHMlMjBhbmQlMjBJbmZsYW1tYXRpb258ZW58MHx8MHx8fDA%3D",
 		"tags": ["omega-3", "inflammation", "recovery"],
 		"content": {
 			"intro": "Omega-3 fats powerfully reduce inflammation, improve recovery, and support cardiovascular health in athletes.",
@@ -583,7 +583,7 @@
 		"featured": false,
 		"readTime": 5,
 		"summary": "Evidence-based caffeine timing and dosing to improve performance and alertness.",
-		"coverImage": "https://images.unsplash.com/photo-1559056199-641a0ac8b3f4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://plus.unsplash.com/premium_photo-1664910894862-0f193af0fd3c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Q2FmZmVpbmUlMjBmb3IlMjBBdGhsZXRpYyUyMFBlcmZvcm1hbmNlfGVufDB8fDB8fHww",
 		"tags": ["caffeine", "performance", "energy"],
 		"content": {
 			"intro": "Caffeine is one of the most effective performance supplements. Proper timing and dosing maximize results.",
@@ -619,7 +619,7 @@
 		"featured": false,
 		"readTime": 5,
 		"summary": "Why magnesium matters for recovery, sleep quality, and muscle function in athletes.",
-		"coverImage": "https://images.unsplash.com/photo-1600788148-a7a1d1a0c02c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+		"coverImage": "https://images.unsplash.com/photo-1633122368233-9320b631a0f6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8TWFnbmVzaXVtJTIwZm9yJTIwTXVzY2xlJTIwUmVjb3ZlcnklMjBhbmQlMjBTbGVlcHxlbnwwfHwwfHx8MA%3D%3D",
 		"tags": ["magnesium", "recovery", "sleep"],
 		"content": {
 			"intro": "Magnesium is essential for muscle function, recovery, and sleep quality. Many athletes are deficient.",
