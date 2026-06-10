@@ -28,11 +28,7 @@ const BottomTabBar = memo(function BottomTabBar({ activeTab, onTabPress }) {
 						onPress={() => onTabPress(tab.route)}
 						style={styles.tabButton}
 						hitSlop={8}>
-						<Ionicons
-							name={tab.icon}
-							size={21}
-							color={color}
-						/>
+						<Ionicons name={tab.icon} size={21} color={color} />
 						<Text style={[styles.tabLabel, { color }]}>{tab.key}</Text>
 					</Pressable>
 				)

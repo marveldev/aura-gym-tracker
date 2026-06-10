@@ -2,7 +2,11 @@ import { memo } from "react"
 import { StyleSheet, TextInput, View } from "react-native"
 import Ionicons from "react-native-vector-icons/Ionicons"
 
-const SearchBar = memo(function SearchBar({ value, onChangeText, placeholder }) {
+const SearchBar = memo(function SearchBar({
+	value,
+	onChangeText,
+	placeholder,
+}) {
 	return (
 		<View style={styles.container}>
 			<Ionicons name="search-outline" size={20} color="#8A8A8A" />

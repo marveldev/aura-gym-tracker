@@ -276,7 +276,8 @@ export const handbookExerciseData = {
 			{
 				slug: "hanging-knee-raise",
 				name: "Hanging Knee Raise",
-				description: "Dynamic core movement emphasizing lower abdominal control.",
+				description:
+					"Dynamic core movement emphasizing lower abdominal control.",
 				targetMuscles: "Abs, hip flexors",
 			},
 			{

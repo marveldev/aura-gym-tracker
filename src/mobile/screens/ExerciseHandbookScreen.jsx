@@ -107,7 +107,11 @@ function ExerciseHandbookScreen({ navigation }) {
 
 	const renderCategory = useCallback(
 		({ item, index }) => (
-			<ExerciseCategoryCard item={item} index={index} onPress={handleCardPress} />
+			<ExerciseCategoryCard
+				item={item}
+				index={index}
+				onPress={handleCardPress}
+			/>
 		),
 		[handleCardPress],
 	)

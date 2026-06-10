@@ -63,7 +63,8 @@ function HandbookExercisesPage() {
 		() =>
 			exerciseCategories.map((category) => ({
 				...category,
-				exerciseCount: handbookExerciseData[category.id]?.exercises?.length ?? 0,
+				exerciseCount:
+					handbookExerciseData[category.id]?.exercises?.length ?? 0,
 			})),
 		[],
 	)
@@ -104,10 +105,13 @@ function HandbookExercisesPage() {
 						</div>
 
 						<div className="space-y-3">
-							<h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Exercises</h1>
+							<h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+								Exercises
+							</h1>
 							<div className="h-1 w-16 rounded-full bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary))]/40" />
 							<p className="max-w-3xl text-base leading-relaxed text-[hsl(var(--muted))] sm:text-lg">
-								Browse muscle groups and open structured exercise lists with movement descriptions and target muscles.
+								Browse muscle groups and open structured exercise lists with
+								movement descriptions and target muscles.
 							</p>
 						</div>
 
@@ -141,13 +145,17 @@ function HandbookExercisesPage() {
 						<div className="space-y-2">
 							<h2 className="text-3xl font-bold">Muscle Groups</h2>
 							<p className="text-[hsl(var(--muted))]">
-								{filteredCategories.length} {filteredCategories.length === 1 ? "group" : "groups"} available
+								{filteredCategories.length}{" "}
+								{filteredCategories.length === 1 ? "group" : "groups"} available
 							</p>
 						</div>
 
 						<div className="space-y-3">
 							{filteredCategories.map((category) => (
-								<motion.div key={category.id} whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
+								<motion.div
+									key={category.id}
+									whileHover={{ y: -4 }}
+									transition={{ duration: 0.2 }}>
 									<Link
 										to={`/handbook/exercises/${category.id}`}
 										className="group relative block h-[150px] overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] shadow-sm transition hover:border-[hsl(var(--primary))]/45 hover:shadow-xl">
@@ -197,7 +205,7 @@ function HandbookExercisesPage() {
 						)}
 					</div>
 				</div>
-				</div>
+			</div>
 		</AppPageFrame>
 	)
 }
