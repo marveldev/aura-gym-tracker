@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react"
 import { motion } from "framer-motion"
+import { ArrowLeft } from "lucide-react"
+import { Link, useLocation } from "react-router-dom"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import EncyclopediaCard from "../components/encyclopedia/EncyclopediaCard"
 import EncyclopediaSearch from "../components/encyclopedia/EncyclopediaSearch"
@@ -14,6 +16,7 @@ const CATEGORY_CHIPS = [
 ]
 
 function EncyclopediaPage() {
+	const location = useLocation()
 	const [searchQuery, setSearchQuery] = useState("")
 	const [selectedCategory, setSelectedCategory] = useState("All")
 
@@ -49,16 +52,28 @@ function EncyclopediaPage() {
 		[filteredTopics],
 	)
 
+	const backTo = location.pathname.startsWith("/handbook")
+		? "/handbook"
+		: "/dashboard"
+
 	const isEmptyState = filteredTopics.length === 0
 
 	return (
 		<AppPageFrame>
 			<div className="bg-[hsl(var(--bg))] px-4 py-8 text-[hsl(var(--fg))] sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-7xl space-y-8">
-					<header className="space-y-2">
-						<h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-							Fitness Encyclopedia
-						</h1>
+					<header className="mb-8 space-y-2">
+						<div className="flex items-center gap-3">
+							<Link
+								to={backTo}
+								aria-label="Back"
+								className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))] text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--primary))]">
+								<ArrowLeft className="h-5 w-5" />
+							</Link>
+							<h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+								Fitness Encyclopedia
+							</h1>
+						</div>
 						<p className="max-w-3xl text-sm text-[hsl(var(--muted))] sm:text-base">
 							Learn about training, nutrition, recovery, supplements, and common
 							fitness questions.

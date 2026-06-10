@@ -278,7 +278,7 @@ function HandbookPage({ embedded = false }) {
 								onDragStart={() => pauseAutoplay()}
 								onDragEnd={handleDragEnd}
 								style={{ touchAction: "pan-y" }}
-								className="absolute inset-0 cursor-grab active:cursor-grabbing">
+								className="absolute inset-0 z-0 cursor-grab active:cursor-grabbing">
 								<img
 									src={activeArticle.coverImage}
 									alt={activeArticle.title}
@@ -313,14 +313,14 @@ function HandbookPage({ embedded = false }) {
 						<button
 							type="button"
 							onClick={() => paginate(-1)}
-							className="absolute left-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/50 focus:outline-none focus:ring-2 focus:ring-white/45"
+							className="absolute left-3 top-1/2 z-40 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/50 focus:outline-none focus:ring-2 focus:ring-white/45"
 							aria-label="Previous article">
 							<ChevronLeft className="h-5 w-5" />
 						</button>
 						<button
 							type="button"
 							onClick={() => paginate(1)}
-							className="absolute right-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/50 focus:outline-none focus:ring-2 focus:ring-white/45"
+							className="absolute right-3 top-1/2 z-40 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/50 focus:outline-none focus:ring-2 focus:ring-white/45"
 							aria-label="Next article">
 							<ChevronRight className="h-5 w-5" />
 						</button>

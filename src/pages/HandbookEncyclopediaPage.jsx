@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
-import { Bookmark, Clock, Search } from "lucide-react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { ArrowLeft, Bookmark, Clock, Search } from "lucide-react"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import EncyclopediaArticleCard from "../components/encyclopedia/EncyclopediaArticleCard.jsx"
 import {
@@ -21,6 +21,7 @@ import {
 
 function HandbookEncyclopediaPage() {
 	const location = useLocation()
+	const navigate = useNavigate()
 	const [searchQuery, setSearchQuery] = useState("")
 	const [selectedCategory, setSelectedCategory] = useState(
 		getLastSelectedEncyclopediaCategory,
@@ -101,6 +102,15 @@ function HandbookEncyclopediaPage() {
 		setBookmarkedIds(toggleBookmarkedArticleId(articleId))
 	}
 
+	const handleBack = () => {
+		if (window.history.length > 1) {
+			navigate(-1)
+			return
+		}
+
+		navigate("/handbook")
+	}
+
 	useEffect(() => {
 		featuredEncyclopediaArticles.forEach((article) => {
 			console.log("[EncyclopediaImageDebug][Featured]", {
@@ -119,11 +129,14 @@ function HandbookEncyclopediaPage() {
 							<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
 								Fitness Encyclopedia
 							</h1>
-							<Link
-								to="/handbook"
-								className="btn btn-secondary rounded-lg px-4 py-2">
+							<button
+								type="button"
+								onClick={handleBack}
+								className="btn btn-secondary inline-flex items-center gap-2 rounded-lg px-4 py-2"
+								aria-label="Go back">
+								<ArrowLeft className="h-4 w-4" />
 								Back
-							</Link>
+							</button>
 						</div>
 
 						<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
