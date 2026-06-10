@@ -4,6 +4,7 @@ import handbookArticles from "../data/handbookArticles"
 import { encyclopediaTopics } from "../data/encyclopediaTopics.js"
 import HandbookArticleDetailPage from "./HandbookArticleDetailPage.jsx"
 import HandbookEncyclopediaPage from "./HandbookEncyclopediaPage.jsx"
+import HandbookExercisesPage from "./HandbookExercisesPage.jsx"
 
 const sectionMeta = {
 	exercises: {
@@ -83,6 +84,10 @@ function HandbookSectionPage() {
 
 	if (sectionKey === "encyclopedia") {
 		return <HandbookEncyclopediaPage />
+	}
+
+	if (sectionKey === "exercises") {
+		return <HandbookExercisesPage />
 	}
 
 	if (article) {

@@ -238,4 +238,80 @@ export const handbookExerciseData = {
 			},
 		],
 	},
+	gluteus: {
+		title: "Gluteus",
+		exercises: [
+			{
+				slug: "hip-thrust",
+				name: "Hip Thrust",
+				description:
+					"Primary glute-focused lift for strength and muscle development.",
+				targetMuscles: "Glutes, hamstrings, core",
+			},
+			{
+				slug: "glute-bridge",
+				name: "Glute Bridge",
+				description: "Bodyweight bridge pattern to isolate glute contraction.",
+				targetMuscles: "Glutes, hamstrings",
+			},
+			{
+				slug: "bulgarian-split-squat",
+				name: "Bulgarian Split Squat",
+				description:
+					"Single-leg squat variation that challenges glutes and quads.",
+				targetMuscles: "Glutes, quads, hamstrings",
+			},
+		],
+	},
+	core: {
+		title: "Core",
+		exercises: [
+			{
+				slug: "dead-bug",
+				name: "Dead Bug",
+				description:
+					"Core stability drill for trunk control and spinal positioning.",
+				targetMuscles: "Deep core, obliques",
+			},
+			{
+				slug: "hanging-knee-raise",
+				name: "Hanging Knee Raise",
+				description: "Dynamic core movement emphasizing lower abdominal control.",
+				targetMuscles: "Abs, hip flexors",
+			},
+			{
+				slug: "side-plank",
+				name: "Side Plank",
+				description:
+					"Isometric anti-lateral-flexion hold for oblique endurance.",
+				targetMuscles: "Obliques, glutes, shoulders",
+			},
+		],
+	},
+	cardio: {
+		title: "Cardio",
+		exercises: [
+			{
+				slug: "incline-treadmill-walk",
+				name: "Incline Treadmill Walk",
+				description:
+					"Low-impact steady-state cardio to improve aerobic capacity.",
+				targetMuscles: "Calves, glutes, hamstrings, cardiovascular system",
+			},
+			{
+				slug: "rowing-ergometer",
+				name: "Rowing Ergometer",
+				description:
+					"Full-body cardio modality with strong posterior-chain recruitment.",
+				targetMuscles: "Back, legs, core, cardiovascular system",
+			},
+			{
+				slug: "jump-rope",
+				name: "Jump Rope",
+				description:
+					"High-cadence plyometric conditioning for coordination and endurance.",
+				targetMuscles: "Calves, shoulders, core, cardiovascular system",
+			},
+		],
+	},
 }
