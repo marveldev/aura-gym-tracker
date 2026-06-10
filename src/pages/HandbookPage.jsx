@@ -348,7 +348,9 @@ function HandbookPage({ embedded = false }) {
 
 				{hasNoResults ? (
 					<div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-6 text-center sm:p-8">
-						<h2 className="text-xl font-semibold tracking-tight">No results found</h2>
+						<h2 className="text-xl font-semibold tracking-tight">
+							No results found
+						</h2>
 						<p className="mt-2 text-sm text-[hsl(var(--muted))]">
 							No handbook topic matches "{query.trim()}".
 						</p>
@@ -372,7 +374,8 @@ function HandbookPage({ embedded = false }) {
 									<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/5" />
 									<div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
 										<div className="mb-3 flex items-center justify-between">
-											<i className={`ph ${section.icon} text-2xl text-white`}></i>
+											<i
+												className={`ph ${section.icon} text-2xl text-white`}></i>
 											<i className="ph ph-arrow-up-right text-lg text-white/85 transition-colors group-hover:text-white"></i>
 										</div>
 										<h2 className="text-xl font-semibold tracking-tight text-white">
@@ -387,7 +390,6 @@ function HandbookPage({ embedded = false }) {
 						))}
 					</div>
 				)}
-
 			</div>
 		</div>
 	)
