@@ -30,6 +30,14 @@ function EncyclopediaDetail() {
 	const topic = useMemo(() => (id ? topicById.get(id) : undefined), [id])
 
 	useEffect(() => {
+		const mainContent = document.querySelector(".main-content")
+		if (mainContent) {
+			mainContent.scrollTo({ top: 0, left: 0, behavior: "auto" })
+		}
+		window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+	}, [id])
+
+	useEffect(() => {
 		if (!topic) {
 			return
 		}

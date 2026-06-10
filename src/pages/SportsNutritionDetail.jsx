@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { useParams, useNavigate, Link } from "react-router-dom"
 import { motion } from "framer-motion"
 import { ArrowLeft, Clock, Tag } from "lucide-react"
@@ -8,6 +8,14 @@ import articlesData from "../data/sportsNutritionArticles.json"
 function SportsNutritionDetail() {
 	const { id } = useParams()
 	const navigate = useNavigate()
+
+	useEffect(() => {
+		const mainContent = document.querySelector(".main-content")
+		if (mainContent) {
+			mainContent.scrollTo({ top: 0, left: 0, behavior: "auto" })
+		}
+		window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+	}, [id])
 
 	const article = useMemo(() => articlesData.find((a) => a.id === id), [id])
 
@@ -36,18 +44,6 @@ function SportsNutritionDetail() {
 	return (
 		<AppPageFrame>
 			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))]">
-				{/* Back Button */}
-				<div className="sticky top-0 z-40 border-b border-[hsl(var(--border))] bg-[hsl(var(--bg))]/80 backdrop-blur-xl">
-					<div className="px-4 py-3 sm:px-6 lg:px-8">
-						<button
-							onClick={() => navigate(-1)}
-							className="inline-flex items-center gap-2 text-sm font-semibold text-[hsl(var(--primary))] transition hover:gap-3">
-							<ArrowLeft className="h-4 w-4" />
-							Back
-						</button>
-					</div>
-				</div>
-
 				{/* Hero Section */}
 				<section className="relative h-80 w-full overflow-hidden sm:h-96">
 					<img
@@ -56,6 +52,12 @@ function SportsNutritionDetail() {
 						className="h-full w-full object-cover"
 					/>
 					<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+					<Link
+						to="/handbook"
+						className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-black/35 px-3 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-black/50">
+						<ArrowLeft className="w-4 h-4" />
+						Handbook
+					</Link>
 
 					<div className="absolute inset-x-0 bottom-0 px-4 py-8 sm:px-6 lg:px-8">
 						<div className="mx-auto max-w-3xl">
@@ -212,22 +214,6 @@ function SportsNutritionDetail() {
 						</div>
 					</section>
 				)}
-
-				{/* CTA Section */}
-				<section className="border-t border-[hsl(var(--border))] px-4 py-12 sm:px-6 lg:px-8">
-					<div className="mx-auto max-w-3xl rounded-2xl border border-[hsl(var(--primary))]/30 bg-gradient-to-br from-[hsl(var(--primary))]/5 to-[hsl(var(--primary))]/10 p-8 text-center">
-						<h3 className="text-xl font-bold">Explore More Nutrition Topics</h3>
-						<p className="mt-2 text-[hsl(var(--muted))]">
-							Discover comprehensive sports nutrition guides to optimize your
-							fitness journey.
-						</p>
-						<Link
-					to="/handbook/sport-nutrition"
-							className="mt-6 inline-flex rounded-lg bg-[hsl(var(--primary))] px-6 py-3 font-semibold text-[hsl(var(--primary-fg))] transition hover:opacity-90">
-							Back to All Articles
-						</Link>
-					</div>
-				</section>
 			</div>
 		</AppPageFrame>
 	)

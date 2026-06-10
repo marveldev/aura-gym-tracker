@@ -61,32 +61,6 @@ const handbookSections = [
 	},
 ]
 
-const trendingArticles = [
-	{
-		title: "Build Better Running Endurance",
-		description:
-			"Structured intervals and recovery pacing for consistent gains.",
-		to: "/handbook/encyclopedia/interval-training",
-		imageUrl:
-			"https://images.unsplash.com/photo-1552674605-db6ffd4facb5?auto=format&fit=crop&w=1400&q=80",
-	},
-	{
-		title: "Pre-Workout Fueling Essentials",
-		description: "Simple timing rules for carbs, hydration, and performance.",
-		to: "/handbook/sport-nutrition",
-		imageUrl:
-			"https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1400&q=80",
-	},
-	{
-		title: "Master Core Stability Basics",
-		description:
-			"Improve form and strength with controlled anti-rotation work.",
-		to: "/handbook/exercises/core",
-		imageUrl:
-			"https://images.unsplash.com/photo-1599058917765-a780eda07a3e?auto=format&fit=crop&w=1400&q=80",
-	},
-]
-
 function HandbookPage({ embedded = false }) {
 	const [query, setQuery] = useState("")
 	const [activeIndex, setActiveIndex] = useState(getInitialFeaturedIndex)
@@ -107,6 +81,8 @@ function HandbookPage({ embedded = false }) {
 				section.description.toLowerCase().includes(normalized),
 		)
 	}, [query])
+
+	const hasNoResults = query.trim().length > 0 && filteredSections.length === 0
 
 	const activeArticle = featuredArticles[activeIndex]
 
@@ -370,74 +346,48 @@ function HandbookPage({ embedded = false }) {
 					</div>
 				</motion.section>
 
-				<div className="grid gap-4 sm:gap-5 md:grid-cols-2">
-					{filteredSections.map((section) => (
-						<motion.div
-							key={section.slug}
-							whileHover={{ y: -4 }}
-							whileTap={{ scale: 0.985 }}>
-							<Link
-								to={`/handbook/${section.slug}`}
-								className="group relative block overflow-hidden rounded-3xl border border-[hsl(var(--border))] shadow-sm transition-all hover:border-[hsl(var(--primary))]/45">
-								<img
-									src={section.imageUrl}
-									alt={section.title}
-									loading="lazy"
-									className="h-52 w-full object-cover sm:h-56"
-								/>
-								<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/5" />
-								<div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-									<div className="mb-3 flex items-center justify-between">
-										<i className={`ph ${section.icon} text-2xl text-white`}></i>
-										<i className="ph ph-arrow-up-right text-lg text-white/85 transition-colors group-hover:text-white"></i>
-									</div>
-									<h2 className="text-xl font-semibold tracking-tight text-white">
-										{section.title}
-									</h2>
-									<p className="mt-1 text-sm text-white/85 leading-relaxed">
-										{section.description}
-									</p>
-								</div>
-							</Link>
-						</motion.div>
-					))}
-				</div>
-
-				<section className="mt-8">
-					<div className="mb-4 flex items-center justify-between">
-						<h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
-							Trending
-						</h2>
+				{hasNoResults ? (
+					<div className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-6 text-center sm:p-8">
+						<h2 className="text-xl font-semibold tracking-tight">No results found</h2>
+						<p className="mt-2 text-sm text-[hsl(var(--muted))]">
+							No handbook topic matches "{query.trim()}".
+						</p>
 					</div>
-					<div className="grid gap-4 sm:gap-5 md:grid-cols-3">
-						{trendingArticles.map((article) => (
+				) : (
+					<div className="grid gap-4 sm:gap-5 md:grid-cols-2">
+						{filteredSections.map((section) => (
 							<motion.div
-								key={article.title}
+								key={section.slug}
 								whileHover={{ y: -4 }}
 								whileTap={{ scale: 0.985 }}>
 								<Link
-									to={article.to}
-									className="group relative block overflow-hidden rounded-2xl border border-[hsl(var(--border))] shadow-sm transition-all hover:border-[hsl(var(--primary))]/45">
+									to={`/handbook/${section.slug}`}
+									className="group relative block overflow-hidden rounded-3xl border border-[hsl(var(--border))] shadow-sm transition-all hover:border-[hsl(var(--primary))]/45">
 									<img
-										src={article.imageUrl}
-										alt={article.title}
+										src={section.imageUrl}
+										alt={section.title}
 										loading="lazy"
-										className="h-44 w-full object-cover"
+										className="h-52 w-full object-cover sm:h-56"
 									/>
-									<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/10" />
-									<div className="absolute inset-x-0 bottom-0 p-4">
-										<h3 className="text-base font-semibold text-white">
-											{article.title}
-										</h3>
-										<p className="mt-1 text-xs text-white/80">
-											{article.description}
+									<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/5" />
+									<div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+										<div className="mb-3 flex items-center justify-between">
+											<i className={`ph ${section.icon} text-2xl text-white`}></i>
+											<i className="ph ph-arrow-up-right text-lg text-white/85 transition-colors group-hover:text-white"></i>
+										</div>
+										<h2 className="text-xl font-semibold tracking-tight text-white">
+											{section.title}
+										</h2>
+										<p className="mt-1 text-sm text-white/85 leading-relaxed">
+											{section.description}
 										</p>
 									</div>
 								</Link>
 							</motion.div>
 						))}
 					</div>
-				</section>
+				)}
+
 			</div>
 		</div>
 	)

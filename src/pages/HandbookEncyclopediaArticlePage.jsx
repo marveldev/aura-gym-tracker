@@ -27,6 +27,14 @@ function HandbookEncyclopediaArticlePage() {
 		addRecentlyViewedArticleId(article.id)
 	}, [article])
 
+	useEffect(() => {
+		const mainContent = document.querySelector(".main-content")
+		if (mainContent) {
+			mainContent.scrollTo({ top: 0, left: 0, behavior: "auto" })
+		}
+		window.scrollTo({ top: 0, left: 0, behavior: "auto" })
+	}, [articleId])
+
 	const relatedArticles = useMemo(() => {
 		if (!article) {
 			return []
