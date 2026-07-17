@@ -2,7 +2,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import LandingPage from "./pages/LandingPage.jsx"
 import Dashboard from "./pages/Dashboard"
 import HistoryPage from "./pages/HistoryPage.jsx"
-import AnalyticsPage from "./pages/AnalyticsPage.jsx"
 import NutritionPage from "./pages/NutritionPage.jsx"
 import AuthPage from "./pages/AuthPage.jsx"
 import OnboardingPage from "./pages/OnboardingPage.jsx"
@@ -50,14 +49,6 @@ function App() {
 					element={
 						<ProtectedRoute>
 							<HistoryPage />
-						</ProtectedRoute>
-					}
-				/>
-				<Route
-					path="/analytics"
-					element={
-						<ProtectedRoute>
-							<AnalyticsPage />
 						</ProtectedRoute>
 					}
 				/>

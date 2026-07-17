@@ -225,12 +225,11 @@ function LandingPage() {
 								<i className="ph ph-chart-line-up text-3xl"></i>
 							</div>
 							<h3 className="text-3xl font-bold text-[hsl(var(--fg))] mb-4">
-								Deep Analytics
+								Progress Insights
 							</h3>
 							<p className="text-[hsl(var(--muted))] text-lg leading-relaxed">
-								Visualize your progression. Track 1RM estimates, total volume
-								load, and muscle group frequency with interactive, beautiful
-								charts.
+								See your progress at a glance with workout history, consistency,
+								and performance trends designed to keep your training on track.
 							</p>
 						</div>
 						<div className="flex-1 w-full flex items-end h-48 gap-3 border-b border-[hsl(var(--border))] pb-0 px-6">

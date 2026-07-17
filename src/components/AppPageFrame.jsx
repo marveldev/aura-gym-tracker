@@ -17,12 +17,6 @@ const NAV_ITEMS = [
 		icon: "ph-clock-counter-clockwise",
 		to: "/history",
 	},
-	{
-		key: "analytics",
-		label: "Analytics",
-		icon: "ph-chart-line-up",
-		to: "/analytics",
-	},
 ]
 
 const isActiveRoute = (pathname, to) => {
@@ -34,7 +28,6 @@ const isActiveRoute = (pathname, to) => {
 const HIDE_BACK_BUTTON_ROUTES = new Set([
 	"/dashboard",
 	"/history",
-	"/analytics",
 	"/nutrition",
 	"/workout",
 	"/handbook",

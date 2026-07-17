@@ -54,7 +54,8 @@ function EncyclopediaPage() {
 	const backTo = location.pathname.startsWith("/handbook")
 		? "/handbook"
 		: "/dashboard"
-	const backLabel = backTo === "/handbook" ? "Back to Handbook" : "Back to Dashboard"
+	const backLabel =
+		backTo === "/handbook" ? "Back to Handbook" : "Back to Dashboard"
 	const isSearching = normalizedQuery.length > 0
 
 	const isEmptyState = filteredTopics.length === 0
@@ -82,7 +83,8 @@ function EncyclopediaPage() {
 							</h1>
 							<div className="h-1 w-16 rounded-full bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary))]/40" />
 							<p className="max-w-3xl text-base leading-relaxed text-[hsl(var(--muted))] sm:text-lg">
-								Learn about training, nutrition, recovery, supplements, and common fitness questions.
+								Learn about training, nutrition, recovery, supplements, and
+								common fitness questions.
 							</p>
 						</div>
 
@@ -112,74 +114,73 @@ function EncyclopediaPage() {
 
 				<div className="px-4 py-10 sm:px-6 lg:px-8">
 					<div className="mx-auto max-w-7xl space-y-8">
+						<section className="space-y-3">
+							<div className="space-y-3">
+								<h2 className="text-xl font-bold">Browse By Category</h2>
+								<EncyclopediaCategoryFilter
+									categories={CATEGORY_CHIPS}
+									selectedCategory={selectedCategory}
+									onSelectCategory={setSelectedCategory}
+								/>
+							</div>
+						</section>
 
-					<section className="space-y-3">
-						<div className="space-y-3">
-							<h2 className="text-xl font-bold">Browse By Category</h2>
-							<EncyclopediaCategoryFilter
-								categories={CATEGORY_CHIPS}
-								selectedCategory={selectedCategory}
-								onSelectCategory={setSelectedCategory}
-							/>
-						</div>
-					</section>
+						<section className="space-y-4">
+							<h2 className="text-xl font-bold">Featured Topics</h2>
+							<FeaturedTopicsCarousel topics={featuredTopics} />
+						</section>
 
-					<section className="space-y-4">
-						<h2 className="text-xl font-bold">Featured Topics</h2>
-						<FeaturedTopicsCarousel topics={featuredTopics} />
-					</section>
+						<section className="space-y-4">
+							<div className="flex items-center justify-between gap-3">
+								<h2 className="text-xl font-bold">All Topics</h2>
+								<p className="text-sm text-[hsl(var(--muted))]">
+									{filteredTopics.length} topics
+								</p>
+							</div>
 
-					<section className="space-y-4">
-						<div className="flex items-center justify-between gap-3">
-							<h2 className="text-xl font-bold">All Topics</h2>
-							<p className="text-sm text-[hsl(var(--muted))]">
-								{filteredTopics.length} topics
-							</p>
-						</div>
-
-						{isEmptyState ? (
-							<motion.div
-								initial={{ opacity: 0, y: 10 }}
-								animate={{ opacity: 1, y: 0 }}
-								className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-8 text-center">
-								<p className="text-lg font-semibold">No topics found.</p>
-								<div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-									<button
-										type="button"
-										onClick={() => {
-											setSearchQuery("")
-											setSelectedCategory("All")
-										}}
-										className="rounded-lg border border-[hsl(var(--border))] px-3 py-2 text-sm transition hover:border-[hsl(var(--primary))]/45">
-										Clear search
-									</button>
-									{CATEGORY_CHIPS.slice(1, 4).map((suggestedCategory) => (
+							{isEmptyState ? (
+								<motion.div
+									initial={{ opacity: 0, y: 10 }}
+									animate={{ opacity: 1, y: 0 }}
+									className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-8 text-center">
+									<p className="text-lg font-semibold">No topics found.</p>
+									<div className="mt-4 flex flex-wrap items-center justify-center gap-2">
 										<button
-											key={suggestedCategory}
 											type="button"
 											onClick={() => {
 												setSearchQuery("")
-												setSelectedCategory(suggestedCategory)
+												setSelectedCategory("All")
 											}}
-											className="rounded-lg border border-[hsl(var(--border))] px-3 py-2 text-sm text-[hsl(var(--muted))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--fg))]">
-											{suggestedCategory}
+											className="rounded-lg border border-[hsl(var(--border))] px-3 py-2 text-sm transition hover:border-[hsl(var(--primary))]/45">
+											Clear search
 										</button>
+										{CATEGORY_CHIPS.slice(1, 4).map((suggestedCategory) => (
+											<button
+												key={suggestedCategory}
+												type="button"
+												onClick={() => {
+													setSearchQuery("")
+													setSelectedCategory(suggestedCategory)
+												}}
+												className="rounded-lg border border-[hsl(var(--border))] px-3 py-2 text-sm text-[hsl(var(--muted))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--fg))]">
+												{suggestedCategory}
+											</button>
+										))}
+									</div>
+								</motion.div>
+							) : (
+								<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+									{filteredTopics.map((topic) => (
+										<EncyclopediaCard
+											key={topic.id}
+											topic={topic}
+											to={`/encyclopedia/${topic.id}`}
+										/>
 									))}
 								</div>
-							</motion.div>
-						) : (
-							<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-								{filteredTopics.map((topic) => (
-									<EncyclopediaCard
-										key={topic.id}
-										topic={topic}
-										to={`/encyclopedia/${topic.id}`}
-									/>
-								))}
-							</div>
-						)}
-					</section>
-				</div>
+							)}
+						</section>
+					</div>
 				</div>
 			</div>
 		</AppPageFrame>
