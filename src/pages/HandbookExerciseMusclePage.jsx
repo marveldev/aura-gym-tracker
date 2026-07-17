@@ -21,7 +21,8 @@ import workoutExerciseData from "../data/workoutExerciseData.js"
 
 const MUSCLE_META = {
 	chest: {
-		heroImage: "https://images.unsplash.com/photo-1604480133080-602261a680df?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hlc3QlMjBleGVyY2lzZXxlbnwwfHwwfHx8MA%3D%3D",
+		heroImage:
+			"https://images.unsplash.com/photo-1604480133080-602261a680df?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hlc3QlMjBleGVyY2lzZXxlbnwwfHwwfHx8MA%3D%3D",
 		description:
 			"The chest (pectoralis major & minor) is the primary pushing muscle of the upper body. A well-developed chest improves posture, pushing strength, and athletic performance.",
 		stats: {
@@ -151,6 +152,85 @@ const MUSCLE_META = {
 				title: "Using only wide grip",
 				detail:
 					"Vary grip width (close, neutral, wide) to hit all back angles and avoid imbalances.",
+				title: "Skipping heavy deadlifts or squats",
+				detail:
+					"Light-only work limits strength and muscle-building potential. Use substantial load.",
+			},
+			{
+				title: "Forgetting lower leg training",
+				detail:
+					"The calves and shins need direct work — 2–3 sets of calf raises/flexion per week.",
+			},
+		],
+		objectPosition: "center",
+	},
+	legs: {
+		heroImage:
+			"https://images.unsplash.com/photo-1518611012118-696072aa579a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGVncyUyMGV4ZXJjaXNlfGVufDB8fDB8fHww",
+		description:
+			"Legs contain the body's largest muscles and drive athletic performance, metabolic health, and functional strength. Comprehensive leg training improves posture, power, and fat loss.",
+		stats: {
+			difficultyRange: "Intermediate – Advanced",
+			equipment: "Barbell · Dumbbell · Leg Machine · Bodyweight",
+		},
+		muscleOverview: {
+			primary: [
+				{
+					name: "Quadriceps",
+					function:
+						"Knee extension, hip flexion — primary knee driver for squats",
+				},
+				{
+					name: "Hamstrings",
+					function:
+						"Knee flexion, hip extension — crucial for balance and joint health",
+				},
+				{
+					name: "Gluteus Maximus",
+					function:
+						"Hip extension and external rotation, athletic power output",
+				},
+			],
+			secondary: [
+				{
+					name: "Adductors",
+					function: "Inner thigh — assists knee flexion and stabilisation",
+				},
+				{
+					name: "Gastrocnemius & Soleus",
+					function:
+						"Calf muscles — ankle plantarflexion and lower leg strength",
+				},
+				{
+					name: "Tibialis Anterior",
+					function: "Front shin — dorsiflexion and injury prevention",
+				},
+			],
+		},
+		tips: [
+			"Train legs at minimum 2× per week for optimal growth and strength gains.",
+			"Prioritise the squat and deadlift — they build the most muscle and strength.",
+			"Use full range of motion on squats — deep squats build maximum strength and hypertrophy.",
+			"Include both quad-dominant (sissy squats, leg press) and hip-dominant (RDLs, good mornings) work.",
+			"Never skip hamstring and adductor work — imbalances cause injury and joint pain.",
+		],
+		mistakes: [
+			{
+				title: "Partial range of motion on squats",
+				detail:
+					"Limits quad and glute development. Squat deep (below parallel) when safe to do so.",
+			},
+			{
+				title: "Quad-only training",
+				detail:
+					"Ignoring glutes and hamstrings creates muscle imbalances and knee overuse injuries.",
+			},
+			{
+				title: "Training legs only once per week",
+				detail:
+					"Optimal leg growth requires 2+ sessions per week with different foci.",
+			},
+			{
 				title: "Skipping heavy deadlifts or squats",
 				detail:
 					"Light-only work limits strength and muscle-building potential. Use substantial load.",
@@ -318,7 +398,8 @@ const MUSCLE_META = {
 		objectPosition: "center",
 	},
 	core: {
-		heroImage: "https://plus.unsplash.com/premium_photo-1733328015522-c497d190f74b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29yZSUyMGV4ZXJjaXNlfGVufDB8fDB8fHww",
+		heroImage:
+			"https://plus.unsplash.com/premium_photo-1733328015522-c497d190f74b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29yZSUyMGV4ZXJjaXNlfGVufDB8fDB8fHww",
 		description:
 			"The core stabilises the spine and transfers force between upper and lower body. Functional core training improves athletic performance, injury prevention, and posture.",
 		stats: {
@@ -397,7 +478,8 @@ const MUSCLE_META = {
 		objectPosition: "center",
 	},
 	cardio: {
-		heroImage: "https://images.unsplash.com/photo-1599552683573-9dc48255fe85?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyZGlvJTIwZXhlcmNpc2V8ZW58MHx8MHx8fDA%3D",
+		heroImage:
+			"https://images.unsplash.com/photo-1599552683573-9dc48255fe85?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyZGlvJTIwZXhlcmNpc2V8ZW58MHx8MHx8fDA%3D",
 		description:
 			"Cardiovascular training strengthens the heart and lungs, improves work capacity, aids recovery, and supports overall health. Strategic cardio complements resistance training without compromising muscle.",
 		stats: {

@@ -1,10 +1,9 @@
 import { useMemo, useState } from "react"
 import { motion } from "framer-motion"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Search, X } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import EncyclopediaCard from "../components/encyclopedia/EncyclopediaCard"
-import EncyclopediaSearch from "../components/encyclopedia/EncyclopediaSearch"
 import FeaturedTopicsCarousel from "../components/encyclopedia/FeaturedTopicsCarousel"
 import EncyclopediaCategoryFilter from "../components/encyclopedia/EncyclopediaCategoryFilter"
 import topicsData from "../data/encyclopediaTopics.json"
@@ -55,37 +54,66 @@ function EncyclopediaPage() {
 	const backTo = location.pathname.startsWith("/handbook")
 		? "/handbook"
 		: "/dashboard"
+	const backLabel = backTo === "/handbook" ? "Back to Handbook" : "Back to Dashboard"
+	const isSearching = normalizedQuery.length > 0
 
 	const isEmptyState = filteredTopics.length === 0
 
 	return (
 		<AppPageFrame>
-			<div className="bg-[hsl(var(--bg))] px-4 py-8 text-[hsl(var(--fg))] sm:px-6 lg:px-8">
-				<div className="mx-auto max-w-7xl space-y-8">
-					<header className="mb-8 space-y-2">
-						<div className="flex items-center gap-3">
+			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))]">
+				<section className="relative overflow-hidden bg-gradient-to-br from-[hsl(var(--primary))]/20 via-[hsl(var(--primary))]/8 to-[hsl(var(--primary))]/5 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+					<div className="absolute right-0 top-0 -z-10 h-80 w-80 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
+					<div className="absolute bottom-0 left-0 -z-10 h-72 w-72 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
+
+					<div className="mx-auto max-w-5xl space-y-7">
+						<div className="flex items-center">
 							<Link
 								to={backTo}
-								aria-label="Back"
-								className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))] text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--primary))]">
-								<ArrowLeft className="h-5 w-5" />
+								className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--border))]/70 bg-[hsl(var(--surface))]/75 px-3.5 py-1.5 text-sm font-medium text-[hsl(var(--muted))] backdrop-blur-sm transition hover:border-[hsl(var(--primary))]/30 hover:bg-[hsl(var(--surface))] hover:text-[hsl(var(--fg))]">
+								<ArrowLeft className="h-4 w-4" />
+								{backLabel}
 							</Link>
-							<h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+						</div>
+
+						<div className="space-y-3">
+							<h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
 								Fitness Encyclopedia
 							</h1>
+							<div className="h-1 w-16 rounded-full bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary))]/40" />
+							<p className="max-w-3xl text-base leading-relaxed text-[hsl(var(--muted))] sm:text-lg">
+								Learn about training, nutrition, recovery, supplements, and common fitness questions.
+							</p>
 						</div>
-						<p className="max-w-3xl text-sm text-[hsl(var(--muted))] sm:text-base">
-							Learn about training, nutrition, recovery, supplements, and common
-							fitness questions.
-						</p>
-					</header>
+
+						<div className="rounded-2xl border border-[hsl(var(--border))]/50 bg-[hsl(var(--bg))]/80 p-1 backdrop-blur-md shadow-xl shadow-[hsl(var(--primary))]/5">
+							<div className="relative">
+								<Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[hsl(var(--primary))]" />
+								<input
+									type="search"
+									value={searchQuery}
+									onChange={(event) => setSearchQuery(event.target.value)}
+									placeholder="Search topics, categories, or tags..."
+									className="w-full rounded-xl bg-transparent py-4 pl-12 pr-10 text-base text-[hsl(var(--fg))] placeholder:text-[hsl(var(--muted))] focus:outline-none"
+								/>
+								{isSearching && (
+									<button
+										type="button"
+										onClick={() => setSearchQuery("")}
+										className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-[hsl(var(--muted))] transition hover:bg-[hsl(var(--surface))] hover:text-[hsl(var(--fg))]"
+										aria-label="Clear search">
+										<X className="h-4 w-4" />
+									</button>
+								)}
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<div className="px-4 py-10 sm:px-6 lg:px-8">
+					<div className="mx-auto max-w-7xl space-y-8">
 
 					<section className="space-y-3">
-						<EncyclopediaSearch
-							value={searchQuery}
-							onChange={setSearchQuery}
-							onClear={() => setSearchQuery("")}
-						/>
 						<div className="space-y-3">
 							<h2 className="text-xl font-bold">Browse By Category</h2>
 							<EncyclopediaCategoryFilter
@@ -151,6 +179,7 @@ function EncyclopediaPage() {
 							</div>
 						)}
 					</section>
+				</div>
 				</div>
 			</div>
 		</AppPageFrame>

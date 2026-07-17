@@ -23,7 +23,7 @@ const exerciseCategories = [
 		id: "legs",
 		name: "Legs",
 		image:
-			"https://images.unsplash.com/photo-1544367567-0d6fcffe5d3b?auto=format&fit=crop&w=1800&q=80",
+			"https://images.unsplash.com/photo-1518611012118-696072aa579a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGVncyUyMGV4ZXJjaXNlfGVufDB8fDB8fHww",
 	},
 	{
 		id: "shoulders",

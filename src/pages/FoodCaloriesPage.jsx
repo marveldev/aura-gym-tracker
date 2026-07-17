@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react"
 import { Link } from "react-router-dom"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Search, X } from "lucide-react"
 import {
 	Bar,
 	BarChart,
@@ -170,6 +170,8 @@ function FoodCaloriesPage() {
 	const [dailyLog, setDailyLog] = useState(getInitialDailyLog)
 	const [weeklyHistory, setWeeklyHistory] = useState(getInitialWeeklyHistory)
 	const [toasts, setToasts] = useState([])
+	const normalizedSearchQuery = searchQuery.trim()
+	const isSearching = normalizedSearchQuery.length > 0
 
 	useEffect(() => {
 		window.localStorage.setItem(
@@ -356,19 +358,58 @@ function FoodCaloriesPage() {
 
 	return (
 		<AppPageFrame>
-			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))] px-4 sm:px-6 lg:px-8 py-8">
-				<div className="w-full">
-					<header className="mb-8 flex items-center gap-3">
-						<Link
-							to="/handbook"
-							aria-label="Back to handbook"
-							className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))] text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--primary))]">
-							<ArrowLeft className="h-5 w-5" />
-						</Link>
-						<h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
-							Food & Calories
-						</h1>
-					</header>
+			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))]">
+				<section className="relative overflow-hidden bg-gradient-to-br from-[hsl(var(--primary))]/20 via-[hsl(var(--primary))]/8 to-[hsl(var(--primary))]/5 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+					<div className="absolute right-0 top-0 -z-10 h-80 w-80 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
+					<div className="absolute bottom-0 left-0 -z-10 h-72 w-72 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
+
+					<div className="mx-auto max-w-5xl space-y-7">
+						<div className="flex items-center">
+							<Link
+								to="/handbook"
+								className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--border))]/70 bg-[hsl(var(--surface))]/75 px-3.5 py-1.5 text-sm font-medium text-[hsl(var(--muted))] backdrop-blur-sm transition hover:border-[hsl(var(--primary))]/30 hover:bg-[hsl(var(--surface))] hover:text-[hsl(var(--fg))]">
+								<ArrowLeft className="h-4 w-4" />
+								Back to Handbook
+							</Link>
+						</div>
+
+						<div className="space-y-3">
+							<h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+								Food & Calories
+							</h1>
+							<div className="h-1 w-16 rounded-full bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary))]/40" />
+							<p className="max-w-3xl text-base leading-relaxed text-[hsl(var(--muted))] sm:text-lg">
+								Track calories and macros, monitor daily goals, and build better nutrition habits with a quick food log.
+							</p>
+						</div>
+
+						<div className="rounded-2xl border border-[hsl(var(--border))]/50 bg-[hsl(var(--bg))]/80 p-1 backdrop-blur-md shadow-xl shadow-[hsl(var(--primary))]/5">
+							<div className="relative">
+								<Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[hsl(var(--primary))]" />
+								<input
+									id="food-search"
+									type="search"
+									value={searchQuery}
+									onChange={(event) => setSearchQuery(event.target.value)}
+									placeholder="Search food by name"
+									className="w-full rounded-xl bg-transparent py-4 pl-12 pr-10 text-base text-[hsl(var(--fg))] placeholder:text-[hsl(var(--muted))] focus:outline-none"
+								/>
+								{isSearching && (
+									<button
+										type="button"
+										onClick={() => setSearchQuery("")}
+										className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-[hsl(var(--muted))] transition hover:bg-[hsl(var(--surface))] hover:text-[hsl(var(--fg))]"
+										aria-label="Clear search">
+										<X className="h-4 w-4" />
+									</button>
+								)}
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<div className="px-4 py-10 sm:px-6 lg:px-8">
+					<div className="w-full">
 
 					<section className="card p-5 sm:p-6 mb-6 rounded-2xl shadow-sm">
 						<div className="mb-4 flex items-center justify-between gap-3">
@@ -571,20 +612,6 @@ function FoodCaloriesPage() {
 					</div>
 
 					<section className="card p-5 sm:p-6 mb-6">
-						<div className="mb-4">
-							<label htmlFor="food-search" className="sr-only">
-								Search foods
-							</label>
-							<input
-								id="food-search"
-								type="search"
-								value={searchQuery}
-								onChange={(event) => setSearchQuery(event.target.value)}
-								placeholder="Search food by name"
-								className="w-full rounded-xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-4 py-3 text-sm placeholder:text-[hsl(var(--muted))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]/35"
-							/>
-						</div>
-
 						<div className="flex gap-2 overflow-x-auto pb-1">
 							{foodCategories.map((category) => (
 								<button
@@ -677,6 +704,7 @@ function FoodCaloriesPage() {
 							</p>
 						</section>
 					)}
+				</div>
 				</div>
 			</div>
 
