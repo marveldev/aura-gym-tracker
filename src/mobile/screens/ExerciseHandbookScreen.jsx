@@ -30,13 +30,6 @@ const EXERCISE_CATEGORIES = [
 		exerciseCount: 42,
 	},
 	{
-		id: "gluteus",
-		name: "Gluteus",
-		image:
-			"https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=900&q=80",
-		exerciseCount: 22,
-	},
-	{
 		id: "shoulders",
 		name: "Shoulders",
 		image:

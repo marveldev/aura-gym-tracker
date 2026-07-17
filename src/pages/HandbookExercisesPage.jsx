@@ -4,57 +4,74 @@ import { Link } from "react-router-dom"
 import { ArrowLeft, ChevronRight, Search, X } from "lucide-react"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import { handbookExerciseData } from "../data/handbookExercises.js"
+import workoutExerciseData from "../data/workoutExerciseData.js"
 
 const exerciseCategories = [
 	{
 		id: "chest",
 		name: "Chest",
 		image:
-			"https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=1400&q=80",
+			"https://images.unsplash.com/photo-1604480133080-602261a680df?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hlc3QlMjBleGVyY2lzZXxlbnwwfHwwfHx8MA%3D%3D",
 	},
 	{
 		id: "back",
 		name: "Back",
 		image:
-			"https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=1400&q=80",
+			"https://plus.unsplash.com/premium_photo-1666736569172-0c435487b6ef?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmFjayUyMGV4ZXJjaXNlfGVufDB8fDB8fHww",
 	},
 	{
 		id: "legs",
 		name: "Legs",
 		image:
-			"https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1400&q=80",
-	},
-	{
-		id: "gluteus",
-		name: "Gluteus",
-		image:
-			"https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=1400&q=80",
+			"https://images.unsplash.com/photo-1544367567-0d6fcffe5d3b?auto=format&fit=crop&w=1800&q=80",
 	},
 	{
 		id: "shoulders",
 		name: "Shoulders",
 		image:
-			"https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?auto=format&fit=crop&w=1400&q=80",
+			"https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1800&q=80",
 	},
 	{
 		id: "arms",
 		name: "Arms",
 		image:
-			"https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=1400&q=80",
+			"https://images.unsplash.com/photo-1683586861092-596182a95463?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGFybXMlMjBleGVyY2lzZXxlbnwwfHwwfHx8MA%3D%3D",
 	},
 	{
 		id: "core",
 		name: "Core",
 		image:
-			"https://images.unsplash.com/photo-1598971639058-a3289398f4f0?auto=format&fit=crop&w=1400&q=80",
+			"https://plus.unsplash.com/premium_photo-1733328015522-c497d190f74b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29yZSUyMGV4ZXJjaXNlfGVufDB8fDB8fHww",
 	},
 	{
 		id: "cardio",
 		name: "Cardio",
 		image:
-			"https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=1400&q=80",
+			"https://images.unsplash.com/photo-1599552683573-9dc48255fe85?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FyZGlvJTIwZXhlcmNpc2V8ZW58MHx8MHx8fDA%3D",
 	},
 ]
+
+// Maps category id → bodyParts value used in workoutExerciseData
+const categoryToBodyPart = {
+	chest: "chest",
+	back: "back",
+	legs: "upper legs",
+	shoulders: "shoulders",
+	arms: "upper arms",
+	core: "waist",
+	cardio: "cardio",
+}
+
+function getExerciseCount(categoryId) {
+	const bodyPart = categoryToBodyPart[categoryId]
+	if (bodyPart) {
+		const count = (workoutExerciseData.data ?? []).filter((e) =>
+			e.bodyParts?.some((bp) => bp.toLowerCase() === bodyPart),
+		).length
+		if (count > 0) return count
+	}
+	return handbookExerciseData[categoryId]?.exercises?.length ?? 0
+}
 
 function HandbookExercisesPage() {
 	const [searchQuery, setSearchQuery] = useState("")
@@ -63,8 +80,7 @@ function HandbookExercisesPage() {
 		() =>
 			exerciseCategories.map((category) => ({
 				...category,
-				exerciseCount:
-					handbookExerciseData[category.id]?.exercises?.length ?? 0,
+				exerciseCount: getExerciseCount(category.id),
 			})),
 		[],
 	)

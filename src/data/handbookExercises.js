@@ -238,31 +238,6 @@ export const handbookExerciseData = {
 			},
 		],
 	},
-	gluteus: {
-		title: "Gluteus",
-		exercises: [
-			{
-				slug: "hip-thrust",
-				name: "Hip Thrust",
-				description:
-					"Primary glute-focused lift for strength and muscle development.",
-				targetMuscles: "Glutes, hamstrings, core",
-			},
-			{
-				slug: "glute-bridge",
-				name: "Glute Bridge",
-				description: "Bodyweight bridge pattern to isolate glute contraction.",
-				targetMuscles: "Glutes, hamstrings",
-			},
-			{
-				slug: "bulgarian-split-squat",
-				name: "Bulgarian Split Squat",
-				description:
-					"Single-leg squat variation that challenges glutes and quads.",
-				targetMuscles: "Glutes, quads, hamstrings",
-			},
-		],
-	},
 	core: {
 		title: "Core",
 		exercises: [
