@@ -34,20 +34,20 @@ function LandingPage() {
 	return (
 		<div className="overflow-x-hidden selection:bg-[hsl(var(--primary))] selection:text-white">
 			<nav className="fixed w-full top-0 z-50 transition-all duration-300 backdrop-blur-md bg-[hsl(var(--bg))]/80 border-b border-[hsl(var(--border))]/50">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2">
 					<div className="flex items-center gap-3">
 						<img
 							src="/logo.svg"
 							alt="Aura Logo"
 							className="w-7 h-7 sm:w-8 sm:h-8"
 						/>
-						<span className="text-lg sm:text-xl font-bold tracking-tight text-[hsl(var(--fg))]">
+						<span className="text-base sm:text-xl font-bold tracking-tight text-[hsl(var(--fg))]">
 							Aura
 						</span>
 					</div>
-					<div className="flex items-center gap-2 md:hidden">
+					<div className="flex items-center gap-1.5 md:hidden">
 						<button
-							className="btn-secondary h-10 w-10 rounded flex items-center justify-center"
+							className="btn-secondary h-9 w-9 rounded flex items-center justify-center"
 							onClick={toggleTheme}
 							aria-label={
 								isDarkTheme ? "Switch to light theme" : "Switch to dark theme"
@@ -56,7 +56,7 @@ function LandingPage() {
 								className={`ph text-lg ${isDarkTheme ? "ph-sun" : "ph-moon"}`}></i>
 						</button>
 						<button
-							className="btn-secondary py-2 px-3 text-sm rounded font-bold whitespace-nowrap"
+							className="btn-secondary py-2 px-2.5 text-xs rounded font-bold whitespace-nowrap"
 							onClick={handleAuthButtonClick}>
 							{currentUser || isGuest ? "Sign Out" : "Sign In"}
 						</button>
@@ -86,75 +86,77 @@ function LandingPage() {
 				<div className="absolute top-1/4 right-0 w-[800px] h-[800px] bg-[hsl(var(--primary))]/10 rounded-full blur-[120px] -z-10 translate-x-1/3"></div>
 				<div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[100px] -z-10 -translate-x-1/2"></div>
 
-				<div className="max-w-7xl mx-auto px-6 w-full flex flex-col lg:flex-row relative z-10 gap-12 lg:gap-16 items-center">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col lg:flex-row relative z-10 gap-8 sm:gap-12 lg:gap-16 items-center">
 					<div className="flex-1 max-w-4xl animate-slide-up">
-						<h1 className="text-7xl md:text-9xl font-extrabold tracking-tighter leading-[0.9] text-[hsl(var(--fg))]">
+						<h1 className="text-[clamp(2.4rem,18vw,7rem)] md:text-9xl font-extrabold tracking-tight leading-[0.9] text-[hsl(var(--fg))] break-words">
 							STRENGTH <br />
 							IS A <span className="text-gradient italic">SCIENCE.</span>
 						</h1>
-						<p className="mt-8 text-xl md:text-2xl text-[hsl(var(--muted))] font-light max-w-2xl leading-relaxed">
+						<p className="mt-6 sm:mt-8 text-base sm:text-lg md:text-2xl text-[hsl(var(--muted))] font-light max-w-2xl leading-relaxed">
 							Stop guessing your progress. Aura is the brutally efficient,
 							deeply analytical tracker built for those obsessed with
 							progression.
 						</p>
-						<div className="mt-12 flex flex-col sm:flex-row gap-4">
+						<div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4">
 							<Link
 								to={currentUser || isGuest ? "/dashboard" : "/auth"}
-								className="btn-primary text-lg rounded px-8 py-4 font-bold w-full sm:w-auto text-center">
+								className="btn-primary text-base sm:text-lg rounded px-5 sm:px-8 py-3.5 sm:py-4 font-bold w-full sm:w-auto text-center">
 								Start Tracking Now
 							</Link>
 							<a
 								href="#features"
-								className="btn-outline text-lg rounded px-8 py-4 font-bold w-full sm:w-auto text-center">
+								className="btn-outline text-base sm:text-lg rounded px-5 sm:px-8 py-3.5 sm:py-4 font-bold w-full sm:w-auto text-center">
 								Explore Features
 							</a>
 						</div>
 					</div>
 
 					<div className="flex-1 w-full animate-slide-up">
-						<div className="grid grid-cols-2 gap-6">
-							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
+						<div className="grid grid-cols-1 min-[396px]:grid-cols-2 gap-4 sm:gap-6">
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-5 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
 								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
 									<i className="ph ph-arrow-up text-2xl"></i>
 								</div>
-								<p className="text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+								<p className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-1">
 									+12%
 								</p>
-								<p className="text-sm text-[hsl(var(--muted))]">
+								<p className="text-xs sm:text-sm text-[hsl(var(--muted))]">
 									Monthly Progress
 								</p>
 							</div>
 
-							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-5 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
 								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
 									<i className="ph ph-lightning text-2xl"></i>
 								</div>
-								<p className="text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+								<p className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-1">
 									156
 								</p>
-								<p className="text-sm text-[hsl(var(--muted))]">
+								<p className="text-xs sm:text-sm text-[hsl(var(--muted))]">
 									Total Workouts
 								</p>
 							</div>
 
-							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-5 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
 								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
 									<i className="ph ph-target text-2xl"></i>
 								</div>
-								<p className="text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+								<p className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-1">
 									+45lbs
 								</p>
-								<p className="text-sm text-[hsl(var(--muted))]">Max Increase</p>
+								<p className="text-xs sm:text-sm text-[hsl(var(--muted))]">
+									Max Increase
+								</p>
 							</div>
 
-							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-6 text-center transform hover:scale-105 transition-transform duration-300">
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-5 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
 								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
 									<i className="ph ph-chart-line-up text-2xl"></i>
 								</div>
-								<p className="text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+								<p className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-1">
 									89%
 								</p>
-								<p className="text-sm text-[hsl(var(--muted))]">
+								<p className="text-xs sm:text-sm text-[hsl(var(--muted))]">
 									Consistency Rate
 								</p>
 							</div>
@@ -163,7 +165,9 @@ function LandingPage() {
 				</div>
 			</section>
 
-			<section id="features" className="py-32 relative max-w-5xl mx-auto px-6">
+			<section
+				id="features"
+				className="py-24 sm:py-32 relative max-w-5xl mx-auto px-4 sm:px-6">
 				<div
 					className="mb-20 animate-slide-up"
 					style={{ animationDelay: "0.2s" }}>
@@ -247,8 +251,8 @@ function LandingPage() {
 				</div>
 			</section>
 
-			<section className="py-32 bg-[hsl(var(--surface))] border-t border-[hsl(var(--border))]">
-				<div className="max-w-4xl mx-auto px-6 text-center">
+			<section className="py-24 sm:py-32 bg-[hsl(var(--surface))] border-t border-[hsl(var(--border))]">
+				<div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
 					<h2 className="text-5xl md:text-7xl font-bold tracking-tight text-[hsl(var(--fg))] mb-8">
 						Ready to grow?
 					</h2>
@@ -265,7 +269,7 @@ function LandingPage() {
 			</section>
 
 			<footer className="border-t border-[hsl(var(--border))] py-12 bg-[hsl(var(--bg))]">
-				<div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row justify-between items-center gap-6">
 					<div className="flex items-center gap-2">
 						<img
 							src="/logo.svg"
