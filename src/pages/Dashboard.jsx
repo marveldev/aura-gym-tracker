@@ -616,6 +616,7 @@ function Dashboard() {
 						weeklyCompletionPercent={todayWorkout.weeklyCompletionPercent}
 						weeklyCompletionSummary={weeklyCompletionSummary}
 						onStartWorkout={handleStartWorkout}
+						onStartCustomWorkout={handleOpenCustomWorkoutModal}
 						isLoading={isLoading}
 					/>
 
@@ -711,7 +712,7 @@ function Dashboard() {
 						</BaseCard>
 					</section>
 
-					<div className="fixed bottom-20 md:bottom-7 right-4 md:right-7 z-40">
+					<div className="fixed bottom-20 right-4 z-40 md:hidden">
 						<motion.button
 							whileTap={{ scale: 0.98 }}
 							onClick={handleOpenCustomWorkoutModal}

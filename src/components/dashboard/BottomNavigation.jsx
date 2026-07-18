@@ -1,9 +1,4 @@
-import {
-	Home,
-	Dumbbell,
-	Apple,
-	UserRound,
-} from "lucide-react"
+import { Home, Dumbbell, Apple, UserRound } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 
 const tabs = [
