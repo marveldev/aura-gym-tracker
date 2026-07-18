@@ -825,6 +825,7 @@ function HistoryPage() {
 
 	const hasHistory = historyEntries.length > 0
 	const noResults = hasHistory && visibleHistory.length === 0
+	const isSearching = searchQuery.trim().length > 0
 	const filteredCountLabel = `${visibleHistory.length.toLocaleString()} ${visibleHistory.length === 1 ? "workout" : "workouts"}`
 
 	const shiftCalendarMonth = (offset) => {
@@ -955,365 +956,412 @@ function HistoryPage() {
 							</BaseCard>
 						) : (
 							<>
-								<section>
-									<div className="mb-3 flex items-center justify-between gap-3">
-										<div>
-											<h2 className="text-xl font-bold sm:text-2xl">
-												Period Summary
-											</h2>
-											<p className="text-sm text-[hsl(var(--muted))]">
-												{filteredCountLabel} in{" "}
-												{formatRangeTitle(dateRange).toLowerCase()}
-											</p>
-										</div>
-										{summaryLoading && (
-											<div className="h-5 w-24 rounded-full bg-[hsl(var(--border))]/70 animate-pulse" />
-										)}
-									</div>
-									<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-										{monthlySummaryCards.map((card) => (
-											<SummaryCard
-												key={card.label}
-												{...card}
-												isLoading={summaryLoading}
-											/>
-										))}
-									</div>
-								</section>
-
-								<section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
-									<BaseCard
-										ref={timelineCardRef}
-										className="flex flex-col p-5 sm:p-6"
-										style={
-											timelineCardHeight
-												? { height: timelineCardHeight }
-												: undefined
-										}>
-										<div className="mb-4 flex items-center justify-between gap-3">
-											<div>
-												<h2 className="text-xl font-bold">
-													Recent Workout Timeline
-												</h2>
-												<p className="text-sm text-[hsl(var(--muted))]">
-													Chronological review of logged sessions
-												</p>
-											</div>
-											<p className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-xs text-[hsl(var(--muted))]">
-												{visibleHistory.length} entries
-											</p>
-										</div>
-										<div
-											className={`space-y-3 ${timelineCardHeight ? "min-h-0 overflow-y-auto pr-1" : ""}`}>
-											{visibleHistorySorted.map((item, index) => (
-												<TimelineItem
-													key={item.id}
-													item={item}
-													index={index}
-													onClick={() =>
-														setSelectedDateKey(
-															getDateKey(
-																parseDate(item.completedAt) || new Date(),
-															),
-														)
-													}
-												/>
-											))}
-										</div>
-									</BaseCard>
-
-									<BaseCard
-										ref={calendarCardRef}
-										className="self-start p-5 sm:p-6">
-										<div className="mb-4 flex items-center justify-between gap-3">
-											<div>
-												<h2 className="text-xl font-bold">Workout Calendar</h2>
-												<p className="text-sm text-[hsl(var(--muted))]">
-													Tap a completed day to review workouts
-												</p>
-											</div>
-											<div className="flex items-center gap-1.5">
-												<button
-													type="button"
-													onClick={() => shiftCalendarMonth(-1)}
-													className="rounded-xl border border-[hsl(var(--border))] p-2 text-[hsl(var(--muted))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--fg))]"
-													aria-label="Previous month">
-													<ChevronLeft className="h-4 w-4" />
-												</button>
-												<p className="min-w-28 text-center text-sm font-semibold">
-													{calendarMonth.toLocaleDateString(undefined, {
-														month: "long",
-														year: "numeric",
-													})}
-												</p>
-												<button
-													type="button"
-													onClick={() => shiftCalendarMonth(1)}
-													className="rounded-xl border border-[hsl(var(--border))] p-2 text-[hsl(var(--muted))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--fg))]"
-													aria-label="Next month">
-													<ChevronRight className="h-4 w-4" />
-												</button>
-											</div>
-										</div>
-										{summaryLoading ? (
-											<div className="space-y-3">
-												<div className="grid grid-cols-7 gap-2">
-													{Array.from({ length: 7 }).map((_, index) => (
-														<div
-															key={index}
-															className="h-4 rounded bg-[hsl(var(--border))]/70 animate-pulse"
-														/>
-													))}
-												</div>
-												<div className="grid grid-cols-7 gap-2">
-													{Array.from({ length: 35 }).map((_, index) => (
-														<div
-															key={index}
-															className="h-20 rounded-2xl bg-[hsl(var(--border))]/70 animate-pulse"
-														/>
-													))}
-												</div>
-											</div>
-										) : (
-											<div>
-												<div className="mb-3 grid grid-cols-7 gap-2 text-center text-xs font-semibold uppercase tracking-wider text-[hsl(var(--muted))]">
-													{[
-														"Mon",
-														"Tue",
-														"Wed",
-														"Thu",
-														"Fri",
-														"Sat",
-														"Sun",
-													].map((day) => (
-														<div key={day}>{day}</div>
-													))}
-												</div>
-												<div className="grid grid-cols-7 gap-2">
-													{calendarGrid.map((cell, index) =>
-														cell ? (
-															<motion.button
-																key={cell.dateKey}
-																whileHover={cell.count > 0 ? { y: -2 } : {}}
-																whileTap={cell.count > 0 ? { scale: 0.98 } : {}}
-																onClick={() =>
-																	cell.count > 0 &&
-																	setSelectedDateKey(cell.dateKey)
-																}
-																disabled={cell.count === 0}
-																className={`min-h-20 rounded-2xl border p-2 text-left transition ${
-																	cell.count > 0
-																		? "border-[hsl(var(--primary))]/35 bg-[hsl(var(--primary))]/8 hover:border-[hsl(var(--primary))]/60 hover:shadow-md"
-																		: "border-[hsl(var(--border))] bg-[hsl(var(--surface))] text-[hsl(var(--muted))] opacity-60"
-																}`}
-																aria-label={`${cell.date.toDateString()} ${cell.count} workouts`}>
-																<div className="flex items-center justify-between gap-2">
-																	<span className="text-xs font-semibold text-[hsl(var(--muted))]">
-																		{cell.date.getDate()}
-																	</span>
-																	{cell.count > 0 && (
-																		<span className="rounded-full bg-[hsl(var(--primary))] px-2 py-0.5 text-[10px] font-bold text-white">
-																			{cell.count}
-																		</span>
-																	)}
-																</div>
-																{cell.count > 0 && (
-																	<div className="mt-3 flex items-center gap-1.5">
-																		<span className="h-2 w-2 rounded-full bg-[hsl(var(--primary))]" />
-																		<span className="h-2 w-2 rounded-full bg-[hsl(var(--primary))]/60" />
-																		<span className="h-2 w-2 rounded-full bg-[hsl(var(--primary))]/30" />
-																	</div>
-																)}
-															</motion.button>
-														) : (
-															<div
-																key={`empty-${index}`}
-																className="min-h-20 rounded-2xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--surface))]/40"
-															/>
-														),
-													)}
-												</div>
-												{selectedDateKey && (
-													<p className="mt-3 text-xs text-[hsl(var(--muted))]">
-														Selected: {selectedDayLabel} · {selectedDateCount}{" "}
-														workout{selectedDateCount === 1 ? "" : "s"}
+								{isSearching ? (
+									<section>
+										<BaseCard className="p-5 sm:p-6">
+											<div className="mb-4 flex items-center justify-between gap-3">
+												<div>
+													<h2 className="text-xl font-bold">
+														Recent Workout Timeline
+													</h2>
+													<p className="text-sm text-[hsl(var(--muted))]">
+														Chronological review of logged sessions
 													</p>
+												</div>
+												<p className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-xs text-[hsl(var(--muted))]">
+													{visibleHistory.length} entries
+												</p>
+											</div>
+											<div className="space-y-3">
+												{visibleHistorySorted.map((item, index) => (
+													<TimelineItem
+														key={item.id}
+														item={item}
+														index={index}
+														onClick={() =>
+															setSelectedDateKey(
+																getDateKey(
+																	parseDate(item.completedAt) || new Date(),
+																),
+															)
+														}
+													/>
+												))}
+											</div>
+										</BaseCard>
+									</section>
+								) : (
+									<>
+										<section>
+											<div className="mb-3 flex items-center justify-between gap-3">
+												<div>
+													<h2 className="text-xl font-bold sm:text-2xl">
+														Period Summary
+													</h2>
+													<p className="text-sm text-[hsl(var(--muted))]">
+														{filteredCountLabel} in{" "}
+														{formatRangeTitle(dateRange).toLowerCase()}
+													</p>
+												</div>
+												{summaryLoading && (
+													<div className="h-5 w-24 rounded-full bg-[hsl(var(--border))]/70 animate-pulse" />
 												)}
 											</div>
-										)}
-									</BaseCard>
-								</section>
+											<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+												{monthlySummaryCards.map((card) => (
+													<SummaryCard
+														key={card.label}
+														{...card}
+														isLoading={summaryLoading}
+													/>
+												))}
+											</div>
+										</section>
 
-								<section className="space-y-4">
-									<div className="flex items-center gap-2">
-										<BarChart3 className="h-5 w-5 text-[hsl(var(--primary))]" />
-										<h2 className="text-xl font-bold sm:text-2xl">
-											Progress Charts
-										</h2>
-									</div>
-									<div className="grid gap-4 xl:grid-cols-2">
-										<ChartCard
-											title="Workouts Completed Over Time"
-											subtitle={formatRangeTitle(dateRange)}
-											isLoading={summaryLoading}>
-											<WorkoutConsistencyChart
-												data={trendData}
-												isLoading={summaryLoading}
-												maxBarSize={80}
-												barCategoryGap="36%"
-											/>
-										</ChartCard>
-										<ChartCard
-											title="Workout Duration"
-											subtitle="Minutes per bucket"
-											isLoading={summaryLoading}>
-											<HistoryTrendChart
-												data={trendData}
-												dataKey="duration"
-												strokeColor="hsl(var(--primary))"
-											/>
-										</ChartCard>
-										<ChartCard
-											title="Calories Burned"
-											subtitle="Energy output per bucket"
-											isLoading={summaryLoading}>
-											<HistoryTrendChart
-												data={trendData}
-												dataKey="calories"
-												strokeColor="#f97316"
-											/>
-										</ChartCard>
-										<ChartCard
-											title="Weight"
-											subtitle="Average peak set weight"
-											isLoading={summaryLoading}>
-											{hasWeightData ? (
-												<WeightProgressChart
-													data={trendData}
-													isLoading={summaryLoading}
-												/>
-											) : (
-												<div className="flex h-64 items-center justify-center rounded-2xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 px-6 text-center text-sm text-[hsl(var(--muted))]">
-													No weight data available yet.
+										<section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
+											<BaseCard
+												ref={timelineCardRef}
+												className="flex flex-col p-5 sm:p-6"
+												style={
+													timelineCardHeight
+														? { height: timelineCardHeight }
+														: undefined
+												}>
+												<div className="mb-4 flex items-center justify-between gap-3">
+													<div>
+														<h2 className="text-xl font-bold">
+															Recent Workout Timeline
+														</h2>
+														<p className="text-sm text-[hsl(var(--muted))]">
+															Chronological review of logged sessions
+														</p>
+													</div>
+													<p className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-xs text-[hsl(var(--muted))]">
+														{visibleHistory.length} entries
+													</p>
 												</div>
-											)}
-										</ChartCard>
-									</div>
-								</section>
+												<div
+													className={`space-y-3 ${timelineCardHeight ? "min-h-0 overflow-y-auto pr-1" : ""}`}>
+													{visibleHistorySorted.map((item, index) => (
+														<TimelineItem
+															key={item.id}
+															item={item}
+															index={index}
+															onClick={() =>
+																setSelectedDateKey(
+																	getDateKey(
+																		parseDate(item.completedAt) || new Date(),
+																	),
+																)
+															}
+														/>
+													))}
+												</div>
+											</BaseCard>
 
-								<section className="grid gap-6 xl:grid-cols-2 xl:items-start">
-									<BaseCard
-										ref={muscleBreakdownCardRef}
-										className="self-start p-5 sm:p-6">
-										<div className="mb-4 flex items-center gap-2">
-											<Activity className="h-5 w-5 text-[hsl(var(--primary))]" />
-											<div>
-												<h2 className="text-xl font-bold">
-													Muscle Group Breakdown
+											<BaseCard
+												ref={calendarCardRef}
+												className="self-start p-5 sm:p-6">
+												<div className="mb-4 flex items-center justify-between gap-3">
+													<div>
+														<h2 className="text-xl font-bold">
+															Workout Calendar
+														</h2>
+														<p className="text-sm text-[hsl(var(--muted))]">
+															Tap a completed day to review workouts
+														</p>
+													</div>
+													<div className="flex items-center gap-1.5">
+														<button
+															type="button"
+															onClick={() => shiftCalendarMonth(-1)}
+															className="rounded-xl border border-[hsl(var(--border))] p-2 text-[hsl(var(--muted))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--fg))]"
+															aria-label="Previous month">
+															<ChevronLeft className="h-4 w-4" />
+														</button>
+														<p className="min-w-28 text-center text-sm font-semibold">
+															{calendarMonth.toLocaleDateString(undefined, {
+																month: "long",
+																year: "numeric",
+															})}
+														</p>
+														<button
+															type="button"
+															onClick={() => shiftCalendarMonth(1)}
+															className="rounded-xl border border-[hsl(var(--border))] p-2 text-[hsl(var(--muted))] transition hover:border-[hsl(var(--primary))]/45 hover:text-[hsl(var(--fg))]"
+															aria-label="Next month">
+															<ChevronRight className="h-4 w-4" />
+														</button>
+													</div>
+												</div>
+												{summaryLoading ? (
+													<div className="space-y-3">
+														<div className="grid grid-cols-7 gap-2">
+															{Array.from({ length: 7 }).map((_, index) => (
+																<div
+																	key={index}
+																	className="h-4 rounded bg-[hsl(var(--border))]/70 animate-pulse"
+																/>
+															))}
+														</div>
+														<div className="grid grid-cols-7 gap-2">
+															{Array.from({ length: 35 }).map((_, index) => (
+																<div
+																	key={index}
+																	className="h-20 rounded-2xl bg-[hsl(var(--border))]/70 animate-pulse"
+																/>
+															))}
+														</div>
+													</div>
+												) : (
+													<div>
+														<div className="mb-3 grid grid-cols-7 gap-2 text-center text-xs font-semibold uppercase tracking-wider text-[hsl(var(--muted))]">
+															{[
+																"Mon",
+																"Tue",
+																"Wed",
+																"Thu",
+																"Fri",
+																"Sat",
+																"Sun",
+															].map((day) => (
+																<div key={day}>{day}</div>
+															))}
+														</div>
+														<div className="grid grid-cols-7 gap-2">
+															{calendarGrid.map((cell, index) =>
+																cell ? (
+																	<motion.button
+																		key={cell.dateKey}
+																		whileHover={cell.count > 0 ? { y: -2 } : {}}
+																		whileTap={
+																			cell.count > 0 ? { scale: 0.98 } : {}
+																		}
+																		onClick={() =>
+																			cell.count > 0 &&
+																			setSelectedDateKey(cell.dateKey)
+																		}
+																		disabled={cell.count === 0}
+																		className={`min-h-20 rounded-2xl border p-2 text-left transition ${
+																			cell.count > 0
+																				? "border-[hsl(var(--primary))]/35 bg-[hsl(var(--primary))]/8 hover:border-[hsl(var(--primary))]/60 hover:shadow-md"
+																				: "border-[hsl(var(--border))] bg-[hsl(var(--surface))] text-[hsl(var(--muted))] opacity-60"
+																		}`}
+																		aria-label={`${cell.date.toDateString()} ${cell.count} workouts`}>
+																		<div className="flex items-center justify-between gap-2">
+																			<span className="text-xs font-semibold text-[hsl(var(--muted))]">
+																				{cell.date.getDate()}
+																			</span>
+																			{cell.count > 0 && (
+																				<span className="rounded-full bg-[hsl(var(--primary))] px-2 py-0.5 text-[10px] font-bold text-white">
+																					{cell.count}
+																				</span>
+																			)}
+																		</div>
+																		{cell.count > 0 && (
+																			<div className="mt-3 flex items-center gap-1.5">
+																				<span className="h-2 w-2 rounded-full bg-[hsl(var(--primary))]" />
+																				<span className="h-2 w-2 rounded-full bg-[hsl(var(--primary))]/60" />
+																				<span className="h-2 w-2 rounded-full bg-[hsl(var(--primary))]/30" />
+																			</div>
+																		)}
+																	</motion.button>
+																) : (
+																	<div
+																		key={`empty-${index}`}
+																		className="min-h-20 rounded-2xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--surface))]/40"
+																	/>
+																),
+															)}
+														</div>
+														{selectedDateKey && (
+															<p className="mt-3 text-xs text-[hsl(var(--muted))]">
+																Selected: {selectedDayLabel} ·{" "}
+																{selectedDateCount} workout
+																{selectedDateCount === 1 ? "" : "s"}
+															</p>
+														)}
+													</div>
+												)}
+											</BaseCard>
+										</section>
+
+										<section className="space-y-4">
+											<div className="flex items-center gap-2">
+												<BarChart3 className="h-5 w-5 text-[hsl(var(--primary))]" />
+												<h2 className="text-xl font-bold sm:text-2xl">
+													Progress Charts
 												</h2>
-												<p className="text-sm text-[hsl(var(--muted))]">
-													Completed workout sessions by muscle group
-												</p>
 											</div>
-										</div>
-										{muscleBreakdown.length > 0 ? (
-											<div className="space-y-3">
-												{muscleBreakdown.map((group) => (
-													<div key={group.bodyPart} className="space-y-1.5">
-														<div className="flex items-center justify-between gap-3 text-sm">
-															<span className="font-medium">{group.label}</span>
-															<span className="text-[hsl(var(--muted))]">
-																{group.count}
-															</span>
+											<div className="grid gap-4 xl:grid-cols-2">
+												<ChartCard
+													title="Workouts Completed Over Time"
+													subtitle={formatRangeTitle(dateRange)}
+													isLoading={summaryLoading}>
+													<WorkoutConsistencyChart
+														data={trendData}
+														isLoading={summaryLoading}
+														maxBarSize={80}
+														barCategoryGap="36%"
+													/>
+												</ChartCard>
+												<ChartCard
+													title="Workout Duration"
+													subtitle="Minutes per bucket"
+													isLoading={summaryLoading}>
+													<HistoryTrendChart
+														data={trendData}
+														dataKey="duration"
+														strokeColor="hsl(var(--primary))"
+													/>
+												</ChartCard>
+												<ChartCard
+													title="Calories Burned"
+													subtitle="Energy output per bucket"
+													isLoading={summaryLoading}>
+													<HistoryTrendChart
+														data={trendData}
+														dataKey="calories"
+														strokeColor="#f97316"
+													/>
+												</ChartCard>
+												<ChartCard
+													title="Weight"
+													subtitle="Average peak set weight"
+													isLoading={summaryLoading}>
+													{hasWeightData ? (
+														<WeightProgressChart
+															data={trendData}
+															isLoading={summaryLoading}
+														/>
+													) : (
+														<div className="flex h-64 items-center justify-center rounded-2xl border border-dashed border-[hsl(var(--border))] bg-[hsl(var(--surface))]/60 px-6 text-center text-sm text-[hsl(var(--muted))]">
+															No weight data available yet.
 														</div>
-														<div className="h-2 rounded-full bg-[hsl(var(--border))]">
-															<div
-																className="h-2 rounded-full bg-[hsl(var(--primary))] transition-all"
-																style={{
-																	width: `${Math.max(10, (group.count / muscleBreakdown[0].count) * 100)}%`,
-																}}
-															/>
-														</div>
-													</div>
-												))}
+													)}
+												</ChartCard>
 											</div>
-										) : (
-											<p className="text-sm text-[hsl(var(--muted))]">
-												No muscle group data found yet.
-											</p>
-										)}
-									</BaseCard>
+										</section>
 
-									<BaseCard
-										ref={personalRecordsCardRef}
-										className="self-start flex flex-col p-5 sm:p-6"
-										style={
-											personalRecordsCardHeight
-												? { height: personalRecordsCardHeight }
-												: undefined
-										}>
-										<div className="mb-4 flex items-center gap-2">
-											<Scale className="h-5 w-5 text-[hsl(var(--primary))]" />
-											<div>
-												<h2 className="text-xl font-bold">Personal Records</h2>
-												<p className="text-sm text-[hsl(var(--muted))]">
-													Best lifts and when they were achieved
-												</p>
-											</div>
-										</div>
-										{bestRecords.length > 0 ? (
-											<div
-												className={`space-y-3 ${personalRecordsCardHeight ? "min-h-0 overflow-y-auto pr-1" : ""}`}>
-												{bestRecords.map((record) => (
-													<div
-														key={`${record.exerciseName}-${record.completedAt}`}
-														className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--bg))]/60 p-4 transition hover:border-[hsl(var(--primary))]/45">
-														<div className="flex items-start justify-between gap-3">
-															<div>
-																<p className="font-semibold">
-																	{record.exerciseName}
-																</p>
-																<p className="mt-1 text-xs text-[hsl(var(--muted))]">
-																	{record.workoutName} ·{" "}
-																	{formatLongDate(record.completedAt)}
-																</p>
+										<section className="grid gap-6 xl:grid-cols-2 xl:items-start">
+											<BaseCard
+												ref={muscleBreakdownCardRef}
+												className="self-start p-5 sm:p-6">
+												<div className="mb-4 flex items-center gap-2">
+													<Activity className="h-5 w-5 text-[hsl(var(--primary))]" />
+													<div>
+														<h2 className="text-xl font-bold">
+															Muscle Group Breakdown
+														</h2>
+														<p className="text-sm text-[hsl(var(--muted))]">
+															Completed workout sessions by muscle group
+														</p>
+													</div>
+												</div>
+												{muscleBreakdown.length > 0 ? (
+													<div className="space-y-3">
+														{muscleBreakdown.map((group) => (
+															<div key={group.bodyPart} className="space-y-1.5">
+																<div className="flex items-center justify-between gap-3 text-sm">
+																	<span className="font-medium">
+																		{group.label}
+																	</span>
+																	<span className="text-[hsl(var(--muted))]">
+																		{group.count}
+																	</span>
+																</div>
+																<div className="h-2 rounded-full bg-[hsl(var(--border))]">
+																	<div
+																		className="h-2 rounded-full bg-[hsl(var(--primary))] transition-all"
+																		style={{
+																			width: `${Math.max(10, (group.count / muscleBreakdown[0].count) * 100)}%`,
+																		}}
+																	/>
+																</div>
 															</div>
-															<span className="rounded-full bg-[hsl(var(--primary))]/15 px-2.5 py-1 text-xs font-semibold text-[hsl(var(--primary))]">
-																{record.weight} lbs × {record.reps}
-															</span>
-														</div>
+														))}
 													</div>
+												) : (
+													<p className="text-sm text-[hsl(var(--muted))]">
+														No muscle group data found yet.
+													</p>
+												)}
+											</BaseCard>
+
+											<BaseCard
+												ref={personalRecordsCardRef}
+												className="self-start flex flex-col p-5 sm:p-6"
+												style={
+													personalRecordsCardHeight
+														? { height: personalRecordsCardHeight }
+														: undefined
+												}>
+												<div className="mb-4 flex items-center gap-2">
+													<Scale className="h-5 w-5 text-[hsl(var(--primary))]" />
+													<div>
+														<h2 className="text-xl font-bold">
+															Personal Records
+														</h2>
+														<p className="text-sm text-[hsl(var(--muted))]">
+															Best lifts and when they were achieved
+														</p>
+													</div>
+												</div>
+												{bestRecords.length > 0 ? (
+													<div
+														className={`space-y-3 ${personalRecordsCardHeight ? "min-h-0 overflow-y-auto pr-1" : ""}`}>
+														{bestRecords.map((record) => (
+															<div
+																key={`${record.exerciseName}-${record.completedAt}`}
+																className="rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--bg))]/60 p-4 transition hover:border-[hsl(var(--primary))]/45">
+																<div className="flex items-start justify-between gap-3">
+																	<div>
+																		<p className="font-semibold">
+																			{record.exerciseName}
+																		</p>
+																		<p className="mt-1 text-xs text-[hsl(var(--muted))]">
+																			{record.workoutName} ·{" "}
+																			{formatLongDate(record.completedAt)}
+																		</p>
+																	</div>
+																	<span className="rounded-full bg-[hsl(var(--primary))]/15 px-2.5 py-1 text-xs font-semibold text-[hsl(var(--primary))]">
+																		{record.weight} lbs × {record.reps}
+																	</span>
+																</div>
+															</div>
+														))}
+													</div>
+												) : (
+													<p className="text-sm text-[hsl(var(--muted))]">
+														No weighted lifts recorded yet.
+													</p>
+												)}
+											</BaseCard>
+										</section>
+
+										<section>
+											<div className="mb-4 flex items-center gap-2">
+												<Trophy className="h-5 w-5 text-[hsl(var(--primary))]" />
+												<div>
+													<h2 className="text-xl font-bold sm:text-2xl">
+														Achievements
+													</h2>
+													<p className="text-sm text-[hsl(var(--muted))]">
+														Milestones earned from consistency and volume
+													</p>
+												</div>
+											</div>
+											<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+												{achievements.map((achievement) => (
+													<AchievementCard
+														key={achievement.label}
+														achievement={achievement}
+													/>
 												))}
 											</div>
-										) : (
-											<p className="text-sm text-[hsl(var(--muted))]">
-												No weighted lifts recorded yet.
-											</p>
-										)}
-									</BaseCard>
-								</section>
-
-								<section>
-									<div className="mb-4 flex items-center gap-2">
-										<Trophy className="h-5 w-5 text-[hsl(var(--primary))]" />
-										<div>
-											<h2 className="text-xl font-bold sm:text-2xl">
-												Achievements
-											</h2>
-											<p className="text-sm text-[hsl(var(--muted))]">
-												Milestones earned from consistency and volume
-											</p>
-										</div>
-									</div>
-									<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-										{achievements.map((achievement) => (
-											<AchievementCard
-												key={achievement.label}
-												achievement={achievement}
-											/>
-										))}
-									</div>
-								</section>
+										</section>
+									</>
+								)}
 							</>
 						)}
 					</div>
