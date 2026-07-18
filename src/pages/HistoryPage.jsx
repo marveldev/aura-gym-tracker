@@ -579,6 +579,13 @@ function HistoryPage() {
 	const [calendarMonth, setCalendarMonth] = useState(() => new Date())
 	const [selectedDateKey, setSelectedDateKey] = useState(null)
 	const monthInitializedRef = useRef(false)
+	const timelineCardRef = useRef(null)
+	const calendarCardRef = useRef(null)
+	const [timelineCardHeight, setTimelineCardHeight] = useState(null)
+	const muscleBreakdownCardRef = useRef(null)
+	const personalRecordsCardRef = useRef(null)
+	const [personalRecordsCardHeight, setPersonalRecordsCardHeight] =
+		useState(null)
 
 	useEffect(() => {
 		const timer = window.setTimeout(() => setIsLoading(false), 700)
@@ -609,6 +616,42 @@ function HistoryPage() {
 			monthInitializedRef.current = true
 		}
 	}, [historyEntries])
+
+	useEffect(() => {
+		if (typeof window === "undefined") return undefined
+
+		const syncTimelineHeight = () => {
+			if (window.innerWidth < 1280) {
+				setTimelineCardHeight(null)
+				return
+			}
+
+			const calendarHeight = calendarCardRef.current?.offsetHeight || 0
+			setTimelineCardHeight(calendarHeight > 0 ? calendarHeight : null)
+		}
+
+		syncTimelineHeight()
+
+		let resizeObserver
+		if (typeof ResizeObserver !== "undefined" && calendarCardRef.current) {
+			resizeObserver = new ResizeObserver(syncTimelineHeight)
+			resizeObserver.observe(calendarCardRef.current)
+		}
+
+		window.addEventListener("resize", syncTimelineHeight)
+		return () => {
+			window.removeEventListener("resize", syncTimelineHeight)
+			if (resizeObserver) resizeObserver.disconnect()
+		}
+	}, [
+		isLoading,
+		historyEntries.length,
+		dateRange,
+		typeFilter,
+		searchQuery,
+		calendarMonth,
+		selectedDateKey,
+	])
 
 	const rangeFiltered = useMemo(
 		() => filterByRange(historyEntries, dateRange),
@@ -717,6 +760,45 @@ function HistoryPage() {
 		() => buildAchievements(historyEntries),
 		[historyEntries],
 	)
+
+	useEffect(() => {
+		if (typeof window === "undefined") return undefined
+
+		const syncPersonalRecordsHeight = () => {
+			if (window.innerWidth < 1280) {
+				setPersonalRecordsCardHeight(null)
+				return
+			}
+
+			const muscleBreakdownHeight =
+				muscleBreakdownCardRef.current?.offsetHeight || 0
+			setPersonalRecordsCardHeight(
+				muscleBreakdownHeight > 0 ? muscleBreakdownHeight : null,
+			)
+		}
+
+		syncPersonalRecordsHeight()
+
+		let resizeObserver
+		if (
+			typeof ResizeObserver !== "undefined" &&
+			muscleBreakdownCardRef.current
+		) {
+			resizeObserver = new ResizeObserver(syncPersonalRecordsHeight)
+			resizeObserver.observe(muscleBreakdownCardRef.current)
+		}
+
+		window.addEventListener("resize", syncPersonalRecordsHeight)
+		return () => {
+			window.removeEventListener("resize", syncPersonalRecordsHeight)
+			if (resizeObserver) resizeObserver.disconnect()
+		}
+	}, [
+		isLoading,
+		historyEntries.length,
+		muscleBreakdown.length,
+		bestRecords.length,
+	])
 
 	const selectedDayWorkouts = useMemo(() => {
 		if (!selectedDateKey) return []
@@ -899,8 +981,50 @@ function HistoryPage() {
 									</div>
 								</section>
 
-								<section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
-									<BaseCard className="p-5 sm:p-6">
+								<section className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr] xl:items-start">
+									<BaseCard
+										ref={timelineCardRef}
+										className="flex flex-col p-5 sm:p-6"
+										style={
+											timelineCardHeight
+												? { height: timelineCardHeight }
+												: undefined
+										}>
+										<div className="mb-4 flex items-center justify-between gap-3">
+											<div>
+												<h2 className="text-xl font-bold">
+													Recent Workout Timeline
+												</h2>
+												<p className="text-sm text-[hsl(var(--muted))]">
+													Chronological review of logged sessions
+												</p>
+											</div>
+											<p className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-xs text-[hsl(var(--muted))]">
+												{visibleHistory.length} entries
+											</p>
+										</div>
+										<div
+											className={`space-y-3 ${timelineCardHeight ? "min-h-0 overflow-y-auto pr-1" : ""}`}>
+											{visibleHistorySorted.map((item, index) => (
+												<TimelineItem
+													key={item.id}
+													item={item}
+													index={index}
+													onClick={() =>
+														setSelectedDateKey(
+															getDateKey(
+																parseDate(item.completedAt) || new Date(),
+															),
+														)
+													}
+												/>
+											))}
+										</div>
+									</BaseCard>
+
+									<BaseCard
+										ref={calendarCardRef}
+										className="self-start p-5 sm:p-6">
 										<div className="mb-4 flex items-center justify-between gap-3">
 											<div>
 												<h2 className="text-xl font-bold">Workout Calendar</h2>
@@ -1018,38 +1142,6 @@ function HistoryPage() {
 											</div>
 										)}
 									</BaseCard>
-
-									<BaseCard className="p-5 sm:p-6">
-										<div className="mb-4 flex items-center justify-between gap-3">
-											<div>
-												<h2 className="text-xl font-bold">
-													Recent Workout Timeline
-												</h2>
-												<p className="text-sm text-[hsl(var(--muted))]">
-													Chronological review of logged sessions
-												</p>
-											</div>
-											<p className="rounded-full border border-[hsl(var(--border))] px-3 py-1 text-xs text-[hsl(var(--muted))]">
-												{visibleHistory.length} entries
-											</p>
-										</div>
-										<div className="space-y-3">
-											{visibleHistorySorted.map((item, index) => (
-												<TimelineItem
-													key={item.id}
-													item={item}
-													index={index}
-													onClick={() =>
-														setSelectedDateKey(
-															getDateKey(
-																parseDate(item.completedAt) || new Date(),
-															),
-														)
-													}
-												/>
-											))}
-										</div>
-									</BaseCard>
 								</section>
 
 								<section className="space-y-4">
@@ -1067,6 +1159,8 @@ function HistoryPage() {
 											<WorkoutConsistencyChart
 												data={trendData}
 												isLoading={summaryLoading}
+												maxBarSize={80}
+												barCategoryGap="36%"
 											/>
 										</ChartCard>
 										<ChartCard
@@ -1107,8 +1201,10 @@ function HistoryPage() {
 									</div>
 								</section>
 
-								<section className="grid gap-6 xl:grid-cols-2">
-									<BaseCard className="p-5 sm:p-6">
+								<section className="grid gap-6 xl:grid-cols-2 xl:items-start">
+									<BaseCard
+										ref={muscleBreakdownCardRef}
+										className="self-start p-5 sm:p-6">
 										<div className="mb-4 flex items-center gap-2">
 											<Activity className="h-5 w-5 text-[hsl(var(--primary))]" />
 											<div>
@@ -1148,7 +1244,14 @@ function HistoryPage() {
 										)}
 									</BaseCard>
 
-									<BaseCard className="p-5 sm:p-6">
+									<BaseCard
+										ref={personalRecordsCardRef}
+										className="self-start flex flex-col p-5 sm:p-6"
+										style={
+											personalRecordsCardHeight
+												? { height: personalRecordsCardHeight }
+												: undefined
+										}>
 										<div className="mb-4 flex items-center gap-2">
 											<Scale className="h-5 w-5 text-[hsl(var(--primary))]" />
 											<div>
@@ -1159,7 +1262,8 @@ function HistoryPage() {
 											</div>
 										</div>
 										{bestRecords.length > 0 ? (
-											<div className="space-y-3">
+											<div
+												className={`space-y-3 ${personalRecordsCardHeight ? "min-h-0 overflow-y-auto pr-1" : ""}`}>
 												{bestRecords.map((record) => (
 													<div
 														key={`${record.exerciseName}-${record.completedAt}`}

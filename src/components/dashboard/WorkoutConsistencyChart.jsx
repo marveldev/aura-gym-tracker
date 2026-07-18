@@ -8,7 +8,13 @@ import {
 	YAxis,
 } from "recharts"
 
-function WorkoutConsistencyChart({ data, isLoading = false }) {
+function WorkoutConsistencyChart({
+	data,
+	isLoading = false,
+	barSize,
+	maxBarSize = 44,
+	barCategoryGap = "30%",
+}) {
 	if (isLoading) {
 		return (
 			<div className="h-64 animate-pulse rounded-2xl bg-[hsl(var(--border))]" />
@@ -20,6 +26,7 @@ function WorkoutConsistencyChart({ data, isLoading = false }) {
 			<ResponsiveContainer width="100%" height="100%">
 				<BarChart
 					data={data}
+					barCategoryGap={barCategoryGap}
 					margin={{ left: -18, right: 8, top: 10, bottom: 4 }}>
 					<CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
 					<XAxis
@@ -44,6 +51,8 @@ function WorkoutConsistencyChart({ data, isLoading = false }) {
 						dataKey="workouts"
 						fill="hsl(var(--primary))"
 						activeBar={{ fill: "hsl(var(--primary-hover))" }}
+						barSize={barSize}
+						maxBarSize={maxBarSize}
 						radius={[8, 8, 0, 0]}
 					/>
 				</BarChart>
