@@ -712,8 +712,6 @@ function Dashboard() {
 						</BaseCard>
 					</section>
 
-
-
 					{selectedExercise && (
 						<ExerciseDetailModal
 							exercise={selectedExercise}
