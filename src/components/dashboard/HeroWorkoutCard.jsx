@@ -79,17 +79,17 @@ function HeroWorkoutCard({
 						</div>
 					</div>
 
-					<div className="mt-5 flex flex-col sm:flex-row gap-2">
+				<div className="mt-5 flex flex-col gap-2 sm:flex-row">
+					<button
+						onClick={onStartWorkout}
+						className="w-full sm:w-auto rounded-2xl bg-[hsl(var(--primary))] px-6 py-3 text-sm font-semibold text-[hsl(var(--primary-fg))] transition hover:bg-[hsl(var(--primary-hover))] active:scale-[0.98]">
+						Start Workout
+					</button>
+					{typeof onStartCustomWorkout === "function" && (
 						<button
-							onClick={onStartWorkout}
-							className="w-full sm:w-auto rounded-2xl bg-[hsl(var(--primary))] px-6 py-3 text-sm font-semibold text-[hsl(var(--primary-fg))] transition hover:bg-[hsl(var(--primary-hover))] active:scale-[0.98]">
-							Start Workout
-						</button>
-						{typeof onStartCustomWorkout === "function" && (
-							<button
-								type="button"
-								onClick={onStartCustomWorkout}
-								className="hidden md:inline-flex w-full sm:w-auto rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-6 py-3 text-sm font-semibold text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/50 hover:text-[hsl(var(--primary))] active:scale-[0.98]">
+							type="button"
+							onClick={onStartCustomWorkout}
+							className="w-full sm:w-auto rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-6 py-3 text-sm font-semibold text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/50 hover:text-[hsl(var(--primary))] active:scale-[0.98]">
 								Start Custom Workout
 							</button>
 						)}

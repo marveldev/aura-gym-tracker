@@ -712,14 +712,7 @@ function Dashboard() {
 						</BaseCard>
 					</section>
 
-					<div className="fixed bottom-20 right-4 z-40 md:hidden">
-						<motion.button
-							whileTap={{ scale: 0.98 }}
-							onClick={handleOpenCustomWorkoutModal}
-							className="inline-flex items-center gap-2 rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-5 py-3 text-sm font-semibold text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/60 hover:text-[hsl(var(--primary))]">
-							Start Custom Workout
-						</motion.button>
-					</div>
+
 
 					{selectedExercise && (
 						<ExerciseDetailModal

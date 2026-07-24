@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
 
 function ExerciseDetailModal({
 	exercise,
@@ -11,6 +12,16 @@ function ExerciseDetailModal({
 	const overlayRef = useRef(null)
 	const [imgLoaded, setImgLoaded] = useState(false)
 	const [imgError, setImgError] = useState(false)
+	const [dragY, setDragY] = useState(0)
+	const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+	useEffect(() => {
+		const handleResize = () => {
+			setIsMobile(window.innerWidth < 768)
+		}
+		window.addEventListener("resize", handleResize)
+		return () => window.removeEventListener("resize", handleResize)
+	}, [])
 
 	useEffect(() => {
 		const prev = document.body.style.overflow
@@ -28,7 +39,7 @@ function ExerciseDetailModal({
 	}, [onClose])
 
 	const handleOverlayClick = (e) => {
-		if (e.target === overlayRef.current) onClose()
+		if (e.target === overlayRef.current && dragY === 0) onClose()
 	}
 
 	if (!exercise) return null
@@ -46,12 +57,32 @@ function ExerciseDetailModal({
 		"bg-orange-500/15 text-orange-400",
 	]
 
+	const handleDragEnd = (event, info) => {
+		setDragY(0)
+		if (info.offset.y > 100) {
+			onClose()
+		}
+	}
+
 	return (
 		<div
 			ref={overlayRef}
 			onClick={handleOverlayClick}
 			className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm p-0 sm:p-4 animate-fade-in">
-			<div className="relative w-full sm:max-w-2xl max-h-[92dvh] overflow-y-auto rounded-t-3xl sm:rounded-2xl bg-[hsl(var(--surface))] border border-[hsl(var(--border))] shadow-2xl">
+			<motion.div
+				drag={isMobile ? "y" : false}
+				dragElastic={0.2}
+				dragConstraints={{ top: 0, bottom: 0 }}
+				onDrag={(event, info) => isMobile && setDragY(info.offset.y)}
+				onDragEnd={handleDragEnd}
+				initial={{ opacity: 0, y: 64 }}
+				animate={{ opacity: 1, y: 0 }}
+				exit={{ opacity: 0, y: 64 }}
+				style={{
+					opacity: isMobile && dragY > 0 ? Math.max(0.5, 1 - dragY / 200) : 1,
+				}}
+				className="relative w-full sm:max-w-2xl max-h-[92dvh] overflow-y-auto rounded-t-3xl sm:rounded-2xl bg-[hsl(var(--surface))] border border-[hsl(var(--border))] shadow-2xl"
+				transition={{ type: "spring", stiffness: 400, damping: 40 }}>
 				{/* Close button */}
 				<button
 					type="button"
@@ -203,7 +234,7 @@ function ExerciseDetailModal({
 						</div>
 					)}
 				</div>
-			</div>
+			</motion.div>
 		</div>
 	)
 }
