@@ -38,7 +38,9 @@ function AppPageFrame({ children }) {
 	const navigate = useNavigate()
 	const { logout } = useAuth()
 	const [isDarkTheme, setIsDarkTheme] = useState(true)
-	const shouldShowBackButton = !HIDE_BACK_BUTTON_ROUTES.has(location.pathname)
+	const isHandbookRoute = location.pathname.startsWith("/handbook/")
+	const shouldShowBackButton =
+		!HIDE_BACK_BUTTON_ROUTES.has(location.pathname) && !isHandbookRoute
 
 	useEffect(() => {
 		const savedTheme = localStorage.getItem("aura_theme") || "dark"

@@ -16,7 +16,8 @@ export function useWorkoutCompletion() {
 	const [error, setError] = useState("")
 	const [completedSession, setCompletedSession] = useState(null)
 	const inFlight = useRef(false)
-	const completionToken = useMemo(
+	const completionAttemptRef = useRef(0)
+	const completionTokenPrefix = useMemo(
 		() => `completion_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
 		[],
 	)
@@ -31,6 +32,8 @@ export function useWorkoutCompletion() {
 		inFlight.current = true
 
 		try {
+			completionAttemptRef.current += 1
+			const completionToken = `${completionTokenPrefix}_${completionAttemptRef.current}`
 			const session = completeWorkout({
 				...payload,
 				completionToken,

@@ -117,6 +117,13 @@ function WorkoutPage() {
 		}, 3500)
 	}
 
+	const triggerCompletionConfetti = () => {
+		setShowConfetti(false)
+		window.requestAnimationFrame(() => {
+			setShowConfetti(true)
+		})
+	}
+
 	const handleSelectExercise = (exercise) => {
 		setSelectedExercise(exercise)
 		setSessionExercises((current) => {
@@ -171,8 +178,7 @@ function WorkoutPage() {
 				notes,
 			})
 
-			setShowConfetti(true)
-			showToast("Workout completed and saved!", "success")
+			triggerCompletionConfetti()
 		} catch (completionError) {
 			showToast(
 				completionError?.message || "Unable to complete workout.",

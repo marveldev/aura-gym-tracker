@@ -254,7 +254,7 @@ function Dashboard() {
 			)
 
 			setIsWorkoutCompleted(true)
-			setShowCompletionConfetti(true)
+			triggerCompletionConfetti()
 		} catch (error) {
 			setCompleteWorkoutError(
 				error?.message || "Unable to complete workout from dashboard.",
@@ -281,6 +281,13 @@ function Dashboard() {
 		window.setTimeout(() => {
 			setToasts((current) => current.filter((toast) => toast.id !== id))
 		}, 3500)
+	}
+	
+	const triggerCompletionConfetti = () => {
+		setShowCompletionConfetti(false)
+		window.requestAnimationFrame(() => {
+			setShowCompletionConfetti(true)
+		})
 	}
 
 	const handleOpenCustomWorkoutModal = () => {
@@ -402,9 +409,10 @@ function Dashboard() {
 			if (Number.isNaN(workoutDate.getTime())) {
 				return
 			}
-			if (workoutDate >= startOfWeek && workoutDate <= endOfWeek) {
-				uniqueCompletedDays.add(getDateKey(workoutDate))
+			if (workoutDate < startOfWeek || workoutDate > endOfWeek) {
+				return
 			}
+			uniqueCompletedDays.add(getDateKey(workoutDate))
 		})
 
 		const completedDays = uniqueCompletedDays.size

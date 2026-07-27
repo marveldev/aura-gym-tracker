@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { ChevronLeft, ChevronRight, Search } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
 import handbookArticles from "../data/handbookArticles"
@@ -62,6 +62,7 @@ const handbookSections = [
 ]
 
 function HandbookPage({ embedded = false }) {
+	const navigate = useNavigate()
 	const [query, setQuery] = useState("")
 	const [activeIndex, setActiveIndex] = useState(getInitialFeaturedIndex)
 	const [direction, setDirection] = useState(0)
@@ -191,6 +192,19 @@ function HandbookPage({ embedded = false }) {
 		}
 	}
 
+	const handleMobileArticleTap = (event) => {
+		if (typeof window === "undefined" || window.innerWidth >= 640) {
+			return
+		}
+
+		if (event.target.closest("a, button, input, select, textarea")) {
+			return
+		}
+
+		pauseAutoplay()
+		navigate(`/handbook/${activeArticle.slug}`)
+	}
+
 	const slideVariants = {
 		enter: (nextDirection) => ({
 			x: nextDirection > 0 ? 64 : -64,
@@ -267,6 +281,7 @@ function HandbookPage({ embedded = false }) {
 								initial="enter"
 								animate="center"
 								exit="exit"
+								onTap={handleMobileArticleTap}
 								transition={{
 									x: { type: "spring", stiffness: 280, damping: 28 },
 									opacity: { duration: 0.22 },
