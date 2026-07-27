@@ -151,7 +151,7 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 					)}
 					<Link
 						to="/handbook"
-						className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-black/35 px-3 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-black/50">
+						className="absolute top-4 left-10 sm:left-4 inline-flex items-center gap-1.5 rounded-full bg-black/35 px-3 py-2 text-sm font-medium text-white backdrop-blur-sm transition hover:bg-black/50">
 						<ArrowLeft className="w-4 h-4" />
 						Handbook
 					</Link>
@@ -159,7 +159,7 @@ function HandbookArticleDetailPage({ slugOverride = null }) {
 
 				{/* Main Content */}
 				<div className="relative -mt-16 z-10">
-					<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+					<div className="max-w-4xl mx-auto px-10 sm:px-12 md:px-6 lg:px-8 py-8">
 						{/* Article Header Card */}
 						<motion.div
 							initial={{ opacity: 0, y: 16 }}

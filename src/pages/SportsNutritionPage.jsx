@@ -48,12 +48,12 @@ function SportsNutritionPage() {
 		<AppPageFrame>
 			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))]">
 				{/* Hero Section */}
-				<section className="relative overflow-hidden bg-gradient-to-br from-[hsl(var(--primary))]/20 via-[hsl(var(--primary))]/8 to-[hsl(var(--primary))]/5 px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+				<section className="relative -mx-6 md:mx-0 overflow-hidden bg-gradient-to-br from-[hsl(var(--primary))]/20 via-[hsl(var(--primary))]/8 to-[hsl(var(--primary))]/5 px-0 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
 					{/* Decorative blur elements */}
 					<div className="absolute right-0 top-0 -z-10 h-96 w-96 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
 					<div className="absolute bottom-0 left-0 -z-10 h-80 w-80 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
 
-					<div className="mx-auto max-w-4xl">
+					<div className="mx-auto w-full px-10 sm:max-w-4xl sm:px-12 md:px-0">
 						<div className="space-y-8">
 							<div className="flex items-center">
 								<Link

@@ -282,7 +282,7 @@ function Dashboard() {
 			setToasts((current) => current.filter((toast) => toast.id !== id))
 		}, 3500)
 	}
-	
+
 	const triggerCompletionConfetti = () => {
 		setShowCompletionConfetti(false)
 		window.requestAnimationFrame(() => {

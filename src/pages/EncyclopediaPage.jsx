@@ -51,6 +51,11 @@ function EncyclopediaPage() {
 		[filteredTopics],
 	)
 
+	const nonFeaturedTopics = useMemo(
+		() => filteredTopics.filter((topic) => !topic.featured),
+		[filteredTopics],
+	)
+
 	const backTo = location.pathname.startsWith("/handbook")
 		? "/handbook"
 		: "/dashboard"
@@ -58,16 +63,16 @@ function EncyclopediaPage() {
 		backTo === "/handbook" ? "Back to Handbook" : "Back to Dashboard"
 	const isSearching = normalizedQuery.length > 0
 
-	const isEmptyState = filteredTopics.length === 0
+	const isEmptyState = nonFeaturedTopics.length === 0
 
 	return (
 		<AppPageFrame>
 			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))]">
-				<section className="relative overflow-hidden bg-gradient-to-br from-[hsl(var(--primary))]/20 via-[hsl(var(--primary))]/8 to-[hsl(var(--primary))]/5 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+				<section className="relative -mx-6 md:mx-0 overflow-hidden bg-gradient-to-br from-[hsl(var(--primary))]/20 via-[hsl(var(--primary))]/8 to-[hsl(var(--primary))]/5 px-0 py-14 sm:px-6 sm:py-16 lg:px-8">
 					<div className="absolute right-0 top-0 -z-10 h-80 w-80 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
 					<div className="absolute bottom-0 left-0 -z-10 h-72 w-72 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
 
-					<div className="mx-auto max-w-5xl space-y-7">
+					<div className="mx-auto w-full px-10 sm:max-w-5xl sm:px-12 md:px-0 space-y-7">
 						<div className="flex items-center">
 							<Link
 								to={backTo}
@@ -134,7 +139,7 @@ function EncyclopediaPage() {
 							<div className="flex items-center justify-between gap-3">
 								<h2 className="text-xl font-bold">All Topics</h2>
 								<p className="text-sm text-[hsl(var(--muted))]">
-									{filteredTopics.length} topics
+									{nonFeaturedTopics.length} topics
 								</p>
 							</div>
 
@@ -170,7 +175,7 @@ function EncyclopediaPage() {
 								</motion.div>
 							) : (
 								<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-									{filteredTopics.map((topic) => (
+									{nonFeaturedTopics.map((topic) => (
 										<EncyclopediaCard
 											key={topic.id}
 											topic={topic}

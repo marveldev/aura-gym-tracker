@@ -359,11 +359,11 @@ function FoodCaloriesPage() {
 	return (
 		<AppPageFrame>
 			<div className="bg-[hsl(var(--bg))] text-[hsl(var(--fg))]">
-				<section className="relative overflow-hidden bg-gradient-to-br from-[hsl(var(--primary))]/20 via-[hsl(var(--primary))]/8 to-[hsl(var(--primary))]/5 px-4 py-14 sm:px-6 sm:py-16 lg:px-8">
+				<section className="relative -mx-6 md:mx-0 overflow-hidden bg-gradient-to-br from-[hsl(var(--primary))]/20 via-[hsl(var(--primary))]/8 to-[hsl(var(--primary))]/5 px-0 py-14 sm:px-6 sm:py-16 lg:px-8">
 					<div className="absolute right-0 top-0 -z-10 h-80 w-80 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
 					<div className="absolute bottom-0 left-0 -z-10 h-72 w-72 rounded-full bg-[hsl(var(--primary))]/5 blur-3xl" />
 
-					<div className="mx-auto max-w-5xl space-y-7">
+					<div className="mx-auto w-full px-10 sm:max-w-5xl sm:px-12 md:px-0 space-y-7">
 						<div className="flex items-center">
 							<Link
 								to="/handbook"
