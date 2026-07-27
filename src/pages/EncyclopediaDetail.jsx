@@ -53,7 +53,7 @@ function EncyclopediaDetail() {
 	}, [topic])
 
 	if (!topic) {
-		return <Navigate to="/encyclopedia" replace />
+		return <Navigate to="/handbook/encyclopedia" replace />
 	}
 
 	const relatedTopics = getRelatedTopics(topic)
@@ -129,7 +129,7 @@ function EncyclopediaDetail() {
 									{relatedTopics.map((relatedTopic) => (
 										<Link
 											key={relatedTopic.id}
-											to={`/encyclopedia/${relatedTopic.id}`}
+											to={`/handbook/encyclopedia/${relatedTopic.id}`}
 											className="block rounded-lg border border-[hsl(var(--border))] px-3 py-2 text-sm transition hover:border-[hsl(var(--primary))]/45 hover:bg-[hsl(var(--primary))]/5">
 											{relatedTopic.title}
 										</Link>
@@ -147,7 +147,7 @@ function EncyclopediaDetail() {
 									key={`bottom-${relatedTopic.id}`}
 									whileHover={{ y: -4 }}>
 									<Link
-										to={`/encyclopedia/${relatedTopic.id}`}
+										to={`/handbook/encyclopedia/${relatedTopic.id}`}
 										className="block rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] p-4 shadow-sm transition hover:border-[hsl(var(--primary))]/45 hover:shadow-lg">
 										<p className="text-xs text-[hsl(var(--muted))]">
 											{relatedTopic.category}
@@ -165,7 +165,7 @@ function EncyclopediaDetail() {
 
 						<div>
 							<Link
-								to="/encyclopedia"
+								to="/handbook/encyclopedia"
 								className="inline-flex items-center rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-4 py-2 text-sm font-medium transition hover:border-[hsl(var(--primary))]/45 hover:bg-[hsl(var(--primary))]/5">
 								Back to Encyclopedia
 							</Link>

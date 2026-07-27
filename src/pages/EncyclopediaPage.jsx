@@ -4,7 +4,6 @@ import { ArrowLeft, Search, X } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
 import AppPageFrame from "../components/AppPageFrame.jsx"
 import EncyclopediaCard from "../components/encyclopedia/EncyclopediaCard"
-import FeaturedTopicsCarousel from "../components/encyclopedia/FeaturedTopicsCarousel"
 import EncyclopediaCategoryFilter from "../components/encyclopedia/EncyclopediaCategoryFilter"
 import topicsData from "../data/encyclopediaTopics.json"
 
@@ -46,16 +45,6 @@ function EncyclopediaPage() {
 		})
 	}, [normalizedQuery, selectedCategory])
 
-	const featuredTopics = useMemo(
-		() => filteredTopics.filter((topic) => topic.featured),
-		[filteredTopics],
-	)
-
-	const nonFeaturedTopics = useMemo(
-		() => filteredTopics.filter((topic) => !topic.featured),
-		[filteredTopics],
-	)
-
 	const backTo = location.pathname.startsWith("/handbook")
 		? "/handbook"
 		: "/dashboard"
@@ -63,7 +52,7 @@ function EncyclopediaPage() {
 		backTo === "/handbook" ? "Back to Handbook" : "Back to Dashboard"
 	const isSearching = normalizedQuery.length > 0
 
-	const isEmptyState = nonFeaturedTopics.length === 0
+	const isEmptyState = filteredTopics.length === 0
 
 	return (
 		<AppPageFrame>
@@ -131,15 +120,10 @@ function EncyclopediaPage() {
 						</section>
 
 						<section className="space-y-4">
-							<h2 className="text-xl font-bold">Featured Topics</h2>
-							<FeaturedTopicsCarousel topics={featuredTopics} />
-						</section>
-
-						<section className="space-y-4">
 							<div className="flex items-center justify-between gap-3">
 								<h2 className="text-xl font-bold">All Topics</h2>
 								<p className="text-sm text-[hsl(var(--muted))]">
-									{nonFeaturedTopics.length} topics
+									{filteredTopics.length} topics
 								</p>
 							</div>
 
@@ -175,11 +159,11 @@ function EncyclopediaPage() {
 								</motion.div>
 							) : (
 								<div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-									{nonFeaturedTopics.map((topic) => (
+									{filteredTopics.map((topic) => (
 										<EncyclopediaCard
 											key={topic.id}
 											topic={topic}
-											to={`/encyclopedia/${topic.id}`}
+											to={`/handbook/encyclopedia/${topic.id}`}
 										/>
 									))}
 								</div>

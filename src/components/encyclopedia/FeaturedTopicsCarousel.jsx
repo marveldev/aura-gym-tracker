@@ -44,7 +44,7 @@ function FeaturedTopicsCarouselComponent({ topics }) {
 						viewport={{ once: true, amount: 0.2 }}
 						className="min-w-[84%] snap-start sm:min-w-[55%] lg:min-w-[40%]">
 						<Link
-							to={`/encyclopedia/${topic.id}`}
+							to={`/handbook/encyclopedia/${topic.id}`}
 							className="group block overflow-hidden rounded-2xl border border-[hsl(var(--border))] bg-[hsl(var(--surface))] shadow-sm transition hover:border-[hsl(var(--primary))]/45 hover:shadow-xl">
 							<div className="relative h-64">
 								<img

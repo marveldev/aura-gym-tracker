@@ -1,4 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import {
+	BrowserRouter,
+	Navigate,
+	Route,
+	Routes,
+	useParams,
+} from "react-router-dom"
 import LandingPage from "./pages/LandingPage.jsx"
 import Dashboard from "./pages/Dashboard"
 import HistoryPage from "./pages/HistoryPage.jsx"
@@ -7,7 +13,6 @@ import AuthPage from "./pages/AuthPage.jsx"
 import OnboardingPage from "./pages/OnboardingPage.jsx"
 import HandbookDashboardPage from "./pages/HandbookDashboardPage.jsx"
 import HandbookSectionPage from "./pages/HandbookSectionPage.jsx"
-import HandbookEncyclopediaTopicPage from "./pages/HandbookEncyclopediaTopicPage.jsx"
 import HandbookEncyclopediaArticlePage from "./pages/HandbookEncyclopediaArticlePage.jsx"
 import HandbookNutritionPage from "./pages/HandbookNutritionPage.jsx"
 import HandbookFoodCategoryPage from "./pages/HandbookFoodCategoryPage.jsx"
@@ -21,6 +26,11 @@ import EncyclopediaPage from "./pages/EncyclopediaPage"
 import EncyclopediaDetail from "./pages/EncyclopediaDetail"
 import SportsNutritionPage from "./pages/SportsNutritionPage.jsx"
 import SportsNutritionDetail from "./pages/SportsNutritionDetail.jsx"
+
+function LegacyEncyclopediaTopicRedirect() {
+	const { id } = useParams()
+	return <Navigate to={`/handbook/encyclopedia/${id}`} replace />
+}
 
 function App() {
 	return (
@@ -125,10 +135,10 @@ function App() {
 					}
 				/>
 				<Route
-					path="/handbook/encyclopedia/:topic"
+					path="/handbook/encyclopedia/:id"
 					element={
 						<ProtectedRoute>
-							<HandbookEncyclopediaTopicPage />
+							<EncyclopediaDetail />
 						</ProtectedRoute>
 					}
 				/>
@@ -160,7 +170,7 @@ function App() {
 					path="/encyclopedia"
 					element={
 						<ProtectedRoute>
-							<EncyclopediaPage />
+							<Navigate to="/handbook/encyclopedia" replace />
 						</ProtectedRoute>
 					}
 				/>
@@ -168,7 +178,7 @@ function App() {
 					path="/encyclopedia/:id"
 					element={
 						<ProtectedRoute>
-							<EncyclopediaDetail />
+							<LegacyEncyclopediaTopicRedirect />
 						</ProtectedRoute>
 					}
 				/>
