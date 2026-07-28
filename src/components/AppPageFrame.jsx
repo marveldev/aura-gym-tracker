@@ -161,7 +161,9 @@ function AppPageFrame({ children }) {
 							onClick={() => setIsMobileMenuOpen((open) => !open)}
 							aria-label="Open menu"
 							aria-expanded={isMobileMenuOpen}>
-							<i className={`ph text-lg ${isMobileMenuOpen ? "ph-x" : "ph-list"}`} />
+							<i
+								className={`ph text-lg ${isMobileMenuOpen ? "ph-x" : "ph-list"}`}
+							/>
 						</button>
 						<button
 							className="hidden md:inline-flex btn-secondary py-2 px-3 sm:px-4 text-sm rounded font-bold whitespace-nowrap"
@@ -186,7 +188,9 @@ function AppPageFrame({ children }) {
 									setIsMobileMenuOpen(false)
 								}}
 								className="w-full rounded-xl border border-[hsl(var(--border))]/60 bg-[hsl(var(--bg))]/60 px-3.5 py-2.5 text-left text-sm font-semibold text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/40 hover:bg-[hsl(var(--primary))]/10">
-								<i className={`ph mr-2 ${isDarkTheme ? "ph-sun" : "ph-moon"}`} />
+								<i
+									className={`ph mr-2 ${isDarkTheme ? "ph-sun" : "ph-moon"}`}
+								/>
 								{isDarkTheme ? "Switch to Light" : "Switch to Dark"}
 							</button>
 							<button
