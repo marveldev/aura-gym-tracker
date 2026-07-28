@@ -217,7 +217,7 @@ function AuthPage() {
 			</nav>
 
 			{/* Main */}
-			<div className="relative flex flex-1 items-center justify-center overflow-x-clip px-4 py-10 sm:py-12">
+			<div className="relative flex flex-1 items-center justify-center overflow-x-clip px-4 pt-0 pb-10 sm:py-12">
 				{/* Glow */}
 				<div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[360px] h-[360px] sm:w-[600px] sm:h-[600px] bg-[hsl(var(--primary))]/10 rounded-full blur-[90px] sm:blur-[120px] -z-10 pointer-events-none"></div>
 
