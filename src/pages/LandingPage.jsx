@@ -46,6 +46,11 @@ function LandingPage() {
 						</span>
 					</div>
 					<div className="flex items-center gap-1.5 md:hidden">
+						{isGuest && (
+							<span className="inline-flex items-center rounded-full border border-[hsl(var(--primary))]/45 bg-[hsl(var(--primary))]/10 px-2 py-1 text-[10px] font-semibold text-[hsl(var(--primary))]">
+								Guest
+							</span>
+						)}
 						<button
 							className="btn-secondary h-9 w-9 rounded flex items-center justify-center"
 							onClick={toggleTheme}
@@ -62,6 +67,11 @@ function LandingPage() {
 						</button>
 					</div>
 					<div className="hidden md:flex items-center gap-4 lg:gap-6">
+						{isGuest && (
+							<span className="inline-flex items-center rounded-full border border-[hsl(var(--primary))]/45 bg-[hsl(var(--primary))]/10 px-2.5 py-1 text-xs font-semibold text-[hsl(var(--primary))]">
+								Guest Mode
+							</span>
+						)}
 						<button
 							className="btn-secondary py-2.5 px-4 text-sm rounded font-bold"
 							onClick={toggleTheme}>

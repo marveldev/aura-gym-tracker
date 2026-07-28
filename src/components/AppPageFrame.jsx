@@ -36,7 +36,7 @@ const HIDE_BACK_BUTTON_ROUTES = new Set([
 function AppPageFrame({ children }) {
 	const location = useLocation()
 	const navigate = useNavigate()
-	const { logout } = useAuth()
+	const { isGuest, logout } = useAuth()
 	const [isDarkTheme, setIsDarkTheme] = useState(true)
 	const isHandbookRoute = location.pathname.startsWith("/handbook/")
 	const shouldShowBackButton =
@@ -98,6 +98,11 @@ function AppPageFrame({ children }) {
 					</div>
 
 					<div className="flex items-center gap-2 sm:gap-3">
+						{isGuest && (
+							<span className="hidden sm:inline-flex items-center rounded-full border border-[hsl(var(--primary))]/45 bg-[hsl(var(--primary))]/10 px-2.5 py-1 text-xs font-semibold text-[hsl(var(--primary))]">
+								Guest Mode
+							</span>
+						)}
 						<button
 							className="btn-secondary h-10 w-10 rounded flex items-center justify-center"
 							aria-label="Notifications">

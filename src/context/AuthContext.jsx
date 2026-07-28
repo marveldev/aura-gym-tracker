@@ -4,17 +4,18 @@ import {
 	GoogleAuthProvider,
 	onAuthStateChanged,
 	sendPasswordResetEmail,
-	signInAnonymously as firebaseSignInAnonymously,
 	signInWithPopup,
 	signInWithEmailAndPassword,
-	signOut,
 } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
 import { auth } from "../firebase.js"
 import { db } from "../firebase.js"
+import {
+	signInAsGuest as signInAsGuestHelper,
+	signOut as signOutHelper,
+} from "../services/auth.ts"
 
 const AuthContext = createContext(null)
-const GUEST_STORAGE_KEY = "aura_guest_session"
 
 export function useAuth() {
 	const context = useContext(AuthContext)
@@ -28,14 +29,10 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState(null)
-	const [isGuest, setIsGuest] = useState(
-		() => localStorage.getItem(GUEST_STORAGE_KEY) === "true",
-	)
 	const [loading, setLoading] = useState(true)
+	const isGuest = Boolean(currentUser?.isAnonymous)
 
 	const signup = async (email, password) => {
-		setIsGuest(false)
-		localStorage.removeItem(GUEST_STORAGE_KEY)
 		const userCredential = await createUserWithEmailAndPassword(
 			auth,
 			email,
@@ -46,8 +43,6 @@ export function AuthProvider({ children }) {
 	}
 
 	const login = async (email, password) => {
-		setIsGuest(false)
-		localStorage.removeItem(GUEST_STORAGE_KEY)
 		const userCredential = await signInWithEmailAndPassword(
 			auth,
 			email,
@@ -59,9 +54,6 @@ export function AuthProvider({ children }) {
 
 	const signInWithGoogle = async () => {
 		try {
-			setIsGuest(false)
-			localStorage.removeItem(GUEST_STORAGE_KEY)
-
 			const provider = new GoogleAuthProvider()
 			const userCredential = await signInWithPopup(auth, provider)
 
@@ -74,11 +66,7 @@ export function AuthProvider({ children }) {
 
 	const signInAnonymously = async () => {
 		try {
-			setIsGuest(false)
-			localStorage.removeItem(GUEST_STORAGE_KEY)
-
-			const userCredential = await firebaseSignInAnonymously(auth)
-			return userCredential.user
+			return await signInAsGuestHelper(auth)
 		} catch (error) {
 			console.error("Anonymous sign-in failed", error)
 			throw error
@@ -87,18 +75,11 @@ export function AuthProvider({ children }) {
 
 	const signInAsGuest = async () => {
 		try {
-			const user = await signInAnonymously()
-			return user
+			return await signInAnonymously()
 		} catch (error) {
 			console.error("Guest sign-in failed", error)
 			throw error
 		}
-	}
-
-	const continueAsGuest = () => {
-		setCurrentUser(null)
-		setIsGuest(true)
-		localStorage.setItem(GUEST_STORAGE_KEY, "true")
 	}
 
 	const resetPassword = async (email) => {
@@ -111,15 +92,12 @@ export function AuthProvider({ children }) {
 		}
 	}
 
-	const logout = async () => {
-		if (auth.currentUser) {
-			await signOut(auth)
-		}
-
+	const signOut = async () => {
+		await signOutHelper(auth)
 		setCurrentUser(null)
-		setIsGuest(false)
-		localStorage.removeItem(GUEST_STORAGE_KEY)
 	}
+
+	const logout = signOut
 
 	const checkProfileExists = async (uid) => {
 		try {
@@ -136,10 +114,6 @@ export function AuthProvider({ children }) {
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setCurrentUser(user)
-			if (user) {
-				setIsGuest(false)
-				localStorage.removeItem(GUEST_STORAGE_KEY)
-			}
 			setLoading(false)
 		})
 
@@ -150,17 +124,18 @@ export function AuthProvider({ children }) {
 		() => ({
 			currentUser,
 			isGuest,
+			loading,
 			login,
 			resetPassword,
 			signInAsGuest,
 			signInAnonymously,
 			signInWithGoogle,
 			signup,
-			continueAsGuest,
+			signOut,
 			logout,
 			checkProfileExists,
 		}),
-		[currentUser, isGuest],
+		[currentUser, isGuest, loading],
 	)
 
 	return (
