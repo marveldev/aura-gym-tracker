@@ -198,10 +198,10 @@ function AuthPage() {
 	}
 
 	return (
-		<div className="min-h-screen bg-[hsl(var(--bg))] flex flex-col selection:bg-[hsl(var(--primary))] selection:text-white">
+		<div className="relative min-h-screen overflow-x-hidden bg-[hsl(var(--bg))] flex flex-col selection:bg-[hsl(var(--primary))] selection:text-white">
 			{/* Nav */}
 			<nav className="w-full border-b border-[hsl(var(--border))]/50 bg-[hsl(var(--bg))]/80 backdrop-blur-md">
-				<div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 					<Link to="/" className="flex items-center gap-3">
 						<img src="/logo.svg" alt="Aura Logo" className="w-7 h-7" />
 						<span className="text-lg font-bold tracking-tight text-[hsl(var(--fg))]">
@@ -217,9 +217,9 @@ function AuthPage() {
 			</nav>
 
 			{/* Main */}
-			<div className="flex flex-1 items-center justify-center px-4 py-12">
+			<div className="relative flex flex-1 items-center justify-center overflow-x-clip px-4 py-10 sm:py-12">
 				{/* Glow */}
-				<div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[hsl(var(--primary))]/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+				<div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[360px] h-[360px] sm:w-[600px] sm:h-[600px] bg-[hsl(var(--primary))]/10 rounded-full blur-[90px] sm:blur-[120px] -z-10 pointer-events-none"></div>
 
 				<div className="w-full max-w-md animate-slide-up">
 					{/* Tab switcher */}

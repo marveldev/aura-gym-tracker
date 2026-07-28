@@ -82,22 +82,22 @@ function LandingPage() {
 				</div>
 			</nav>
 
-			<section className="relative min-h-screen flex items-center pt-20 sm:pt-20 overflow-hidden">
+			<section className="relative min-h-screen flex items-start lg:items-center pt-24 sm:pt-24 overflow-hidden">
 				<div className="absolute top-1/4 right-0 w-[800px] h-[800px] bg-[hsl(var(--primary))]/10 rounded-full blur-[120px] -z-10 translate-x-1/3"></div>
 				<div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[100px] -z-10 -translate-x-1/2"></div>
 
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col lg:flex-row relative z-10 gap-8 sm:gap-12 lg:gap-16 items-center">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 w-full flex flex-col lg:flex-row relative z-10 gap-6 sm:gap-12 lg:gap-16 items-center">
 					<div className="flex-1 max-w-4xl animate-slide-up">
-						<h1 className="text-[clamp(2.4rem,18vw,7rem)] md:text-9xl font-extrabold tracking-tight leading-[0.9] text-[hsl(var(--fg))] break-words">
+						<h1 className="text-[clamp(2rem,13vw,7rem)] sm:text-[clamp(2.6rem,10vw,7rem)] md:text-9xl font-extrabold tracking-tight leading-[0.9] text-[hsl(var(--fg))] break-words">
 							STRENGTH <br />
 							IS A <span className="text-gradient italic">SCIENCE.</span>
 						</h1>
-						<p className="mt-6 sm:mt-8 text-base sm:text-lg md:text-2xl text-[hsl(var(--muted))] font-light max-w-2xl leading-relaxed">
+						<p className="mt-5 sm:mt-8 text-[0.95rem] sm:text-lg md:text-2xl text-[hsl(var(--muted))] font-light max-w-2xl leading-relaxed">
 							Stop guessing your progress. Aura is the brutally efficient,
 							deeply analytical tracker built for those obsessed with
 							progression.
 						</p>
-						<div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4">
+						<div className="mt-7 sm:mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4">
 							<Link
 								to={currentUser || isGuest ? "/dashboard" : "/auth"}
 								className="btn-primary text-base sm:text-lg rounded px-5 sm:px-8 py-3.5 sm:py-4 font-bold w-full sm:w-auto text-center">
@@ -112,51 +112,51 @@ function LandingPage() {
 					</div>
 
 					<div className="flex-1 w-full animate-slide-up">
-						<div className="grid grid-cols-1 min-[396px]:grid-cols-2 gap-4 sm:gap-6">
-							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-5 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
-								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
-									<i className="ph ph-arrow-up text-2xl"></i>
+						<div className="mx-auto w-full max-w-xl grid grid-cols-2 gap-3 sm:gap-6">
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-xl sm:rounded-2xl p-3 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
+								<div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-2 sm:mb-4">
+									<i className="ph ph-arrow-up text-xl sm:text-2xl"></i>
 								</div>
-								<p className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+								<p className="text-[1.85rem] sm:text-3xl font-bold leading-none text-[hsl(var(--fg))] mb-1">
 									+12%
 								</p>
-								<p className="text-xs sm:text-sm text-[hsl(var(--muted))]">
+								<p className="text-[0.85rem] sm:text-sm text-[hsl(var(--muted))] leading-tight">
 									Monthly Progress
 								</p>
 							</div>
 
-							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-5 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
-								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
-									<i className="ph ph-lightning text-2xl"></i>
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-xl sm:rounded-2xl p-3 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
+								<div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-2 sm:mb-4">
+									<i className="ph ph-lightning text-xl sm:text-2xl"></i>
 								</div>
-								<p className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+								<p className="text-[1.85rem] sm:text-3xl font-bold leading-none text-[hsl(var(--fg))] mb-1">
 									156
 								</p>
-								<p className="text-xs sm:text-sm text-[hsl(var(--muted))]">
+								<p className="text-[0.85rem] sm:text-sm text-[hsl(var(--muted))] leading-tight">
 									Total Workouts
 								</p>
 							</div>
 
-							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-5 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
-								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
-									<i className="ph ph-target text-2xl"></i>
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-xl sm:rounded-2xl p-3 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
+								<div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-2 sm:mb-4">
+									<i className="ph ph-target text-xl sm:text-2xl"></i>
 								</div>
-								<p className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+								<p className="text-[1.85rem] sm:text-3xl font-bold leading-none text-[hsl(var(--fg))] mb-1">
 									+45lbs
 								</p>
-								<p className="text-xs sm:text-sm text-[hsl(var(--muted))]">
+								<p className="text-[0.85rem] sm:text-sm text-[hsl(var(--muted))] leading-tight">
 									Max Increase
 								</p>
 							</div>
 
-							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-2xl p-5 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
-								<div className="w-12 h-12 rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-4">
-									<i className="ph ph-chart-line-up text-2xl"></i>
+							<div className="bg-[hsl(var(--surface))] border border-[hsl(var(--border))] rounded-xl sm:rounded-2xl p-3 sm:p-6 text-center transform hover:scale-105 transition-transform duration-300">
+								<div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mx-auto mb-2 sm:mb-4">
+									<i className="ph ph-chart-line-up text-xl sm:text-2xl"></i>
 								</div>
-								<p className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-1">
+								<p className="text-[1.85rem] sm:text-3xl font-bold leading-none text-[hsl(var(--fg))] mb-1">
 									89%
 								</p>
-								<p className="text-xs sm:text-sm text-[hsl(var(--muted))]">
+								<p className="text-[0.85rem] sm:text-sm text-[hsl(var(--muted))] leading-tight">
 									Consistency Rate
 								</p>
 							</div>
@@ -167,14 +167,14 @@ function LandingPage() {
 
 			<section
 				id="features"
-				className="py-24 sm:py-32 relative max-w-5xl mx-auto px-4 sm:px-6">
+				className="py-20 sm:py-32 relative max-w-5xl mx-auto px-4 sm:px-6">
 				<div
 					className="mb-20 animate-slide-up"
 					style={{ animationDelay: "0.2s" }}>
-					<h2 className="text-4xl md:text-6xl font-bold tracking-tight text-[hsl(var(--fg))]">
+					<h2 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-[hsl(var(--fg))]">
 						Built to eliminate friction.
 					</h2>
-					<p className="mt-4 text-[hsl(var(--muted))] text-xl max-w-xl">
+					<p className="mt-4 text-[hsl(var(--muted))] text-base sm:text-xl max-w-xl">
 						Every feature is engineered to get out of your way and let you focus
 						on the lift.
 					</p>
@@ -182,16 +182,16 @@ function LandingPage() {
 
 				<div className="relative pb-32">
 					<div
-						className="stack-card w-full rounded-3xl bg-[hsl(var(--surface))] border border-[hsl(var(--border))] p-10 md:p-16 shadow-2xl shadow-black/5 flex flex-col md:flex-row gap-12 items-center z-10"
+						className="stack-card w-full rounded-3xl bg-[hsl(var(--surface))] border border-[hsl(var(--border))] p-6 sm:p-8 md:p-16 shadow-2xl shadow-black/5 flex flex-col md:flex-row gap-8 sm:gap-12 items-center z-10"
 						style={{ top: "120px" }}>
 						<div className="flex-1">
 							<div className="w-16 h-16 rounded-2xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mb-8">
 								<i className="ph ph-lightning text-3xl"></i>
 							</div>
-							<h3 className="text-3xl font-bold text-[hsl(var(--fg))] mb-4">
+							<h3 className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-4">
 								Lightning Fast Logging
 							</h3>
-							<p className="text-[hsl(var(--muted))] text-lg leading-relaxed">
+							<p className="text-[hsl(var(--muted))] text-base sm:text-lg leading-relaxed">
 								Log sets, reps, and weight in seconds. Our keyboard-optimized
 								interface means you spend less time tapping screens and more
 								time lifting.
@@ -222,16 +222,16 @@ function LandingPage() {
 					</div>
 
 					<div
-						className="stack-card w-full rounded-3xl bg-[hsl(var(--surface))] border border-[hsl(var(--border))] p-10 md:p-16 shadow-2xl shadow-black/5 flex flex-col md:flex-row-reverse gap-12 items-center z-20 mt-12"
+						className="stack-card w-full rounded-3xl bg-[hsl(var(--surface))] border border-[hsl(var(--border))] p-6 sm:p-8 md:p-16 shadow-2xl shadow-black/5 flex flex-col md:flex-row-reverse gap-8 sm:gap-12 items-center z-20 mt-12"
 						style={{ top: "140px" }}>
 						<div className="flex-1">
 							<div className="w-16 h-16 rounded-2xl bg-[hsl(var(--primary))]/10 flex items-center justify-center text-[hsl(var(--primary))] mb-8">
 								<i className="ph ph-chart-line-up text-3xl"></i>
 							</div>
-							<h3 className="text-3xl font-bold text-[hsl(var(--fg))] mb-4">
+							<h3 className="text-2xl sm:text-3xl font-bold text-[hsl(var(--fg))] mb-4">
 								Progress Insights
 							</h3>
-							<p className="text-[hsl(var(--muted))] text-lg leading-relaxed">
+							<p className="text-[hsl(var(--muted))] text-base sm:text-lg leading-relaxed">
 								See your progress at a glance with workout history, consistency,
 								and performance trends designed to keep your training on track.
 							</p>
@@ -251,18 +251,18 @@ function LandingPage() {
 				</div>
 			</section>
 
-			<section className="py-24 sm:py-32 bg-[hsl(var(--surface))] border-t border-[hsl(var(--border))]">
+			<section className="py-20 sm:py-32 bg-[hsl(var(--surface))] border-t border-[hsl(var(--border))]">
 				<div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-					<h2 className="text-5xl md:text-7xl font-bold tracking-tight text-[hsl(var(--fg))] mb-8">
+					<h2 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight text-[hsl(var(--fg))] mb-8">
 						Ready to grow?
 					</h2>
-					<p className="text-xl text-[hsl(var(--muted))] mb-12 max-w-2xl mx-auto">
+					<p className="text-base sm:text-xl text-[hsl(var(--muted))] mb-10 sm:mb-12 max-w-2xl mx-auto">
 						Join thousands of serious lifters who have ditched their
 						spreadsheets for Aura.
 					</p>
 					<Link
 						to={currentUser || isGuest ? "/dashboard" : "/auth"}
-						className="btn-primary text-xl px-12 py-6 rounded font-bold">
+						className="btn-primary text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-6 rounded font-bold">
 						Enter Dashboard
 					</Link>
 				</div>
