@@ -28,7 +28,7 @@ function LandingPage() {
 		}
 
 		await logout()
-		navigate("/", { replace: true })
+		navigate(isGuest ? "/auth" : "/", { replace: true })
 	}
 
 	return (
@@ -63,7 +63,11 @@ function LandingPage() {
 						<button
 							className="btn-secondary py-2 px-2.5 text-xs rounded font-bold whitespace-nowrap"
 							onClick={handleAuthButtonClick}>
-							{currentUser || isGuest ? "Sign Out" : "Sign In"}
+							{isGuest
+								? "Exit Guest Mode"
+								: currentUser
+									? "Sign Out"
+									: "Sign In"}
 						</button>
 					</div>
 					<div className="hidden md:flex items-center gap-4 lg:gap-6">
@@ -81,7 +85,11 @@ function LandingPage() {
 						<button
 							className="btn-secondary py-2.5 px-6 text-sm rounded font-bold"
 							onClick={handleAuthButtonClick}>
-							{currentUser || isGuest ? "Sign Out" : "Sign In"}
+							{isGuest
+								? "Exit Guest Mode"
+								: currentUser
+									? "Sign Out"
+									: "Sign In"}
 						</button>
 						<Link
 							to={currentUser || isGuest ? "/dashboard" : "/auth"}

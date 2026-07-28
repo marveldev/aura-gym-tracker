@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext.jsx"
 
@@ -38,6 +38,9 @@ function AppPageFrame({ children }) {
 	const navigate = useNavigate()
 	const { isGuest, logout } = useAuth()
 	const [isDarkTheme, setIsDarkTheme] = useState(true)
+	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+	const mobileMenuRef = useRef(null)
+	const mobileMenuButtonRef = useRef(null)
 	const isHandbookRoute = location.pathname.startsWith("/handbook/")
 	const shouldShowBackButton =
 		!HIDE_BACK_BUTTON_ROUTES.has(location.pathname) && !isHandbookRoute
@@ -57,9 +60,40 @@ function AppPageFrame({ children }) {
 	}
 
 	const handleSignOut = async () => {
+		setIsMobileMenuOpen(false)
 		await logout()
-		navigate("/", { replace: true })
+		navigate(isGuest ? "/auth" : "/", { replace: true })
 	}
+
+	useEffect(() => {
+		setIsMobileMenuOpen(false)
+	}, [location.pathname])
+
+	useEffect(() => {
+		if (!isMobileMenuOpen) {
+			return undefined
+		}
+
+		const handleClickOutside = (event) => {
+			const target = event.target
+			if (
+				mobileMenuRef.current?.contains(target) ||
+				mobileMenuButtonRef.current?.contains(target)
+			) {
+				return
+			}
+
+			setIsMobileMenuOpen(false)
+		}
+
+		document.addEventListener("mousedown", handleClickOutside)
+		document.addEventListener("touchstart", handleClickOutside)
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside)
+			document.removeEventListener("touchstart", handleClickOutside)
+		}
+	}, [isMobileMenuOpen])
 
 	const handleBack = () => {
 		if (window.history.length > 1) {
@@ -99,17 +133,20 @@ function AppPageFrame({ children }) {
 
 					<div className="flex items-center gap-2 sm:gap-3">
 						{isGuest && (
-							<span className="hidden sm:inline-flex items-center rounded-full border border-[hsl(var(--primary))]/45 bg-[hsl(var(--primary))]/10 px-2.5 py-1 text-xs font-semibold text-[hsl(var(--primary))]">
+							<span
+								className="inline-flex md:hidden items-center rounded-full border border-[hsl(var(--primary))]/45 bg-[hsl(var(--primary))]/10 px-2.5 py-1 text-[11px] font-semibold text-[hsl(var(--primary))]"
+								aria-label="Guest Mode"
+								title="Guest Mode">
+								Guest
+							</span>
+						)}
+						{isGuest && (
+							<span className="hidden md:inline-flex items-center rounded-full border border-[hsl(var(--primary))]/45 bg-[hsl(var(--primary))]/10 px-2.5 py-1 text-xs font-semibold text-[hsl(var(--primary))]">
 								Guest Mode
 							</span>
 						)}
 						<button
-							className="btn-secondary h-10 w-10 rounded flex items-center justify-center"
-							aria-label="Notifications">
-							<i className="ph ph-bell text-lg" />
-						</button>
-						<button
-							className="btn-secondary h-10 w-10 rounded flex items-center justify-center"
+							className="hidden md:flex btn-secondary h-10 w-10 rounded items-center justify-center"
 							onClick={toggleTheme}
 							aria-label={
 								isDarkTheme ? "Switch to light theme" : "Switch to dark theme"
@@ -118,12 +155,50 @@ function AppPageFrame({ children }) {
 								className={`ph text-lg ${isDarkTheme ? "ph-sun" : "ph-moon"}`}></i>
 						</button>
 						<button
-							className="btn-secondary py-2 px-3 sm:px-4 text-sm rounded font-bold whitespace-nowrap"
+							type="button"
+							ref={mobileMenuButtonRef}
+							className="md:hidden btn-secondary h-10 w-10 rounded flex items-center justify-center"
+							onClick={() => setIsMobileMenuOpen((open) => !open)}
+							aria-label="Open menu"
+							aria-expanded={isMobileMenuOpen}>
+							<i className={`ph text-lg ${isMobileMenuOpen ? "ph-x" : "ph-list"}`} />
+						</button>
+						<button
+							className="hidden md:inline-flex btn-secondary py-2 px-3 sm:px-4 text-sm rounded font-bold whitespace-nowrap"
 							onClick={handleSignOut}>
-							Sign Out
+							{isGuest ? "Exit Guest Mode" : "Sign Out"}
 						</button>
 					</div>
 				</div>
+
+				{isMobileMenuOpen && (
+					<div
+						ref={mobileMenuRef}
+						className="md:hidden absolute right-4 top-[calc(100%+0.5rem)] w-[min(92vw,20rem)] overflow-hidden rounded-2xl border border-[hsl(var(--border))]/70 bg-[hsl(var(--surface))]/95 shadow-2xl shadow-black/20 backdrop-blur-xl">
+						<div className="border-b border-[hsl(var(--border))]/70 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--muted))]">
+							Account
+						</div>
+						<div className="p-2 space-y-1.5">
+							<button
+								type="button"
+								onClick={() => {
+									toggleTheme()
+									setIsMobileMenuOpen(false)
+								}}
+								className="w-full rounded-xl border border-[hsl(var(--border))]/60 bg-[hsl(var(--bg))]/60 px-3.5 py-2.5 text-left text-sm font-semibold text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/40 hover:bg-[hsl(var(--primary))]/10">
+								<i className={`ph mr-2 ${isDarkTheme ? "ph-sun" : "ph-moon"}`} />
+								{isDarkTheme ? "Switch to Light" : "Switch to Dark"}
+							</button>
+							<button
+								type="button"
+								onClick={handleSignOut}
+								className="w-full rounded-xl border border-[hsl(var(--border))]/60 bg-[hsl(var(--bg))]/60 px-3.5 py-2.5 text-left text-sm font-semibold text-[hsl(var(--fg))] transition hover:border-[hsl(var(--primary))]/40 hover:bg-[hsl(var(--primary))]/10">
+								<i className="ph ph-sign-out mr-2" />
+								{isGuest ? "Exit Guest Mode" : "Sign Out"}
+							</button>
+						</div>
+					</div>
+				)}
 			</nav>
 
 			{/* Desktop sidebar */}

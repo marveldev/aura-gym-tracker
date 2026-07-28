@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
 import AppPageFrame from "../components/AppPageFrame.jsx"
+import { useAuth } from "../context/AuthContext.jsx"
 import ExerciseDetailModal from "../components/ExerciseDetailModal.jsx"
 import WorkoutModal from "../components/WorkoutModal.jsx"
 import ToastContainer from "../components/ToastContainer.jsx"
@@ -33,6 +34,12 @@ const toDisplayLabel = (value = "") =>
 		.split("-")
 		.map((part) => toTitleCase(part))
 		.join(" ")
+
+const deriveNameFromEmail = (email = "") => {
+	const usernamePart = email.split("@")[0] || ""
+	const normalized = usernamePart.replace(/[._-]+/g, " ")
+	return toTitleCase(normalized)
+}
 
 const getDaySeed = (date) =>
 	Math.floor(
@@ -140,6 +147,7 @@ const getWorkoutStreakDays = (workouts = []) => {
 }
 
 function Dashboard() {
+	const { currentUser, isGuest } = useAuth()
 	const [isLoading, setIsLoading] = useState(true)
 	const [selectedExercise, setSelectedExercise] = useState(null)
 	const [workouts, setWorkouts] = useState([])
@@ -332,6 +340,23 @@ function Dashboard() {
 		if (hour < 18) return "Good afternoon"
 		return "Good evening"
 	}, [])
+
+	const dashboardDisplayName = useMemo(() => {
+		if (isGuest) {
+			return "Guest"
+		}
+
+		const displayName = currentUser?.displayName?.trim()
+		if (displayName) {
+			return displayName
+		}
+
+		if (currentUser?.email) {
+			return deriveNameFromEmail(currentUser.email)
+		}
+
+		return data.profile.name
+	}, [currentUser, data.profile.name, isGuest])
 
 	const dailyStats = useMemo(() => {
 		const today = new Date()
@@ -610,7 +635,7 @@ function Dashboard() {
 						<div className="min-w-0">
 							<p className="text-sm text-[hsl(var(--muted))]">{greeting}</p>
 							<h1 className="mt-1 text-2xl sm:text-3xl font-bold tracking-tight leading-tight">
-								{data.profile.name}
+								{dashboardDisplayName}
 							</h1>
 						</div>
 					</header>
